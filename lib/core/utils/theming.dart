@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:online_exam/core/utils/app_colors.dart';
+import 'package:online_exam/core/utils/text_styles.dart';
 
 ThemeData themeData = ThemeData(
     inputDecorationTheme: InputDecorationTheme(
+      hintStyle: AppTextStyles.roboto400_14.copyWith(
+        color: Color(0xffA6A6A6),
+      ),
+      labelStyle: AppTextStyles.roboto400_12.copyWith(
+        color: Color(0xff535353),
+      ),
       contentPadding: EdgeInsets.fromLTRB(
         16.w,
         4.h,
