@@ -11,6 +11,7 @@ dependencies:
   dio: ^5.8.0+1
   flutter:
     sdk: flutter
+  flutter_bloc: ^9.0.0
   flutter_screenutil: ^5.9.3
   get_it: null
   injectable: null

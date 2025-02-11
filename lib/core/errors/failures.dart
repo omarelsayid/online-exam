@@ -6,7 +6,7 @@ abstract class Failure {
   const Failure({required this.errorMessage});
 }
 
-class ServerFailure extends Failure{
+class ServerFailure extends Failure {
   ServerFailure({required super.errorMessage});
 
   factory ServerFailure.fromDioException(DioException dioExep) {
@@ -20,8 +20,21 @@ class ServerFailure extends Failure{
       case DioExceptionType.badCertificate:
         return ServerFailure(errorMessage: 'Bad SSL certificate error');
       case DioExceptionType.badResponse:
-            // here i need to check on response and statuscode 
-
+        if (dioExep.response!.statusCode == 401) {
+          if (dioExep.response!.data['message'] ==
+              "\"email\" must be a valid email") {
+            return ServerFailure(errorMessage: 'not valid email format');
+          } else if (dioExep.response!.data['message'] ==
+              "incorrect email or password") {
+            return ServerFailure(errorMessage: 'incorrect email or password');
+          } else if (dioExep.response!.data['message']
+              .contains('fails to match the required pattern')) {
+            return ServerFailure(errorMessage: 'invalid password format');
+          } else {
+            return ServerFailure(errorMessage: 'somthing went wrong');
+          }
+        }
+        return ServerFailure(errorMessage: 'bad reponse from ApiServer');
       case DioExceptionType.connectionError:
         return ServerFailure(errorMessage: 'There is no internet connection');
       case DioExceptionType.unknown:
@@ -32,6 +45,4 @@ class ServerFailure extends Failure{
             errorMessage: 'Oops there is an error , Please try later');
     }
   }
-
-  
 }
