@@ -1,8 +1,8 @@
+import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:online_exam/core/errors/custom_exception.dart';
-import 'package:online_exam/core/utils/constants.dart';
+import 'package:online_exam/core/utils/end_points.dart';
 import 'package:online_exam/core/errors/failures.dart';
 
 @singleton
@@ -19,15 +19,10 @@ class AuthService {
         "email": email,
         "password": password,
       });
-      if (response.statusCode == 401) {
-        if (response.data['message'] == "\"email\" must be a valid email") {
-          throw CustomException('not valid email format');
-        } else if (response.data['message'] == "incorrect email or password") {
-          throw CustomException('incorrect email or password');
-        }
-      }
+
       return right(response);
     } on DioException catch (e) {
+      log(ServerFailure.fromDioException(e).errorMessage);
       return left(ServerFailure.fromDioException(e));
     }
   }

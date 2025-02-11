@@ -87,23 +87,22 @@ class AppTextStyles {
   );
 
   // Body Small
-  static TextStyle bodySmall = TextStyle(
+  static TextStyle roboto400_12 = TextStyle(
     fontFamily: 'Roboto',
     fontWeight: FontWeight.w400,
     fontSize: 12.sp,
   );
 
   // Body Large
-  static TextStyle bodyLarge = TextStyle(
+  static TextStyle roboto400_16 = TextStyle(
     fontFamily: 'Roboto',
     fontWeight: FontWeight.w400,
     fontSize: 16.sp,
   );
 
-  // Label Large
-  static TextStyle labelLarge = TextStyle(
+  static TextStyle roboto400_14 = TextStyle(
     fontFamily: 'Roboto',
-    fontWeight: FontWeight.w500,
-    fontSize: 16.sp,
+    fontWeight: FontWeight.w400,
+    fontSize: 14.sp,
   );
 }

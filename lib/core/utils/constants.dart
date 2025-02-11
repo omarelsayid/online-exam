@@ -1,2 +1,0 @@
-const String baseUrl = 'https://exam.elevateegy.com/api/v1';
-const String signinEndPoint = 'signin';

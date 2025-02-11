@@ -24,10 +24,10 @@ class DataSourceImp implements DataSourceRepo {
         (failure) => left(failure), // Propagate the failure
         (response) {
           // Directly return the response data
-          return right(UserModel.fromJson(response.data['user']));
+          return right(UserModel.fromJson(response.data));
         },
       );
-    } catch (e) {
+    } on Exception catch (e) {
       return left(ServerFailure(
           errorMessage: "An unexpected error occurred: ${e.toString()}"));
       // Catch any unexpected errors and wrap them in a ServerFailure

@@ -2,15 +2,14 @@ import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:online_exam/core/errors/failures.dart';
 import 'package:online_exam/features/auth/data/data_source.dart/data_source_repo.dart';
-import 'package:online_exam/features/auth/data/models/user_model.dart';
 import 'package:online_exam/features/auth/domain/entities/user_entity.dart';
 import 'package:online_exam/features/auth/domain/repos/sigin_repo.dart';
 
-@Injectable(as: SignInRepo)
-class SigninRepo implements SignInRepo {
+@Injectable(as: SigninRepo)
+class SigninRepoImp implements SigninRepo {
   final DataSourceRepo _dataSourceRepo;
 
-  SigninRepo(this._dataSourceRepo);
+  SigninRepoImp(this._dataSourceRepo);
 
   @override
   Future<Either<ServerFailure, UserEntity>> signInUser({
