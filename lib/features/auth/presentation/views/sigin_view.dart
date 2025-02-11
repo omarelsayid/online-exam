@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:online_exam/core/services/di_service.dart';
+import 'package:online_exam/core/utils/text_styles.dart';
 import 'package:online_exam/features/auth/domain/repos/sigin_repo.dart';
 import 'package:online_exam/features/auth/presentation/cubits/sigin_cubit/sigin_cubit.dart';
 import 'package:online_exam/features/auth/presentation/views/widgets/sigin_view_body.dart';
@@ -14,6 +15,12 @@ class SiginView extends StatelessWidget {
     return BlocProvider<SiginCubit>(
       create: (context) => SiginCubit(getIt<SigninRepo>()),
       child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Login',
+            style: AppTextStyles.inter500_20,
+          ),
+        ),
         body: SiginViewBody(),
       ),
     );

@@ -9,6 +9,8 @@ import 'package:online_exam/features/auth/presentation/cubits/sigin_cubit/sigin_
 import 'package:online_exam/features/auth/presentation/cubits/sigin_cubit/sigin_states.dart';
 import 'package:online_exam/features/auth/presentation/views/forget_password_view.dart';
 import 'package:online_exam/features/auth/presentation/views/sigin_up_view.dart';
+import 'package:online_exam/features/auth/presentation/views/widgets/do_not_have_an_account_widget.dart';
+import 'package:online_exam/features/auth/presentation/views/widgets/remember_me_checkout_widget.dart';
 
 class SiginViewBody extends StatefulWidget {
   const SiginViewBody({super.key});
@@ -22,62 +24,89 @@ class _SiginViewBodyState extends State<SiginViewBody> {
   final TextEditingController _passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   AutovalidateMode validateMode = AutovalidateMode.disabled;
+  bool rememberMe = false;
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SiginCubit, SiginStates>(
-      listener: (context, state) {
-        if (state is SiginSuccess) {
-          ShowErrorSnackbar('login successfully', context);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const SiginUpView(),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding),
+      child: Form(
+        autovalidateMode: validateMode,
+        key: _formKey,
+        child: Column(
+          children: [
+            SizedBox(height: 24.h),
+            TextFormField(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your email';
+                }
+                return null;
+              },
+              controller: _emailController,
+              decoration: const InputDecoration(
+                labelText: 'email',
+                hintText: 'Enter your email',
+              ),
             ),
-          );
-        } else if (state is SiginFailure) {
-          ShowErrorSnackbar(state.message, context);
-        }
-      },
-      builder: (context, state) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding),
-          child: Form(
-            autovalidateMode: validateMode,
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+            SizedBox(height: 24.h),
+            TextFormField(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your password';
+                }
+                return null;
+              },
+              controller: _passwordController,
+              obscureText: true,
+              decoration: const InputDecoration(
+                labelText: 'password',
+                hintText: 'Enter your password',
+              ),
+            ),
+            SizedBox(height: 16.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TextFormField(
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
-                    }
-                    return null;
+                RememberMeCheckbox(
+                  value: rememberMe,
+                  onChanged: (value) {
+                    setState(() {
+                      rememberMe = value!;
+                    });
                   },
-                  controller: _emailController,
-                  decoration: const InputDecoration(
-                    labelText: 'email',
-                    hintText: 'Enter your email',
-                  ),
                 ),
-                SizedBox(height: 10.h),
-                TextFormField(
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
-                    }
-                    return null;
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, ForgetPasswordView.routeName);
                   },
-                  controller: _passwordController,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: 'password',
-                    hintText: 'Enter your password',
+                  child: Text(
+                    'Forget password?',
+                    style: AppTextStyles.inter400_12.copyWith(
+                      color: Colors.black,
+                      decoration: TextDecoration.underline,
+                    ),
                   ),
-                ),
-                SizedBox(height: 10.h),
-                ElevatedButton(
+                )
+              ],
+            ),
+            SizedBox(height: 64.h),
+            BlocConsumer<SiginCubit, SiginStates>(
+              listener: (context, state) {
+                if (state is SiginSuccess) {
+                  ShowSnackbar('login successfully', context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SiginUpView(),
+                    ),
+                  );
+                } else if (state is SiginFailure) {
+                  ShowErrorSnackbar(state.message, context);
+                }
+              },
+              builder: (context, state) {
+                return ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: validateMode == AutovalidateMode.disabled
                         ? primayColor
@@ -100,33 +129,21 @@ class _SiginViewBodyState extends State<SiginViewBody> {
                   },
                   child: state is SiginLoading
                       ? const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                          ),
+                          child: CircularProgressIndicator(color: Colors.white),
                         )
                       : Text(
                           'Login',
                           style: AppTextStyles.roboto500_16
                               .copyWith(color: Colors.white),
                         ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(
-                      context,
-                      ForgetPasswordView.routeName,
-                    );
-                  },
-                  child: Text(
-                    'Forget Password',
-                    style: AppTextStyles.roboto500_16,
-                  ),
-                ),
-              ],
+                );
+              },
             ),
-          ),
-        );
-      },
+            SizedBox(height: 16.h),
+            DoNotHaveAnAccountWidget(),
+          ],
+        ),
+      ),
     );
   }
 }
