@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:online_exam/core/services/di_service.dart';
-import 'package:online_exam/core/theming.dart';
+import 'package:online_exam/core/utils/theming.dart';
 
 void main() {
   configureDependencies();

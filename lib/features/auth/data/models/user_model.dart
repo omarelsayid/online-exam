@@ -1,36 +1,42 @@
-class UserModel {
-  String? username;
-  String? firstName;
-  String? lastName;
-  String? email;
-  String? phone;
-  String? role;
-  bool? isVerified;
-  String? id;
-  DateTime? createdAt;
+import 'package:online_exam/features/auth/domain/entities/user_entity.dart';
 
+class UserModel extends UserEntity {
+  // Constructor for UserModel
   UserModel({
-    this.username,
-    this.firstName,
-    this.lastName,
-    this.email,
-    this.phone,
-    this.role,
-    this.isVerified,
-    this.id,
-    this.createdAt,
-  });
+    String? token,
+    String? username,
+    String? firstName,
+    String? lastName,
+    String? email,
+    String? phone,
+    String? role,
+    bool? isVerified,
+    String? id,
+    DateTime? createdAt,
+  }) : super(
+          token: token,
+          username: username,
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          phone: phone,
+          role: role,
+          isVerified: isVerified,
+          id: id,
+          createdAt: createdAt,
+        );
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        username: json["username"],
-        firstName: json["firstName"],
-        lastName: json["lastName"],
-        email: json["email"],
-        phone: json["phone"],
-        role: json["role"],
-        isVerified: json["isVerified"],
-        id: json["_id"],
-        createdAt: DateTime.parse(json["createdAt"]),
+        token: json['token'],
+        username: json['user']["username"],
+        firstName: json['user']["firstName"],
+        lastName: json['user']["lastName"],
+        email: json['user']["email"],
+        phone: json['user']["phone"],
+        role: json['user']["role"],
+        isVerified: json['user']["isVerified"],
+        id: json['user']["_id"],
+        createdAt: DateTime.parse(json['user']["createdAt"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -45,4 +51,16 @@ class UserModel {
         "createdAt": createdAt!.toIso8601String(),
       };
 
+  UserEntity toEntity() => UserEntity(
+        token: token,
+        username: username,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: phone,
+        role: role,
+        isVerified: isVerified,
+        id: id,
+        createdAt: createdAt,
+      );
 }
