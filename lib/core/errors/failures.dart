@@ -39,6 +39,13 @@ class ServerFailure extends Failure {
                 errorMessage: 'There is no account with this email address');
           }
           return ServerFailure(errorMessage: 'somthing went wrong');
+        } else if (dioExep.response!.statusCode == 400) {
+          if (dioExep.response!.data['message']
+              .contains('invalid or has expired')) {
+            return ServerFailure(
+                errorMessage: 'Reset code is invalid or has expired');
+          }
+          return ServerFailure(errorMessage: 'somthing went wrong');
         }
         return ServerFailure(errorMessage: 'bad reponse from ApiServer');
       case DioExceptionType.connectionError:
