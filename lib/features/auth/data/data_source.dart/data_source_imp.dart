@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:online_exam/core/errors/failures.dart';
 import 'package:online_exam/core/services/auth_service.dart';
@@ -32,6 +33,22 @@ class DataSourceImp implements DataSourceRepo {
           errorMessage: "An unexpected error occurred: ${e.toString()}"));
       // Catch any unexpected errors and wrap them in a ServerFailure
       // return left(ServerFailure("An unexpected error occurred: ${e.toString()}"));
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, void>> forgetPassword(
+      {required String email}) async {
+    try {
+      Response response = await _authService.forgetPassword(email: email);
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        return Right(null);
+      } else {
+        return left(ServerFailure(errorMessage: response.data['message']));
+      }
+    } on DioException catch (e) {
+      // log(ServerFailure.fromDioException(e).errorMessage);
+      return left(ServerFailure.fromDioException(e));
     }
   }
 }

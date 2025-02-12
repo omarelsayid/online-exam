@@ -33,6 +33,12 @@ class ServerFailure extends Failure {
           } else {
             return ServerFailure(errorMessage: 'somthing went wrong');
           }
+        } else if (dioExep.response!.statusCode == 404) {
+          if (dioExep.response!.data['message'].contains('no account')) {
+            return ServerFailure(
+                errorMessage: 'There is no account with this email address');
+          }
+          return ServerFailure(errorMessage: 'somthing went wrong');
         }
         return ServerFailure(errorMessage: 'bad reponse from ApiServer');
       case DioExceptionType.connectionError:

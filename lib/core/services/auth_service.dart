@@ -26,4 +26,11 @@ class AuthService {
       return left(ServerFailure.fromDioException(e));
     }
   }
+
+  Future<Response> forgetPassword({required String email}) async {
+    Response response = await _dio.post(forgetPasswordEndPoint, data: {
+      "email": email,
+    });
+    return response;
+  }
 }
