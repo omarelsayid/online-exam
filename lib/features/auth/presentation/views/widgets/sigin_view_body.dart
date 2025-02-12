@@ -7,6 +7,7 @@ import 'package:online_exam/core/utils/constans.dart';
 import 'package:online_exam/core/utils/text_styles.dart';
 import 'package:online_exam/features/auth/presentation/cubits/sigin_cubit/sigin_cubit.dart';
 import 'package:online_exam/features/auth/presentation/cubits/sigin_cubit/sigin_states.dart';
+import 'package:online_exam/features/auth/presentation/views/forget_password_view.dart';
 import 'package:online_exam/features/auth/presentation/views/sigin_up_view.dart';
 
 class SiginViewBody extends StatefulWidget {
@@ -108,6 +109,20 @@ class _SiginViewBodyState extends State<SiginViewBody> {
                           style: AppTextStyles.roboto500_16
                               .copyWith(color: Colors.white),
                         ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ForgetPasswordView(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    'Forget Password',
+                    style: AppTextStyles.roboto500_16,
+                  ),
                 ),
               ],
             ),
