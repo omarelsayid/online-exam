@@ -7,18 +7,19 @@ import 'package:online_exam/core/utils/constans.dart';
 import 'package:online_exam/core/utils/text_styles.dart';
 import 'package:online_exam/features/auth/presentation/cubits/forget_password_cubit/forget_password_state.dart';
 import 'package:online_exam/features/auth/presentation/cubits/forget_password_cubit/forget_password_view_model.dart';
+import 'package:online_exam/features/auth/presentation/cubits/verify_code_cubit/verify_reset_code_state.dart';
+import 'package:online_exam/features/auth/presentation/cubits/verify_code_cubit/verify_reset_code_view_model.dart';
 import 'package:online_exam/features/auth/presentation/views/sigin_up_view.dart';
-import 'package:online_exam/features/auth/presentation/views/verify_reset_code_view.dart';
 
-class ForgetPasswordView extends StatefulWidget {
-  const ForgetPasswordView({super.key});
+class VerifyResetCodeView extends StatefulWidget {
+  const VerifyResetCodeView({super.key});
 
   @override
-  State<ForgetPasswordView> createState() => _ForgetPasswordViewState();
+  State<VerifyResetCodeView> createState() => _VerifyResetCodeView();
 }
 
-class _ForgetPasswordViewState extends State<ForgetPasswordView> {
-  ForgetPasswordViewModel forgetPasswordViewModel = getIt();
+class _VerifyResetCodeView extends State<VerifyResetCodeView> {
+  VerifyResetCodeViewModel verifyRestCodeViewModel = getIt();
   TextEditingController emailController = TextEditingController();
 
   AutovalidateMode validateMode = AutovalidateMode.disabled;
@@ -27,24 +28,24 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => forgetPasswordViewModel,
+      create: (context) => verifyRestCodeViewModel,
       child:
-          BlocListener<ForgetPasswordViewModel, ForgetPasswordViewModelState>(
+          BlocListener<VerifyResetCodeViewModel, VerifyResetCodeViewModelState>(
         listener: (context, state) {
-          if (state.forgetPasswordState is BaseErrorState) {
+          if (state.verifyCodeState is BaseErrorState) {
             String errorMessage =
-                (state.forgetPasswordState as BaseErrorState).errorMessage;
+                (state.verifyCodeState as BaseErrorState).errorMessage;
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(errorMessage),
                 backgroundColor: Colors.red,
               ),
             );
-          } else if (state.forgetPasswordState is BaseSuccessState) {
+          } else if (state.verifyCodeState is BaseSuccessState) {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const VerifyResetCodeView(),
+                builder: (context) => const SiginUpView(),
               ),
             );
           }
@@ -67,21 +68,21 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                     child: TextFormField(
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your email';
+                          return 'Please enter your code';
                         }
                         return null;
                       },
                       controller: emailController,
                       decoration: const InputDecoration(
-                        labelText: 'email',
-                        hintText: 'Enter your email',
+                        labelText: 'code',
+                        hintText: 'Enter your code',
                       ),
                     ),
                   ),
-                  BlocBuilder<ForgetPasswordViewModel,
-                      ForgetPasswordViewModelState>(
+                  BlocBuilder<VerifyResetCodeViewModel,
+                      VerifyResetCodeViewModelState>(
                     builder: (context, state) {
-                      if (state.forgetPasswordState is BaseLoadingState) {
+                      if (state.verifyCodeState is BaseLoadingState) {
                         return Center(child: CircularProgressIndicator());
                       } else {
                         return ElevatedButton(
@@ -96,8 +97,8 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                               setState(() {
                                 validateMode = AutovalidateMode.disabled;
                               });
-                              forgetPasswordViewModel.forgetPassword(
-                                  email: emailController.text);
+                              verifyRestCodeViewModel.verifyResetCode(
+                                  resetCode: emailController.text);
                             } else {
                               setState(() {
                                 validateMode = AutovalidateMode.always;
@@ -105,7 +106,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                             }
                           },
                           child: Text(
-                            'Login',
+                            'Verify',
                             style: AppTextStyles.roboto500_16
                                 .copyWith(color: Colors.white),
                           ),
