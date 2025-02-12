@@ -16,11 +16,16 @@ import '../../features/auth/data/data_source.dart/data_source_imp.dart'
     as _i661;
 import '../../features/auth/data/data_source.dart/data_source_repo.dart'
     as _i62;
+import '../../features/auth/data/repos/forget_password_repo_imp.dart' as _i599;
 import '../../features/auth/data/repos/signin_repo_imp.dart' as _i739;
+import '../../features/auth/domain/repos/forget_password_repo.dart' as _i558;
 import '../../features/auth/domain/repos/sigin_repo.dart' as _i364;
+import '../../features/auth/presentation/cubits/forget_password_cubit/forget_password_view_model.dart'
+    as _i457;
 import '../../features/auth/presentation/cubits/sigin_cubit/sigin_cubit.dart'
     as _i895;
 import 'auth_service.dart' as _i184;
+import 'internet_connection_check.dart' as _i746;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -34,10 +39,16 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     gh.singleton<_i184.AuthService>(() => _i184.AuthService());
+    gh.singleton<_i746.InternetConnectionCheck>(
+        () => _i746.InternetConnectionCheck());
     gh.factory<_i62.DataSourceRepo>(
         () => _i661.DataSourceImp(gh<_i184.AuthService>()));
+    gh.factory<_i558.ForgetPasswordRepo>(
+        () => _i599.ForgetPasswordRepoImp(gh<_i62.DataSourceRepo>()));
     gh.factory<_i364.SigninRepo>(
         () => _i739.SigninRepoImp(gh<_i62.DataSourceRepo>()));
+    gh.factory<_i457.ForgetPasswordViewModel>(
+        () => _i457.ForgetPasswordViewModel(gh<_i558.ForgetPasswordRepo>()));
     gh.factory<_i895.SiginCubit>(
         () => _i895.SiginCubit(gh<_i364.SigninRepo>()));
     return this;

@@ -1,4 +1,6 @@
-abstract class ForgetPasswordRepo {
+import 'package:dartz/dartz.dart';
+import 'package:online_exam/core/errors/failures.dart';
 
-  Future<void> forgetPassword({required String email});
+abstract class ForgetPasswordRepo {
+  Future<Either<ServerFailure, void>> forgetPassword({required String email});
 }

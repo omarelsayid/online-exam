@@ -4,6 +4,7 @@ import 'package:online_exam/core/errors/failures.dart';
 import 'package:online_exam/core/services/internet_connection_check.dart';
 import 'package:online_exam/features/auth/data/data_source.dart/data_source_repo.dart';
 import 'package:online_exam/features/auth/domain/repos/forget_password_repo.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 @Injectable(as: ForgetPasswordRepo)
 class ForgetPasswordRepoImp implements ForgetPasswordRepo {
@@ -14,7 +15,8 @@ class ForgetPasswordRepoImp implements ForgetPasswordRepo {
   @override
   Future<Either<ServerFailure, void>> forgetPassword(
       {required String email}) async {
-    bool isConnected = await InternetConnectionCheck().getInstance();
+    bool isConnected =
+        await (InternetConnectionCheck().getInstance()).hasConnection;
     if (isConnected) {
       return _dataSourceRepo.forgetPassword(email: email);
     } else {
