@@ -51,4 +51,20 @@ class DataSourceImp implements DataSourceRepo {
       return left(ServerFailure.fromDioException(e));
     }
   }
+
+  @override
+  Future<Either<ServerFailure, void>> verifyCodeReset(
+      {required String resetCode}) async {
+    try {
+      Response response =
+          await _authService.verifyCodeReset(resetCode: resetCode);
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        return Right(null);
+      } else {
+        return Left(ServerFailure(errorMessage: response.data['message']));
+      }
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioException(e));
+    }
+  }
 }
