@@ -44,7 +44,9 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const VerifyResetCodeView(),
+                builder: (context) => VerifyResetCodeView(
+                  email: emailController.text,
+                ),
               ),
             );
           }

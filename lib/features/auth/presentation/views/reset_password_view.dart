@@ -61,7 +61,6 @@ class _ResetPasswordView extends State<ResetPasswordView> {
             backgroundColor: primayColor,
           ),
           body: Padding(
-
             padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding),
             child: Form(
               key: formKey,
@@ -101,7 +100,7 @@ class _ResetPasswordView extends State<ResetPasswordView> {
                                 validateMode = AutovalidateMode.disabled;
                               });
                               resetPasswordViewModel.resetPassword(
-                                  email: emailController.text,
+                                  email: widget.email,
                                   newPassword: emailController.text);
                             } else {
                               setState(() {
