@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:online_exam/core/errors/failures.dart';
 import 'package:online_exam/core/services/internet_connection_check.dart';
 import 'package:online_exam/features/auth/data/data_source.dart/data_source_repo.dart';
@@ -8,14 +9,14 @@ import 'package:online_exam/features/auth/domain/repos/verify_reset_code_repo.da
 @Injectable(as: VerifyResetCodeRepo)
 class VerifyResetCodeRepoImp implements VerifyResetCodeRepo {
   final DataSourceRepo _dataSourceRepo;
+  final InternetConnectionChecker internetConnectionChecker;
 
-  VerifyResetCodeRepoImp(this._dataSourceRepo);
+  VerifyResetCodeRepoImp(this._dataSourceRepo, this.internetConnectionChecker);
 
   @override
   Future<Either<ServerFailure, void>> verifyResetCode(
       {required String resetCode}) async {
-    bool isConnected =
-        await (InternetConnectionCheck().getInstance()).hasConnection;
+    bool isConnected = await internetConnectionChecker.hasConnection;
     if (isConnected) {
       return _dataSourceRepo.verifyResetCode(resetCode: resetCode);
     } else {

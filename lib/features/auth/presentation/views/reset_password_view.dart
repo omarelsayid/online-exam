@@ -16,6 +16,7 @@ import 'package:online_exam/features/auth/presentation/views/sigin_view.dart';
 
 class ResetPasswordView extends StatefulWidget {
   const ResetPasswordView({super.key, required this.email});
+  static const String routeName = 'resetPasswordView';
 
   final String email;
   @override
