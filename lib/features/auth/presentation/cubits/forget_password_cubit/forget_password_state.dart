@@ -1,9 +1,12 @@
-import 'package:online_exam/core/utils/base_api_state.dart';
+abstract class ForgetPasswordViewModelState {}
 
-class ForgetPasswordViewModelState {
-  late BaseApiState forgetPasswordState;
-  ForgetPasswordViewModelState(this.forgetPasswordState);
-  ForgetPasswordViewModelState.initial() {
-    forgetPasswordState = BaseIdleState();
-  }
+class ForgetPasswordIdleState extends ForgetPasswordViewModelState {}
+
+class ForgetPasswordLoadingState extends ForgetPasswordViewModelState {}
+
+class ForgetPasswordSuccessState extends ForgetPasswordViewModelState {}
+
+class ForgetPasswordErrorState extends ForgetPasswordViewModelState {
+  final String errorMessage;
+  ForgetPasswordErrorState(this.errorMessage);
 }
