@@ -4,10 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:online_exam/core/helper_function/on_generate_route.dart';
 import 'package:online_exam/core/services/custom_bloc_observer.dart';
 import 'package:online_exam/core/services/di_service.dart';
+import 'package:online_exam/core/services/shared_preference_service.dart';
 import 'package:online_exam/core/utils/theming.dart';
 import 'package:online_exam/features/auth/presentation/views/sigin_view.dart';
 
 void main() {
+  SharedPreferenceService.init();
   Bloc.observer = CustomBlocObserver();
   configureDependencies();
   runApp(const MainApp());
