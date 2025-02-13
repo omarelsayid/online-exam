@@ -7,20 +7,23 @@ import 'package:online_exam/core/utils/constans.dart';
 import 'package:online_exam/core/utils/text_styles.dart';
 import 'package:online_exam/features/auth/presentation/cubits/forget_password_cubit/forget_password_state.dart';
 import 'package:online_exam/features/auth/presentation/cubits/forget_password_cubit/forget_password_view_model.dart';
+import 'package:online_exam/features/auth/presentation/cubits/reset_password_cubit/reset_password_state.dart';
+import 'package:online_exam/features/auth/presentation/cubits/reset_password_cubit/reset_password_view_model.dart';
 import 'package:online_exam/features/auth/presentation/cubits/verify_code_cubit/verify_reset_code_state.dart';
 import 'package:online_exam/features/auth/presentation/cubits/verify_code_cubit/verify_reset_code_view_model.dart';
-import 'package:online_exam/features/auth/presentation/views/reset_password_view.dart';
 import 'package:online_exam/features/auth/presentation/views/sigin_up_view.dart';
+import 'package:online_exam/features/auth/presentation/views/sigin_view.dart';
 
-class VerifyResetCodeView extends StatefulWidget {
-  const VerifyResetCodeView({super.key});
+class ResetPasswordView extends StatefulWidget {
+  const ResetPasswordView({super.key, required this.email});
 
+  final String email;
   @override
-  State<VerifyResetCodeView> createState() => _VerifyResetCodeView();
+  State<ResetPasswordView> createState() => _ResetPasswordView();
 }
 
-class _VerifyResetCodeView extends State<VerifyResetCodeView> {
-  VerifyResetCodeViewModel verifyRestCodeViewModel = getIt();
+class _ResetPasswordView extends State<ResetPasswordView> {
+  ResetPasswordViewModel resetPasswordViewModel = getIt();
   TextEditingController emailController = TextEditingController();
 
   AutovalidateMode validateMode = AutovalidateMode.disabled;
@@ -29,25 +32,22 @@ class _VerifyResetCodeView extends State<VerifyResetCodeView> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => verifyRestCodeViewModel,
-      child:
-          BlocListener<VerifyResetCodeViewModel, VerifyResetCodeViewModelState>(
+      create: (context) => resetPasswordViewModel,
+      child: BlocListener<ResetPasswordViewModel, ResetPasswordViewModelState>(
         listener: (context, state) {
-          if (state.verifyCodeState is BaseErrorState) {
-            String errorMessage =
-                (state.verifyCodeState as BaseErrorState).errorMessage;
+          if (state is ResetPasswordErrorState) {
+            String errorMessage = (state).errorMessage;
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(errorMessage),
                 backgroundColor: Colors.red,
               ),
             );
-          } else if (state.verifyCodeState is BaseSuccessState) {
+          } else if (state is ResetPasswordSuccessState) {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    ResetPasswordView(email: emailController.text),
+                builder: (context) => const SiginView(),
               ),
             );
           }
@@ -61,6 +61,7 @@ class _VerifyResetCodeView extends State<VerifyResetCodeView> {
             backgroundColor: primayColor,
           ),
           body: Padding(
+
             padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding),
             child: Form(
               key: formKey,
@@ -70,21 +71,21 @@ class _VerifyResetCodeView extends State<VerifyResetCodeView> {
                     child: TextFormField(
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your code';
+                          return 'Please enter your password';
                         }
                         return null;
                       },
                       controller: emailController,
                       decoration: const InputDecoration(
-                        labelText: 'code',
-                        hintText: 'Enter your code',
+                        labelText: 'password',
+                        hintText: 'Enter your password',
                       ),
                     ),
                   ),
-                  BlocBuilder<VerifyResetCodeViewModel,
-                      VerifyResetCodeViewModelState>(
+                  BlocBuilder<ResetPasswordViewModel,
+                      ResetPasswordViewModelState>(
                     builder: (context, state) {
-                      if (state.verifyCodeState is BaseLoadingState) {
+                      if (state is ResetPasswordLoadingState) {
                         return Center(child: CircularProgressIndicator());
                       } else {
                         return ElevatedButton(
@@ -99,8 +100,9 @@ class _VerifyResetCodeView extends State<VerifyResetCodeView> {
                               setState(() {
                                 validateMode = AutovalidateMode.disabled;
                               });
-                              verifyRestCodeViewModel.verifyResetCode(
-                                  resetCode: emailController.text);
+                              resetPasswordViewModel.resetPassword(
+                                  email: emailController.text,
+                                  newPassword: emailController.text);
                             } else {
                               setState(() {
                                 validateMode = AutovalidateMode.always;
