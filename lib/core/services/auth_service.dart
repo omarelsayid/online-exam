@@ -40,4 +40,13 @@ class AuthService {
     });
     return response;
   }
+
+  Future<Response> resetPassword(
+      {required String email, required String newPassword}) async {
+    Response response = await _dio.put(resetPasswordEndPoint, data: {
+      "email": email,
+      "newPassword": newPassword,
+    });
+    return response;
+  }
 }
