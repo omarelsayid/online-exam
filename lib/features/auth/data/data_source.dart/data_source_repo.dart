@@ -13,4 +13,15 @@ abstract class DataSourceRepo {
 
   Future<Either<ServerFailure, void>> resetPassword(
       {required String email, required String newPassword});
+
+
+  Future<Either<ServerFailure, UserModel>> signUpUser({
+    required String username,
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String password,
+    required String rePassword,
+    required String phone,
+  });
 }

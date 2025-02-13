@@ -3,3 +3,4 @@ const String signinEndPoint = 'auth/signin';
 const String forgetPasswordEndPoint = 'auth/forgotPassword';
 const String verifyResetCodeEndPoint = 'auth/verifyResetCode';
 const String resetPasswordEndPoint = 'auth/resetPassword';
+const String signUpEndPoint = "auth/signup";
