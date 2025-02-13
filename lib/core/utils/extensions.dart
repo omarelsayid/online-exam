@@ -8,7 +8,7 @@ extension StringExtensions on String {
 
   bool get isValidPassword {
     final bool passwordValid = RegExp(
-            r"/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/")
+            r"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")
         .hasMatch(this);
     return passwordValid;
   }

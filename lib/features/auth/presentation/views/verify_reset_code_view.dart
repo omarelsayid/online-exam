@@ -178,7 +178,6 @@ class _VerifyResetCodeView extends State<VerifyResetCodeView> {
             });
             verifyRestCodeViewModel.verifyResetCode(
                 resetCode: joinListToText());
-            print('Success');
           } else {
             setState(() {
               validateMode = AutovalidateMode.always;
