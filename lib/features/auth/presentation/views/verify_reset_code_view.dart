@@ -123,6 +123,7 @@ class _VerifyResetCodeView extends State<VerifyResetCodeView> {
         ),
         TextButton(
           onPressed: () {
+            _controllers.forEach((controller) => controller.clear());
             forgetPasswordViewModel.forgetPassword(email: email);
           },
           child: Text(
