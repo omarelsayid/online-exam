@@ -12,6 +12,7 @@ import 'package:online_exam/features/auth/presentation/views/verify_reset_code_v
 
 class ForgetPasswordView extends StatefulWidget {
   const ForgetPasswordView({super.key});
+  static const String routeName = 'forgetPasswordView';
 
   @override
   State<ForgetPasswordView> createState() => _ForgetPasswordViewState();

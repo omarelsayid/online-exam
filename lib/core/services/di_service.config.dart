@@ -11,6 +11,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:internet_connection_checker/internet_connection_checker.dart'
+    as _i973;
 
 import '../../features/auth/data/data_source.dart/data_source_imp.dart'
     as _i661;
@@ -47,21 +49,28 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
+    final dataModule = _$DataModule();
     gh.singleton<_i184.AuthService>(() => _i184.AuthService());
-    gh.singleton<_i746.InternetConnectionCheck>(
-        () => _i746.InternetConnectionCheck());
+    gh.singleton<_i973.InternetConnectionChecker>(
+        () => dataModule.getInternetConnectionCheck());
     gh.factory<_i62.DataSourceRepo>(
         () => _i661.DataSourceImp(gh<_i184.AuthService>()));
-    gh.factory<_i558.ForgetPasswordRepo>(
-        () => _i599.ForgetPasswordRepoImp(gh<_i62.DataSourceRepo>()));
+    gh.factory<_i558.ForgetPasswordRepo>(() => _i599.ForgetPasswordRepoImp(
+          gh<_i62.DataSourceRepo>(),
+          gh<_i973.InternetConnectionChecker>(),
+        ));
     gh.factory<_i364.SigninRepo>(
         () => _i739.SigninRepoImp(gh<_i62.DataSourceRepo>()));
     gh.factory<_i457.ForgetPasswordViewModel>(
         () => _i457.ForgetPasswordViewModel(gh<_i558.ForgetPasswordRepo>()));
-    gh.factory<_i160.ResetPasswordRepo>(
-        () => _i1027.ResetPasswordRepoImp(gh<_i62.DataSourceRepo>()));
-    gh.factory<_i375.VerifyResetCodeRepo>(
-        () => _i898.VerifyResetCodeRepoImp(gh<_i62.DataSourceRepo>()));
+    gh.factory<_i160.ResetPasswordRepo>(() => _i1027.ResetPasswordRepoImp(
+          gh<_i62.DataSourceRepo>(),
+          gh<_i973.InternetConnectionChecker>(),
+        ));
+    gh.factory<_i375.VerifyResetCodeRepo>(() => _i898.VerifyResetCodeRepoImp(
+          gh<_i62.DataSourceRepo>(),
+          gh<_i973.InternetConnectionChecker>(),
+        ));
     gh.factory<_i16.VerifyResetCodeViewModel>(
         () => _i16.VerifyResetCodeViewModel(gh<_i375.VerifyResetCodeRepo>()));
     gh.factory<_i895.SiginCubit>(
@@ -71,3 +80,5 @@ extension GetItInjectableX on _i174.GetIt {
     return this;
   }
 }
+
+class _$DataModule extends _i746.DataModule {}
