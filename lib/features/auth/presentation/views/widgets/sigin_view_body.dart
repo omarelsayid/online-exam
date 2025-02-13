@@ -112,11 +112,9 @@ class _SiginViewBodyState extends State<SiginViewBody> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.push(
+                    Navigator.pushNamed(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => const ForgetPasswordView(),
-                      ),
+                      ForgetPasswordView.routeName,
                     );
                   },
                   child: Text(
