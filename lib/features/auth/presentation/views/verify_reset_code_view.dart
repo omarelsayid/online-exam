@@ -13,8 +13,8 @@ import 'package:online_exam/features/auth/presentation/views/reset_password_view
 import 'package:online_exam/features/auth/presentation/views/sigin_up_view.dart';
 
 class VerifyResetCodeView extends StatefulWidget {
-  const VerifyResetCodeView({super.key});
-
+  const VerifyResetCodeView({super.key, required this.email});
+final String email;
   @override
   State<VerifyResetCodeView> createState() => _VerifyResetCodeView();
 }
@@ -47,7 +47,7 @@ class _VerifyResetCodeView extends State<VerifyResetCodeView> {
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    ResetPasswordView(email: emailController.text),
+                    ResetPasswordView(email: widget.email),
               ),
             );
           }
