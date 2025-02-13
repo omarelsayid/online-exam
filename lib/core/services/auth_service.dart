@@ -50,8 +50,9 @@ class AuthService {
         },
       );
       return right(response);
-    } catch (error) {
-      return left(ServerFailure(errorMessage: error.toString()));
+    } on DioException catch (e) {
+      log(ServerFailure.fromDioException(e).errorMessage);
+      return left(ServerFailure.fromDioException(e));
     }
   }
 }
