@@ -38,7 +38,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
             String errorMessage = (state).errorMessage;
             ShowErrorSnackbar(errorMessage, context);
           } else if (state is ForgetPasswordSuccessState) {
-            Navigator.pushNamed(context, VerifyResetCodeView.routeName,
+            Navigator.pushReplacementNamed(context, VerifyResetCodeView.routeName,
                 arguments: emailController.text);
           }
         },

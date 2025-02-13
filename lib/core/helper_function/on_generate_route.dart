@@ -14,7 +14,8 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       return MaterialPageRoute(
           builder: (_) => const VerifyResetCodeView(), settings: settings);
     case ResetPasswordView.routeName:
-      return MaterialPageRoute(builder: (_) => const ResetPasswordView());
+      return MaterialPageRoute(
+          builder: (_) => const ResetPasswordView(), settings: settings);
     default:
       return MaterialPageRoute(builder: (_) => Text('Route not found'));
   }

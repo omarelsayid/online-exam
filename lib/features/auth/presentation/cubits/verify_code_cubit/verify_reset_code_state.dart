@@ -1,9 +1,12 @@
-import 'package:online_exam/core/utils/base_api_state.dart';
+abstract class VerifyResetCodeViewModelState {}
 
-class VerifyResetCodeViewModelState {
-  late BaseApiState verifyCodeState;
-  VerifyResetCodeViewModelState(this.verifyCodeState);
-  VerifyResetCodeViewModelState.initial() {
-    verifyCodeState = BaseIdleState();
-  }
+class VerifyResetCodeIdleState extends VerifyResetCodeViewModelState {}
+
+class VerifyResetCodeLoadingState extends VerifyResetCodeViewModelState {}
+
+class VerifyResetCodeSuccessState extends VerifyResetCodeViewModelState {}
+
+class VerifyResetCodeErrorState extends VerifyResetCodeViewModelState {
+  final String errorMessage;
+  VerifyResetCodeErrorState(this.errorMessage);
 }
