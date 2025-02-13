@@ -3,21 +3,22 @@ import 'package:injectable/injectable.dart';
 import 'package:online_exam/core/errors/failures.dart';
 import 'package:online_exam/core/services/internet_connection_check.dart';
 import 'package:online_exam/features/auth/data/data_source.dart/data_source_repo.dart';
-import 'package:online_exam/features/auth/domain/repos/verify_reset_code_repo.dart';
+import 'package:online_exam/features/auth/domain/repos/reset_password_repo.dart';
 
-@Injectable(as: VerifyResetCodeRepo)
-class VerifyResetCodeRepoImp implements VerifyResetCodeRepo {
+@Injectable(as: ResetPasswordRepo)
+class ResetPasswordRepoImp implements ResetPasswordRepo {
   final DataSourceRepo _dataSourceRepo;
 
-  VerifyResetCodeRepoImp(this._dataSourceRepo);
+  ResetPasswordRepoImp(this._dataSourceRepo);
 
   @override
-  Future<Either<ServerFailure, void>> verifyResetCode(
-      {required String resetCode}) async {
+  Future<Either<ServerFailure, void>> resetPassword(
+      {required String email, required String newPassword}) async {
     bool isConnected =
         await (InternetConnectionCheck().getInstance()).hasConnection;
     if (isConnected) {
-      return _dataSourceRepo.verifyResetCode(resetCode: resetCode);
+      return _dataSourceRepo.resetPassword(
+          email: email, newPassword: newPassword);
     } else {
       return left(ServerFailure(
           errorMessage:
