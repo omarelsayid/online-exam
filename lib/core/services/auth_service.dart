@@ -34,7 +34,7 @@ class AuthService {
     return response;
   }
 
-  Future<Response> verifyCodeReset({required String resetCode}) async {
+  Future<Response> verifyResetCode({required String resetCode}) async {
     Response response = await _dio.post(verifyResetCodeEndPoint, data: {
       "resetCode": resetCode,
     });

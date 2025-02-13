@@ -8,6 +8,9 @@ abstract class DataSourceRepo {
 
   Future<Either<ServerFailure, void>> forgetPassword({required String email});
 
-  Future<Either<ServerFailure, void>> verifyCodeReset(
+  Future<Either<ServerFailure, void>> verifyResetCode(
       {required String resetCode});
+
+  Future<Either<ServerFailure, void>> resetPassword(
+      {required String email, required String newPassword});
 }
