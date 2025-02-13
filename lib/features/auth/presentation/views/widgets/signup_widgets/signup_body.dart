@@ -1,0 +1,207 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../../../../core/utils/app_colors.dart';
+import '../../../../../../core/utils/constans.dart';
+import '../../../../../../core/utils/text_styles.dart';
+import '../../../cubits/signup_cubit/signup_cubit.dart';
+import 'aleady_have_account_widget.dart';
+
+class SignupBody extends StatefulWidget {
+  const SignupBody({super.key});
+
+  @override
+  State<SignupBody> createState() => _SignupBodyState();
+}
+
+class _SignupBodyState extends State<SignupBody> {
+  final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _rePasswordController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  AutovalidateMode validateMode = AutovalidateMode.disabled;
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _rePasswordController.dispose();
+    _phoneController.dispose();
+    super.dispose();
+  }
+
+  void _submit() {
+    if (_formKey.currentState!.validate()) {
+      context.read<SignupCubit>().signUpUser(
+            username: _usernameController.text.trim(),
+            firstName: _firstNameController.text.trim(),
+            lastName: _lastNameController.text.trim(),
+            email: _emailController.text.trim(),
+            password: _passwordController.text.trim(),
+            rePassword: _rePasswordController.text.trim(),
+            phone: _phoneController.text.trim(),
+          );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+        child: Padding(
+      padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding),
+      child: Form(
+        autovalidateMode: validateMode,
+        key: _formKey,
+        child: Column(
+          children: [
+            SizedBox(height: 24.h),
+            TextFormField(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your user Name';
+                }
+                return null;
+              },
+              controller: _usernameController,
+              decoration: const InputDecoration(
+                labelText: 'user Name',
+                hintText: 'Enter your user Name',
+              ),
+            ),
+            SizedBox(height: 24.h),
+            Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your first Name';
+                      }
+                      return null;
+                    },
+                    controller: _firstNameController,
+                    decoration: const InputDecoration(
+                      labelText: 'first name',
+                      hintText: 'Enter your first name',
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your last name';
+                      }
+                      return null;
+                    },
+                    controller: _lastNameController,
+                    decoration: const InputDecoration(
+                      labelText: 'last name',
+                      hintText: 'Enter your last name',
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 24.h),
+            TextFormField(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your Email';
+                }
+                return null;
+              },
+              controller: _emailController,
+              decoration: const InputDecoration(
+                labelText: 'email',
+                hintText: 'Enter your email',
+              ),
+            ),
+            SizedBox(height: 24.h),
+            Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      return null;
+                    },
+                    controller: _passwordController,
+                    decoration: const InputDecoration(
+                      labelText: 'password',
+                      hintText: 'Enter your password',
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your Confirm password';
+                      }
+                      return null;
+                    },
+                    controller: _rePasswordController,
+                    decoration: const InputDecoration(
+                      labelText: 'Confirm password',
+                      hintText: 'Enter your Confirm password',
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 24.h),
+            TextFormField(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter your phone';
+                }
+                return null;
+              },
+              controller: _phoneController,
+              decoration: const InputDecoration(
+                labelText: 'phone',
+                hintText: 'Enter your phone',
+              ),
+            ),
+            SizedBox(height: 64.h),
+
+
+
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: validateMode == AutovalidateMode.disabled
+                    ? primayColor
+                    : secondaryColor,
+              ),
+              onPressed: () {},
+              child: Text(
+                'Sign up',
+                style: AppTextStyles.roboto500_16
+                    .copyWith(color: Colors.white),
+              ),
+            ),
+
+
+            SizedBox(height: 16.h),
+            AlreadyHaveAccountWidget(),
+          ],
+        ),
+      ),
+    ));
+  }
+}

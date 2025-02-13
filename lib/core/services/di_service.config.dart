@@ -17,7 +17,9 @@ import '../../features/auth/data/data_source.dart/data_source_imp.dart'
 import '../../features/auth/data/data_source.dart/data_source_repo.dart'
     as _i62;
 import '../../features/auth/data/repos/signin_repo_imp.dart' as _i739;
+import '../../features/auth/data/repos/signup_repo_imp.dart' as _i71;
 import '../../features/auth/domain/repos/sigin_repo.dart' as _i364;
+import '../../features/auth/domain/repos/signup_repo.dart' as _i459;
 import '../../features/auth/presentation/cubits/sigin_cubit/sigin_cubit.dart'
     as _i895;
 import 'auth_service.dart' as _i184;
@@ -38,6 +40,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i661.DataSourceImp(gh<_i184.AuthService>()));
     gh.factory<_i364.SigninRepo>(
         () => _i739.SigninRepoImp(gh<_i62.DataSourceRepo>()));
+    gh.factory<_i459.SignUpRepo>(
+        () => _i71.SignUpRepoImp(gh<_i62.DataSourceRepo>()));
     gh.factory<_i895.SiginCubit>(
         () => _i895.SiginCubit(gh<_i364.SigninRepo>()));
     return this;

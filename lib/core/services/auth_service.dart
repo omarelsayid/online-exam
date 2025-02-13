@@ -26,4 +26,32 @@ class AuthService {
       return left(ServerFailure.fromDioException(e));
     }
   }
+
+  Future<Either<ServerFailure, Response>> signUpUser({
+    required String username,
+    required String firstName,
+    required String lastName,
+    required String email,
+    required String password,
+    required String rePassword,
+    required String phone,
+  }) async {
+    try {
+      final response = await _dio.post(
+        signUpEndPoint,
+        data: {
+          "username": username,
+          "firstName": firstName,
+          "lastName": lastName,
+          "email": email,
+          "password": password,
+          "rePassword": rePassword,
+          "phone": phone,
+        },
+      );
+      return right(response);
+    } catch (error) {
+      return left(ServerFailure(errorMessage: error.toString()));
+    }
+  }
 }
