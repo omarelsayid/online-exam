@@ -2,7 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:online_exam/features/auth/presentation/cubits/sigin_cubit/sigin_cubit.dart';
+import 'package:online_exam/features/auth/presentation/cubits/signup_cubit/signup_states.dart';
+import 'package:online_exam/features/auth/presentation/views/home.dart';
 
+import '../../../../../../core/helper_function/show_error_snackbar.dart';
 import '../../../../../../core/utils/app_colors.dart';
 import '../../../../../../core/utils/constans.dart';
 import '../../../../../../core/utils/text_styles.dart';
@@ -51,6 +55,10 @@ class _SignupBodyState extends State<SignupBody> {
             rePassword: _rePasswordController.text.trim(),
             phone: _phoneController.text.trim(),
           );
+    } else {
+      setState(() {
+        validateMode = AutovalidateMode.always;
+      });
     }
   }
 
@@ -140,6 +148,7 @@ class _SignupBodyState extends State<SignupBody> {
                       return null;
                     },
                     controller: _passwordController,
+                    obscureText: true,
                     decoration: const InputDecoration(
                       labelText: 'password',
                       hintText: 'Enter your password',
@@ -156,6 +165,7 @@ class _SignupBodyState extends State<SignupBody> {
                       return null;
                     },
                     controller: _rePasswordController,
+                    obscureText: true,
                     decoration: const InputDecoration(
                       labelText: 'Confirm password',
                       hintText: 'Enter your Confirm password',
@@ -179,24 +189,38 @@ class _SignupBodyState extends State<SignupBody> {
               ),
             ),
             SizedBox(height: 64.h),
-
-
-
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: validateMode == AutovalidateMode.disabled
-                    ? primayColor
-                    : secondaryColor,
-              ),
-              onPressed: () {},
-              child: Text(
-                'Sign up',
-                style: AppTextStyles.roboto500_16
-                    .copyWith(color: Colors.white),
-              ),
+            BlocConsumer<SignupCubit, SignupStates>(
+              builder: (context, state) {
+                return ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: validateMode == AutovalidateMode.disabled
+                        ? primayColor
+                        : secondaryColor,
+                  ),
+                  onPressed: () {
+                    _submit();
+                  },
+                  child: state is SignupLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(color: Colors.white),
+                        )
+                      : Text(
+                          'Sign up',
+                          style: AppTextStyles.roboto500_16
+                              .copyWith(color: Colors.white),
+                        ),
+                );
+              },
+              listener: (context, state) {
+                if (state is SignupSuccess) {
+                  ShowSnackbar("Register completed Successfully", context);
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil(Home.routeName, (Route<dynamic> route) => false);
+                } else if (state is SignupFailure) {
+                  ShowErrorSnackbar(state.message, context);
+                }
+              },
             ),
-
-
             SizedBox(height: 16.h),
             AlreadyHaveAccountWidget(),
           ],
