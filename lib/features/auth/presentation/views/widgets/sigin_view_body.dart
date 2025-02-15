@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:online_exam/core/helper_function/show_error_snackbar.dart';
+import 'package:online_exam/core/services/secure_storage_service.dart';
 import 'package:online_exam/core/utils/app_colors.dart';
 import 'package:online_exam/core/utils/constans.dart';
 import 'package:online_exam/core/utils/text_styles.dart';
@@ -25,6 +26,12 @@ class _SiginViewBodyState extends State<SiginViewBody> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   AutovalidateMode validateMode = AutovalidateMode.disabled;
   bool rememberMe = false;
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,19 +120,7 @@ class _SiginViewBodyState extends State<SiginViewBody> {
                         : secondaryColor,
                   ),
                   onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      setState(() {
-                        validateMode = AutovalidateMode.disabled;
-                      });
-                      context.read<SiginCubit>().signInUser(
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                          );
-                    } else {
-                      setState(() {
-                        validateMode = AutovalidateMode.always;
-                      });
-                    }
+                    sigin(context, state);
                   },
                   child: state is SiginLoading
                       ? const Center(
@@ -145,5 +140,40 @@ class _SiginViewBodyState extends State<SiginViewBody> {
         ),
       ),
     );
+  }
+
+  void sigin(BuildContext context, SiginStates state) async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        validateMode = AutovalidateMode.disabled;
+      });
+      await context
+          .read<SiginCubit>()
+          .signInUser(
+            email: _emailController.text,
+            password: _passwordController.text,
+          )
+          .then((value) {
+        _resetForm();
+      });
+
+      if (state is SiginSuccess && rememberMe) {
+        await SecureStorageService.setValue(
+            'user', state.userEntity.toString());
+      }
+    } else {
+      setState(() {
+        validateMode = AutovalidateMode.always;
+      });
+    }
+  }
+
+  void _resetForm() {
+    _formKey.currentState!.reset();
+    _emailController.clear();
+    _passwordController.clear();
+    setState(() {
+      rememberMe = false;
+    });
   }
 }

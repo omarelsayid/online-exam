@@ -20,7 +20,7 @@ class SiginCubit extends Cubit<SiginStates> {
       (failure) {
         emit(SiginFailure(failure.errorMessage));
       },
-      (userEntity) => emit(SiginSuccess()),
+      (userEntity) => emit(SiginSuccess(userEntity)),
     );
   }
 }
