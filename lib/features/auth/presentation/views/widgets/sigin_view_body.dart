@@ -159,7 +159,7 @@ class _SiginViewBodyState extends State<SiginViewBody> {
 
       if (state is SiginSuccess && rememberMe) {
         await SecureStorageService.setValue(
-            'user', state.userEntity.toString());
+            kUserKey, state.userEntity.toString());
       }
     } else {
       setState(() {
