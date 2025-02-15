@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:online_exam/core/utils/app_colors.dart';
 import 'package:online_exam/core/utils/text_styles.dart';
 
 class RememberMeCheckbox extends StatelessWidget {
@@ -17,6 +18,8 @@ class RememberMeCheckbox extends StatelessWidget {
     return Row(
       children: [
         Checkbox(
+          checkColor: Colors.white,
+          activeColor: primayColor,
           value: value,
           onChanged: onChanged,
         ),

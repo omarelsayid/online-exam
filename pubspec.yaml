@@ -13,6 +13,7 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^9.0.0
   flutter_screenutil: ^5.9.3
+  flutter_secure_storage: ^9.2.4
   get_it: null
   injectable: null
   shared_preferences: ^2.5.2
