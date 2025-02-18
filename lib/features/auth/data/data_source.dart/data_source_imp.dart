@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:online_exam/core/errors/failures.dart';
 import 'package:online_exam/core/services/auth_service.dart';

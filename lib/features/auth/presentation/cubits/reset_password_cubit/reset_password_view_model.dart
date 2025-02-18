@@ -8,6 +8,7 @@ import 'package:online_exam/features/auth/presentation/cubits/reset_password_cub
 @injectable
 class ResetPasswordViewModel extends Cubit<ResetPasswordViewModelState> {
   ResetPasswordRepo resetPasswordRepo;
+
   ResetPasswordViewModel(this.resetPasswordRepo)
       : super(ResetPasswordIdleState());
 
@@ -16,7 +17,8 @@ class ResetPasswordViewModel extends Cubit<ResetPasswordViewModelState> {
     emit(ResetPasswordLoadingState());
     Either<ServerFailure, void> response = await resetPasswordRepo
         .resetPassword(email: email, newPassword: newPassword);
-    response.fold((failure) {
+    response.fold(
+            (failure) {
       emit(ResetPasswordErrorState(failure.errorMessage));
     }, (_) {
       emit(ResetPasswordSuccessState());

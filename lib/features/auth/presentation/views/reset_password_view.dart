@@ -48,6 +48,7 @@ class _ResetPasswordView extends State<ResetPasswordView> {
           }
         },
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: buildAppBar(),
           body: Form(
             key: formKey,

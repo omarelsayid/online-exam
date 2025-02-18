@@ -9,6 +9,7 @@ import 'package:online_exam/core/utils/text_styles.dart';
 import 'package:online_exam/features/auth/presentation/cubits/sigin_cubit/sigin_cubit.dart';
 import 'package:online_exam/features/auth/presentation/cubits/sigin_cubit/sigin_states.dart';
 import 'package:online_exam/features/auth/presentation/views/forget_password_view.dart';
+import 'package:online_exam/features/auth/presentation/views/home.dart';
 import 'package:online_exam/features/auth/presentation/views/sigin_up_view.dart';
 import 'package:online_exam/features/auth/presentation/views/widgets/do_not_have_an_account_widget.dart';
 import 'package:online_exam/features/auth/presentation/views/widgets/remember_me_checkout_widget.dart';
@@ -102,11 +103,10 @@ class _SiginViewBodyState extends State<SiginViewBody> {
               listener: (context, state) {
                 if (state is SiginSuccess) {
                   ShowSnackbar('login successfully', context);
-                  Navigator.push(
+                  Navigator.pushNamedAndRemoveUntil(
                     context,
-                    MaterialPageRoute(
-                      builder: (context) => const SiginUpView(),
-                    ),
+                    Home.routeName,
+                    (route) => false,
                   );
                 } else if (state is SiginFailure) {
                   ShowErrorSnackbar(state.message, context);
