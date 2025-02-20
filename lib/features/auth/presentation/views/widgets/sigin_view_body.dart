@@ -5,6 +5,7 @@ import 'package:online_exam/core/helper_function/show_error_snackbar.dart';
 import 'package:online_exam/core/services/secure_storage_service.dart';
 import 'package:online_exam/core/utils/app_colors.dart';
 import 'package:online_exam/core/utils/constans.dart';
+import 'package:online_exam/core/utils/extensions.dart';
 import 'package:online_exam/core/utils/text_styles.dart';
 import 'package:online_exam/features/auth/presentation/cubits/sigin_cubit/sigin_cubit.dart';
 import 'package:online_exam/features/auth/presentation/cubits/sigin_cubit/sigin_states.dart';
@@ -44,7 +45,11 @@ class _SiginViewBodyState extends State<SiginViewBody> {
           children: [
             SizedBox(height: 24.h),
             TextFormField(
+              onChanged: onChange,
               validator: (value) {
+                if (!value!.isValidEmail) {
+                  return 'invalid email format';
+                }
                 if (value == null || value.isEmpty) {
                   return 'Please enter your email';
                 }
@@ -58,7 +63,11 @@ class _SiginViewBodyState extends State<SiginViewBody> {
             ),
             SizedBox(height: 24.h),
             TextFormField(
+              onChanged: onChange,
               validator: (value) {
+                if (!value!.isValidPassword) {
+                  return "invalid password format";
+                }
                 if (value == null || value.isEmpty) {
                   return 'Please enter your password';
                 }
@@ -103,13 +112,12 @@ class _SiginViewBodyState extends State<SiginViewBody> {
                 if (state is SiginSuccess) {
                   ShowErrorSnackbar('login successfully', context);
                   await _saveUserToken(state);
-                  Future.delayed(const Duration(seconds: 1), () {
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      Home.routeName,
-                      (route) => false,
-                    );
-                  });
+
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    Home.routeName,
+                    (route) => false,
+                  );
                 } else if (state is SiginFailure) {
                   ShowErrorSnackbar(state.message, context);
                 }
@@ -142,6 +150,18 @@ class _SiginViewBodyState extends State<SiginViewBody> {
         ),
       ),
     );
+  }
+
+  void onChange(String value) {
+    if (!value.isValidEmail || !value.isValidPassword) {
+      setState(() {
+        validateMode = AutovalidateMode.always;
+      });
+    } else if (value.isValidEmail && value.isValidPassword) {
+      setState(() {
+        validateMode = AutovalidateMode.disabled;
+      });
+    }
   }
 
   void sigin(BuildContext context, SiginStates state) async {
