@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:online_exam/features/auth/presentation/cubits/signup_cubit/signup_states.dart';
-import 'package:online_exam/features/auth/presentation/views/home.dart';
+import 'package:online_exam/main_view.dart';
 import '../../../../../../core/helper_function/show_error_snackbar.dart';
 import '../../../../../../core/utils/app_colors.dart';
 import '../../../../../../core/utils/constans.dart';
@@ -213,7 +213,7 @@ class _SignupBodyState extends State<SignupBody> {
                 if (state is SignupSuccess) {
                   ShowSnackbar("Register completed Successfully", context);
                   Navigator.of(context)
-                      .pushNamedAndRemoveUntil(Home.routeName, (Route<dynamic> route) => false);
+                      .pushNamedAndRemoveUntil(MainView.routeName, (Route<dynamic> route) => false);
                 } else if (state is SignupFailure) {
                   ShowErrorSnackbar(state.message, context);
                 }

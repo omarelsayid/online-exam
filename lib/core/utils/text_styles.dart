@@ -105,4 +105,11 @@ class AppTextStyles {
     fontWeight: FontWeight.w400,
     fontSize: 14.sp,
   );
+
+  // Roboto - Weight 600, Size 14px
+  static TextStyle roboto600_14 = TextStyle(
+    fontFamily: 'Roboto',
+    fontWeight: FontWeight.w600,
+    fontSize: 14.sp,
+  );
 }

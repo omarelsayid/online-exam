@@ -6,6 +6,7 @@ import 'package:online_exam/core/services/custom_bloc_observer.dart';
 import 'package:online_exam/core/services/di_service.dart';
 import 'package:online_exam/core/utils/theming.dart';
 import 'package:online_exam/features/auth/presentation/views/sigin_view.dart';
+import 'package:online_exam/main_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,9 +26,10 @@ class MainApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (_, child) {
           return MaterialApp(
+            home: MainView(),
             debugShowCheckedModeBanner: false,
             onGenerateRoute: onGenerateRoute,
-            initialRoute: SiginView.routeName,
+            // initialRoute: SiginView.routeName,
             theme: themeData,
           );
         });
