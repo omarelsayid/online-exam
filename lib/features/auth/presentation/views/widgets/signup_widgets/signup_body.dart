@@ -2,10 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:online_exam/features/auth/presentation/cubits/sigin_cubit/sigin_cubit.dart';
 import 'package:online_exam/features/auth/presentation/cubits/signup_cubit/signup_states.dart';
 import 'package:online_exam/features/auth/presentation/views/home.dart';
-
 import '../../../../../../core/helper_function/show_error_snackbar.dart';
 import '../../../../../../core/utils/app_colors.dart';
 import '../../../../../../core/utils/constans.dart';

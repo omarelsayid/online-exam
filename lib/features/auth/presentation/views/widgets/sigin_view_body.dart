@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,10 +10,8 @@ import 'package:online_exam/features/auth/presentation/cubits/sigin_cubit/sigin_
 import 'package:online_exam/features/auth/presentation/cubits/sigin_cubit/sigin_states.dart';
 import 'package:online_exam/features/auth/presentation/views/forget_password_view.dart';
 import 'package:online_exam/features/auth/presentation/views/home.dart';
-import 'package:online_exam/features/auth/presentation/views/sigin_up_view.dart';
 import 'package:online_exam/features/auth/presentation/views/widgets/do_not_have_an_account_widget.dart';
 import 'package:online_exam/features/auth/presentation/views/widgets/remember_me_checkout_widget.dart';
-import 'dart:developer';
 
 class SiginViewBody extends StatefulWidget {
   const SiginViewBody({super.key});
@@ -107,11 +103,13 @@ class _SiginViewBodyState extends State<SiginViewBody> {
                 if (state is SiginSuccess) {
                   ShowErrorSnackbar('login successfully', context);
                   await _saveUserToken(state);
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    Home.routeName,
-                    (route) => false,
-                  );
+                  Future.delayed(const Duration(seconds: 1), () {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      Home.routeName,
+                      (route) => false,
+                    );
+                  });
                 } else if (state is SiginFailure) {
                   ShowErrorSnackbar(state.message, context);
                 }
