@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,6 +15,7 @@ import 'package:online_exam/features/auth/presentation/views/home.dart';
 import 'package:online_exam/features/auth/presentation/views/sigin_up_view.dart';
 import 'package:online_exam/features/auth/presentation/views/widgets/do_not_have_an_account_widget.dart';
 import 'package:online_exam/features/auth/presentation/views/widgets/remember_me_checkout_widget.dart';
+import 'dart:developer';
 
 class SiginViewBody extends StatefulWidget {
   const SiginViewBody({super.key});
@@ -100,9 +103,10 @@ class _SiginViewBodyState extends State<SiginViewBody> {
             ),
             SizedBox(height: 64.h),
             BlocConsumer<SiginCubit, SiginStates>(
-              listener: (context, state) {
+              listener: (context, state) async {
                 if (state is SiginSuccess) {
-                  ShowSnackbar('login successfully', context);
+                  ShowErrorSnackbar('login successfully', context);
+                  await _saveUserToken(state);
                   Navigator.pushNamedAndRemoveUntil(
                     context,
                     Home.routeName,
@@ -153,14 +157,9 @@ class _SiginViewBodyState extends State<SiginViewBody> {
             email: _emailController.text,
             password: _passwordController.text,
           )
-          .then((value) {
+          .then((value) async {
         _resetForm();
       });
-
-      if (state is SiginSuccess && rememberMe) {
-        await SecureStorageService.setValue(
-            kUserKey, state.userEntity.toString());
-      }
     } else {
       setState(() {
         validateMode = AutovalidateMode.always;
@@ -168,12 +167,17 @@ class _SiginViewBodyState extends State<SiginViewBody> {
     }
   }
 
+  Future<void> _saveUserToken(SiginSuccess state) async {
+    if (rememberMe) {
+      await SecureStorageService.setValue(
+          kUserTokenKey, state.userEntity.token!);
+      await SecureStorageService.getValue(kUserTokenKey);
+    }
+  }
+
   void _resetForm() {
     _formKey.currentState!.reset();
     _emailController.clear();
     _passwordController.clear();
-    setState(() {
-      rememberMe = false;
-    });
   }
 }
