@@ -72,6 +72,7 @@ class _SignupBodyState extends State<SignupBody> {
           children: [
             SizedBox(height: 24.h),
             TextFormField(
+              onChanged: onChange,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter your user Name';
@@ -89,6 +90,7 @@ class _SignupBodyState extends State<SignupBody> {
               children: [
                 Expanded(
                   child: TextFormField(
+                    onChanged: onChange,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your first Name';
@@ -105,6 +107,7 @@ class _SignupBodyState extends State<SignupBody> {
                 const SizedBox(width: 16),
                 Expanded(
                   child: TextFormField(
+                    onChanged: onChange,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your last name';
@@ -122,6 +125,7 @@ class _SignupBodyState extends State<SignupBody> {
             ),
             SizedBox(height: 24.h),
             TextFormField(
+              onChanged: onChange,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter your Email';
@@ -139,6 +143,7 @@ class _SignupBodyState extends State<SignupBody> {
               children: [
                 Expanded(
                   child: TextFormField(
+                    onChanged: onChange,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your password';
@@ -156,6 +161,7 @@ class _SignupBodyState extends State<SignupBody> {
                 const SizedBox(width: 16),
                 Expanded(
                   child: TextFormField(
+                    onChanged: onChange,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your Confirm password';
@@ -174,6 +180,7 @@ class _SignupBodyState extends State<SignupBody> {
             ),
             SizedBox(height: 24.h),
             TextFormField(
+              onChanged: onChange,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter your phone';
@@ -225,5 +232,17 @@ class _SignupBodyState extends State<SignupBody> {
         ),
       ),
     ));
+  }
+
+  void onChange(String value) {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        validateMode = AutovalidateMode.disabled;
+      });
+    } else {
+      setState(() {
+        validateMode = AutovalidateMode.always;
+      });
+    }
   }
 }

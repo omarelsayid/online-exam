@@ -153,13 +153,13 @@ class _SiginViewBodyState extends State<SiginViewBody> {
   }
 
   void onChange(String value) {
-    if (!value.isValidEmail || !value.isValidPassword) {
-      setState(() {
-        validateMode = AutovalidateMode.always;
-      });
-    } else if (value.isValidEmail && value.isValidPassword) {
+    if (_formKey.currentState!.validate()) {
       setState(() {
         validateMode = AutovalidateMode.disabled;
+      });
+    } else {
+      setState(() {
+        validateMode = AutovalidateMode.always;
       });
     }
   }
