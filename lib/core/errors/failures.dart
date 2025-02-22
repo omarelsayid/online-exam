@@ -20,34 +20,7 @@ class ServerFailure extends Failure {
       case DioExceptionType.badCertificate:
         return ServerFailure(errorMessage: 'Bad SSL certificate error');
       case DioExceptionType.badResponse:
-        if (dioExep.response!.statusCode == 401) {
-          if (dioExep.response!.data['message'] ==
-              "\"email\" must be a valid email") {
-            return ServerFailure(errorMessage: 'not valid email format');
-          } else if (dioExep.response!.data['message'] ==
-              "incorrect email or password") {
-            return ServerFailure(errorMessage: 'incorrect email or password');
-          } else if (dioExep.response!.data['message']
-              .contains('fails to match the required pattern')) {
-            return ServerFailure(errorMessage: 'invalid password format');
-          } else {
-            return ServerFailure(errorMessage: 'somthing went wrong');
-          }
-        } else if (dioExep.response!.statusCode == 404) {
-          if (dioExep.response!.data['message'].contains('no account')) {
-            return ServerFailure(
-                errorMessage: 'There is no account with this email address');
-          }
-          return ServerFailure(errorMessage: 'somthing went wrong');
-        } else if (dioExep.response!.statusCode == 400) {
-          if (dioExep.response!.data['message']
-              .contains('invalid or has expired')) {
-            return ServerFailure(
-                errorMessage: 'Reset code is invalid or has expired');
-          }
-          return ServerFailure(errorMessage: 'somthing went wrong');
-        }
-        return ServerFailure(errorMessage: 'bad reponse from ApiServer');
+        return ServerFailure.fromResponse(dioExep);
       case DioExceptionType.connectionError:
         return ServerFailure(errorMessage: 'There is no internet connection');
       case DioExceptionType.unknown:
@@ -57,5 +30,34 @@ class ServerFailure extends Failure {
         return ServerFailure(
             errorMessage: 'Oops there is an error , Please try later');
     }
+  }
+  factory ServerFailure.fromResponse(DioException dioExep) {
+    if (dioExep.response!.statusCode == 401) {
+      if (dioExep.response!.data['message'] ==
+          "\"email\" must be a valid email") {
+        return ServerFailure(errorMessage: 'not valid email format');
+      } else if (dioExep.response!.data['message'] ==
+          "incorrect email or password") {
+        return ServerFailure(errorMessage: 'incorrect email or password');
+      } else if (dioExep.response!.data['message']
+          .contains('fails to match the required pattern')) {
+        return ServerFailure(errorMessage: 'invalid password format');
+      } else {
+        return ServerFailure(errorMessage: 'somthing went wrong');
+      }
+    } else if (dioExep.response!.statusCode == 404) {
+      if (dioExep.response!.data['message'].contains('no account')) {
+        return ServerFailure(
+            errorMessage: 'There is no account with this email address');
+      }
+      return ServerFailure(errorMessage: 'somthing went wrong');
+    } else if (dioExep.response!.statusCode == 400) {
+      if (dioExep.response!.data['message']
+          .contains('invalid or has expired')) {
+        return ServerFailure(
+            errorMessage: 'Reset code is invalid or has expired');
+      }
+    }
+    return ServerFailure(errorMessage: 'somthing went wrong');
   }
 }
