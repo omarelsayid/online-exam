@@ -1,9 +1,11 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:online_exam/core/utils/app_colors.dart';
 import 'package:online_exam/core/utils/constans.dart';
+import 'package:online_exam/core/utils/text_styles.dart';
 import 'package:online_exam/features/user_profile/domain/entities/user_profile_entity.dart';
+import 'package:online_exam/features/user_profile/presentation/views/chnage_password_view.dart';
+import 'package:online_exam/features/user_profile/presentation/views/widgets/profile_image_widget.dart';
 
 class UserProfileViewBody extends StatefulWidget {
   const UserProfileViewBody({super.key, required this.userProfileEntity});
@@ -24,7 +26,8 @@ class _UserProfileViewBodyState extends State<UserProfileViewBody> {
       TextEditingController(text: widget.userProfileEntity.email);
   late final TextEditingController _phoneController =
       TextEditingController(text: widget.userProfileEntity.phone);
-
+  final TextEditingController _passwordController =
+      TextEditingController(text: '123456');
   @override
   void initState() {
     super.initState();
@@ -46,7 +49,9 @@ class _UserProfileViewBodyState extends State<UserProfileViewBody> {
       padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding.w),
       child: Column(
         children: [
-          SizedBox(height: 20.h),
+          SizedBox(height: 24.h),
+          ProfileImageWidget(),
+          SizedBox(height: 24.h),
           TextFormField(
             controller: _usernameController, // ✅ Assigned controller
             decoration: InputDecoration(labelText: 'User Name'),
@@ -76,8 +81,22 @@ class _UserProfileViewBodyState extends State<UserProfileViewBody> {
           ),
           SizedBox(height: 24.h),
           TextFormField(
+            controller: _passwordController,
+            obscuringCharacter: '★',
+            readOnly: true,
             obscureText: true,
-            decoration: InputDecoration(labelText: 'Password'),
+            decoration: InputDecoration(
+              suffixIcon: TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, ChangePasswordView.routeName);
+                },
+                child: Text(
+                  'change',
+                  style: AppTextStyles.inter400_12.copyWith(color: primayColor),
+                ),
+              ),
+              labelText: 'Password',
+            ),
           ),
           SizedBox(height: 24.h),
           TextFormField(
@@ -89,3 +108,5 @@ class _UserProfileViewBodyState extends State<UserProfileViewBody> {
     );
   }
 }
+
+
