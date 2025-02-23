@@ -47,12 +47,14 @@ class _SiginViewBodyState extends State<SiginViewBody> {
             TextFormField(
               onChanged: onChange,
               validator: (value) {
-                if (!value!.isValidEmail) {
-                  return 'invalid email format';
-                }
                 if (value == null || value.isEmpty) {
                   return 'Please enter your email';
                 }
+
+                if (!value.isValidEmail) {
+                  return 'invalid email format';
+                }
+
                 return null;
               },
               controller: _emailController,
@@ -65,12 +67,14 @@ class _SiginViewBodyState extends State<SiginViewBody> {
             TextFormField(
               onChanged: onChange,
               validator: (value) {
-                if (!value!.isValidPassword) {
-                  return "invalid password format";
-                }
                 if (value == null || value.isEmpty) {
                   return 'Please enter your password';
                 }
+
+                if (!value.isValidPassword) {
+                  return "invalid password format";
+                }
+
                 return null;
               },
               controller: _passwordController,
