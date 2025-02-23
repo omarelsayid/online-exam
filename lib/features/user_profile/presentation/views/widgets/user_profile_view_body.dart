@@ -103,10 +103,15 @@ class _UserProfileViewBodyState extends State<UserProfileViewBody> {
             controller: _phoneController,
             decoration: InputDecoration(labelText: 'Phone Number'),
           ),
+          SizedBox(height: 48.h),
+          ElevatedButton(
+              onPressed: () {},
+              child: Text(
+                'update',
+                style: AppTextStyles.roboto500_16.copyWith(color: Colors.white),
+              ))
         ],
       ),
     );
   }
 }
-
-
