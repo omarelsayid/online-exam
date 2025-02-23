@@ -107,48 +107,52 @@ class _SiginViewBodyState extends State<SiginViewBody> {
               ],
             ),
             SizedBox(height: 64.h),
-            BlocConsumer<SiginCubit, SiginStates>(
-              listener: (context, state) async {
-                if (state is SiginSuccess) {
-                  ShowErrorSnackbar('login successfully', context);
-                  await _saveUserToken(state);
-
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    MainView.routeName,
-                    (route) => false,
-                  );
-                } else if (state is SiginFailure) {
-                  ShowErrorSnackbar(state.message, context);
-                }
-              },
-              builder: (context, state) {
-                return ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: validateMode == AutovalidateMode.disabled
-                        ? primayColor
-                        : secondaryColor,
-                  ),
-                  onPressed: () {
-                    sigin(context, state);
-                  },
-                  child: state is SiginLoading
-                      ? const Center(
-                          child: CircularProgressIndicator(color: Colors.white),
-                        )
-                      : Text(
-                          'Login',
-                          style: AppTextStyles.roboto500_16
-                              .copyWith(color: Colors.white),
-                        ),
-                );
-              },
-            ),
+            ElevatedButtonBlocConsumer(),
             SizedBox(height: 16.h),
             DoNotHaveAnAccountWidget(),
           ],
         ),
       ),
+    );
+  }
+
+  BlocConsumer<SiginCubit, SiginStates> ElevatedButtonBlocConsumer() {
+    return BlocConsumer<SiginCubit, SiginStates>(
+      listener: (context, state) async {
+        if (state is SiginSuccess) {
+          ShowSnackbar('login successfully', context);
+          await _saveUserToken(state);
+
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            MainView.routeName,
+            (route) => false,
+          );
+        } else if (state is SiginFailure) {
+          ShowErrorSnackbar(state.message, context);
+        }
+      },
+      builder: (context, state) {
+        return ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: validateMode == AutovalidateMode.disabled
+                ? primayColor
+                : secondaryColor,
+          ),
+          onPressed: () {
+            sigin(context, state);
+          },
+          child: state is SiginLoading
+              ? const Center(
+                  child: CircularProgressIndicator(color: Colors.white),
+                )
+              : Text(
+                  'Login',
+                  style:
+                      AppTextStyles.roboto500_16.copyWith(color: Colors.white),
+                ),
+        );
+      },
     );
   }
 

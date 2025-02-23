@@ -3,10 +3,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:online_exam/core/utils/app_colors.dart';
 import 'package:online_exam/core/utils/app_images.dart';
 import 'package:online_exam/core/utils/text_styles.dart';
+import 'package:online_exam/core/widgets/active_icon_widget.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
- static const routeName = 'mainView';
+  static const routeName = 'mainView';
   @override
   State<MainView> createState() => _MainViewState();
 }
@@ -25,8 +26,8 @@ class _MainViewState extends State<MainView> {
     return Scaffold(
       body: _screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        selectedLabelStyle:
-            AppTextStyles.roboto600_14.copyWith(color: primayColor),
+        backgroundColor: Color(0xffedeff3),
+        selectedLabelStyle: AppTextStyles.roboto600_14,
         onTap: (value) {
           setState(() {
             currentIndex = value;
@@ -36,15 +37,18 @@ class _MainViewState extends State<MainView> {
         items: [
           BottomNavigationBarItem(
               icon: SvgPicture.asset(Assets.imagesInActiveExploreIcon),
-              activeIcon: SvgPicture.asset(Assets.imagesActiveExploreIcon),
+              activeIcon: ActiveIconWidget(
+                  child: SvgPicture.asset(Assets.imagesActiveExploreIcon)),
               label: 'Explore'),
           BottomNavigationBarItem(
               icon: SvgPicture.asset(Assets.imagesInActiveResultIcon),
-              activeIcon: SvgPicture.asset(Assets.imagesActiveIconResults),
+              activeIcon: ActiveIconWidget(
+                  child: SvgPicture.asset(Assets.imagesActiveIconResults)),
               label: 'Results'),
           BottomNavigationBarItem(
               icon: SvgPicture.asset(Assets.imagesInActiveProfileIcon),
-              activeIcon: SvgPicture.asset(Assets.imagesActiveProfileIcon),
+              activeIcon: ActiveIconWidget(
+                  child: SvgPicture.asset(Assets.imagesActiveProfileIcon)),
               label: 'Results'),
         ],
       ),
