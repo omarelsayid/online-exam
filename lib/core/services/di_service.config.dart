@@ -47,6 +47,8 @@ import '../../features/user_profile/data/repo/get_user_profile_repo_imp.dart'
     as _i601;
 import '../../features/user_profile/domain/repo/get_user_profile_repo.dart'
     as _i972;
+import '../../features/user_profile/presentation/cubits/user_profile_cubit/user_profile_cubit.dart'
+    as _i1061;
 import 'auth_service.dart' as _i184;
 import 'internet_connection_check.dart' as _i746;
 
@@ -71,6 +73,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i661.DataSourceImp(gh<_i184.AuthService>()));
     gh.factory<_i972.GetUserProfileRepo>(() =>
         _i601.GetUserProfileRepoImp(gh<_i185.UserProfileDataSourceRepo>()));
+    gh.factory<_i1061.UserProfileCubit>(
+        () => _i1061.UserProfileCubit(gh<_i972.GetUserProfileRepo>()));
     gh.factory<_i558.ForgetPasswordRepo>(() => _i599.ForgetPasswordRepoImp(
           gh<_i62.DataSourceRepo>(),
           gh<_i973.InternetConnectionChecker>(),

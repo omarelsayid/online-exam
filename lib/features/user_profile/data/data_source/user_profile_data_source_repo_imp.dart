@@ -11,7 +11,8 @@ class UserPofileDataSourceRepoImp implements UserProfileDataSourceRepo {
   @override
   Future<UserProfileModel> getUserInfo() async {
     Response response = await authService.getUserInfo();
-    UserProfileModel userInfoModel = UserProfileModel.fromJson(response.data);
-    return userInfoModel;
+    UserProfileModel userProfileModel =
+        UserProfileModel.fromJson(response.data);
+    return userProfileModel;
   }
 }

@@ -4,6 +4,7 @@ import 'package:online_exam/core/utils/app_colors.dart';
 import 'package:online_exam/core/utils/app_images.dart';
 import 'package:online_exam/core/utils/text_styles.dart';
 import 'package:online_exam/core/widgets/active_icon_widget.dart';
+import 'package:online_exam/features/user_profile/presentation/views/user_profile_view.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
@@ -16,7 +17,7 @@ class _MainViewState extends State<MainView> {
   final List<Widget> _screens = [
     Center(child: Text('Explore')),
     Center(child: Text('Results')),
-    Center(child: Text('Profile')),
+    UserProfileView(),
   ];
 
   int currentIndex = 0;

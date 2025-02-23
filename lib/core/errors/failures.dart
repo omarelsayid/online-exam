@@ -42,6 +42,8 @@ class ServerFailure extends Failure {
       } else if (dioExep.response!.data['message']
           .contains('fails to match the required pattern')) {
         return ServerFailure(errorMessage: 'invalid password format');
+      } else if (dioExep.response!.data['message'].contains('login again')) {
+        return ServerFailure(errorMessage: 'login again');
       } else {
         return ServerFailure(errorMessage: 'somthing went wrong');
       }

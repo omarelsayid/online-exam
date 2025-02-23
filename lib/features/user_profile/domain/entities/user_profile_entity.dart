@@ -8,16 +8,22 @@ class UserProfileEntity {
   final String? role;
   final bool? isVerified;
   final DateTime? createdAt;
+  final String? passwordResetCode;
+  final DateTime? passwordResetExpires;
+  final bool? resetCodeVerified;
 
-  UserProfileEntity({
-    required this.id,
-    required this.username,
-    required this.firstName,
-    required this.lastName,
-    required this.email,
-    required this.phone,
-    required this.role,
-    required this.isVerified,
-    required this.createdAt,
+  const UserProfileEntity({
+    this.id,
+    this.username,
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.phone,
+    this.role,
+    this.isVerified,
+    this.createdAt,
+    this.passwordResetCode,
+    this.passwordResetExpires,
+    this.resetCodeVerified,
   });
 }
