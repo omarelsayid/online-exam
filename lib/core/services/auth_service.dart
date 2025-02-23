@@ -86,9 +86,9 @@ class AuthService {
     Response response = await _dio.get(
       getUserProfileEndPoint,
       options: Options(
-          // headers: {
-          //   'token': token,
-          // },
+          headers: {
+            'token': token,
+          },
           ),
     );
     return response;

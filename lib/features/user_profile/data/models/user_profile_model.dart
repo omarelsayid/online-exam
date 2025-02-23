@@ -15,34 +15,35 @@ class UserProfileModel {
   final bool? resetCodeVerified;
 
   UserProfileModel({
-     this.id,
-     this.username,
-     this.firstName,
-     this.lastName,
-     this.email,
-     this.phone,
-     this.role,
-     this.isVerified,
-     this.createdAt,
-     this.passwordResetCode,
-     this.passwordResetExpires,
-     this.resetCodeVerified,
+    this.id,
+    this.username,
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.phone,
+    this.role,
+    this.isVerified,
+    this.createdAt,
+    this.passwordResetCode,
+    this.passwordResetExpires,
+    this.resetCodeVerified,
   });
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) {
     return UserProfileModel(
-      id: json['_id'],
-      username: json['username'],
-      firstName: json['firstName'],
-      lastName: json['lastName'],
-      email: json['email'],
-      phone: json['phone'],
-      role: json['role'],
-      isVerified: json['isVerified'],
-      // createdAt: DateTime.parse(json['createdAt']),
-      // passwordResetCode: json['passwordResetCode'],
-      // passwordResetExpires: DateTime.parse(json['passwordResetExpires']),
-      // resetCodeVerified: json['resetCodeVerified'],
+      id: json['user']['_id'],
+      username: json['user']['username'],
+      firstName: json['user']['firstName'],
+      lastName: json['user']['lastName'],
+      email: json['user']['email'],
+      phone: json['user']['phone'],
+      role: json['user']['role'],
+      isVerified: json['user']['isVerified'],
+      createdAt: DateTime.parse(json['user']['createdAt']),
+      passwordResetCode: json['user']['passwordResetCode'],
+      passwordResetExpires:
+          DateTime.parse(json['user']['passwordResetExpires']),
+      resetCodeVerified: json['user']['resetCodeVerified'],
     );
   }
 

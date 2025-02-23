@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:online_exam/core/services/auth_service.dart';
@@ -11,6 +12,7 @@ class UserPofileDataSourceRepoImp implements UserProfileDataSourceRepo {
   @override
   Future<UserProfileModel> getUserInfo() async {
     Response response = await authService.getUserInfo();
+    log(response.data.toString());
     UserProfileModel userProfileModel =
         UserProfileModel.fromJson(response.data);
     return userProfileModel;
