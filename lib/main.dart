@@ -29,8 +29,8 @@ class MainApp extends StatelessWidget {
             // home: MainView(),
             debugShowCheckedModeBanner: false,
             onGenerateRoute: onGenerateRoute,
-            // initialRoute: SiginView.routeName,
-            initialRoute: MainView.routeName,
+            initialRoute: SiginView.routeName,
+            // initialRoute: MainView.routeName,
 
             theme: themeData,
           );

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:online_exam/core/utils/extensions.dart';
 import 'package:online_exam/features/auth/presentation/cubits/signup_cubit/signup_states.dart';
 import 'package:online_exam/main_view.dart';
 import '../../../../../../core/helper_function/show_error_snackbar.dart';
@@ -72,6 +73,7 @@ class _SignupBodyState extends State<SignupBody> {
           children: [
             SizedBox(height: 24.h),
             TextFormField(
+              onChanged: onChange,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter your user Name';
@@ -89,6 +91,7 @@ class _SignupBodyState extends State<SignupBody> {
               children: [
                 Expanded(
                   child: TextFormField(
+                    onChanged: onChange,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your first Name';
@@ -105,6 +108,7 @@ class _SignupBodyState extends State<SignupBody> {
                 const SizedBox(width: 16),
                 Expanded(
                   child: TextFormField(
+                    onChanged: onChange,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your last name';
@@ -122,10 +126,15 @@ class _SignupBodyState extends State<SignupBody> {
             ),
             SizedBox(height: 24.h),
             TextFormField(
+              onChanged: onChange,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter your Email';
                 }
+                if (!value.isValidEmail) {
+                  return "invalid email format";
+                }
+
                 return null;
               },
               controller: _emailController,
@@ -139,9 +148,13 @@ class _SignupBodyState extends State<SignupBody> {
               children: [
                 Expanded(
                   child: TextFormField(
+                    onChanged: onChange,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your password';
+                      }
+                      if (!value.isValidPassword) {
+                        return "invalid password format";
                       }
                       return null;
                     },
@@ -156,9 +169,12 @@ class _SignupBodyState extends State<SignupBody> {
                 const SizedBox(width: 16),
                 Expanded(
                   child: TextFormField(
+                    onChanged: onChange,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your Confirm password';
+                      } else if (value != _passwordController.text) {
+                        return "passwords do not match";
                       }
                       return null;
                     },
@@ -212,8 +228,8 @@ class _SignupBodyState extends State<SignupBody> {
               listener: (context, state) {
                 if (state is SignupSuccess) {
                   ShowSnackbar("Register completed Successfully", context);
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil(MainView.routeName, (Route<dynamic> route) => false);
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      MainView.routeName, (Route<dynamic> route) => false);
                 } else if (state is SignupFailure) {
                   ShowErrorSnackbar(state.message, context);
                 }
@@ -225,5 +241,17 @@ class _SignupBodyState extends State<SignupBody> {
         ),
       ),
     ));
+  }
+
+  void onChange(String value) {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        validateMode = AutovalidateMode.disabled;
+      });
+    } else {
+      setState(() {
+        validateMode = AutovalidateMode.always;
+      });
+    }
   }
 }
