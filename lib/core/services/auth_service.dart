@@ -2,6 +2,8 @@ import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:online_exam/core/services/secure_storage_service.dart';
+import 'package:online_exam/core/utils/constans.dart';
 import 'package:online_exam/core/utils/end_points.dart';
 import 'package:online_exam/core/errors/failures.dart';
 
@@ -76,6 +78,19 @@ class AuthService {
       "email": email,
       "newPassword": newPassword,
     });
+    return response;
+  }
+
+  Future<Response> getUserInfo() async {
+    String? token = await SecureStorageService.getValue(kUserTokenKey);
+    Response response = await _dio.get(
+      getUserProfileEndPoint,
+      options: Options(
+        headers: {
+          'token': token,
+        },
+      ),
+    );
     return response;
   }
 }
