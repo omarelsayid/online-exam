@@ -26,8 +26,10 @@ class _MainViewState extends State<MainView> {
     return Scaffold(
       body: _screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: primayColor,
         backgroundColor: Color(0xffedeff3),
         selectedLabelStyle: AppTextStyles.roboto600_14,
+        unselectedLabelStyle: AppTextStyles.roboto400_12,
         onTap: (value) {
           setState(() {
             currentIndex = value;
