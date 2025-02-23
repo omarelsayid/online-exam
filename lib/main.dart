@@ -26,10 +26,10 @@ class MainApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (_, child) {
           return MaterialApp(
-            home: MainView(),
+            // home: MainView(),
             debugShowCheckedModeBanner: false,
             onGenerateRoute: onGenerateRoute,
-            // initialRoute: SiginView.routeName,
+            initialRoute: SiginView.routeName,
             theme: themeData,
           );
         });
