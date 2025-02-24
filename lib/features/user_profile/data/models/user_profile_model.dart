@@ -40,10 +40,10 @@ class UserProfileModel {
       role: json['user']['role'],
       isVerified: json['user']['isVerified'],
       createdAt: DateTime.parse(json['user']['createdAt']),
-      passwordResetCode: json['user']['passwordResetCode'],
-      passwordResetExpires:
-          DateTime.parse(json['user']['passwordResetExpires']),
-      resetCodeVerified: json['user']['resetCodeVerified'],
+      // passwordResetCode: json['user']['passwordResetCode'],
+      // passwordResetExpires:
+      //     DateTime.parse(json['user']['passwordResetExpires']),
+      // resetCodeVerified: json['user']['resetCodeVerified'],
     );
   }
 
@@ -58,9 +58,9 @@ class UserProfileModel {
       'role': role,
       'isVerified': isVerified,
       'createdAt': createdAt!.toIso8601String(),
-      'passwordResetCode': passwordResetCode,
-      'passwordResetExpires': passwordResetExpires!.toIso8601String(),
-      'resetCodeVerified': resetCodeVerified,
+      // 'passwordResetCode': passwordResetCode,
+      // 'passwordResetExpires': passwordResetExpires!.toIso8601String(),
+      // 'resetCodeVerified': resetCodeVerified,
     };
   }
 
@@ -74,8 +74,8 @@ class UserProfileModel {
         role: role,
         isVerified: isVerified,
         createdAt: createdAt,
-        passwordResetCode: passwordResetCode,
-        passwordResetExpires: passwordResetExpires,
-        resetCodeVerified: resetCodeVerified,
+        // passwordResetCode: passwordResetCode,
+        // passwordResetExpires: passwordResetExpires,
+        // resetCodeVerified: resetCodeVerified,
       );
 }
