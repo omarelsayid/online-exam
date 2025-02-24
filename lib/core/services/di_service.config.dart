@@ -13,6 +13,8 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:internet_connection_checker/internet_connection_checker.dart'
     as _i973;
+import 'package:online_exam/features/user_profile/domain/repo/update_profile_repo.dart';
+import 'package:online_exam/features/user_profile/presentation/cubits/update_profile_cubit/update_profile_cubit.dart';
 
 import '../../features/auth/data/data_source.dart/data_source_imp.dart'
     as _i661;
@@ -45,8 +47,12 @@ import '../../features/user_profile/data/data_source/user_profile_data_source_re
     as _i852;
 import '../../features/user_profile/data/repo/get_user_profile_repo_imp.dart'
     as _i601;
+import '../../features/user_profile/data/repo/update_profile_repo_imp.dart'
+    as _i471;
 import '../../features/user_profile/domain/repo/get_user_profile_repo.dart'
     as _i972;
+import '../../features/user_profile/domain/repo/update_profile_repo.dart'
+    as _i970;
 import '../../features/user_profile/presentation/cubits/user_profile_cubit/user_profile_cubit.dart'
     as _i1061;
 import 'auth_service.dart' as _i184;
@@ -69,8 +75,14 @@ extension GetItInjectableX on _i174.GetIt {
         () => dataModule.getInternetConnectionCheck());
     gh.factory<_i185.UserProfileDataSourceRepo>(
         () => _i852.UserPofileDataSourceRepoImp(gh<_i184.AuthService>()));
+    gh.factory<UpdateProfileCubit>(
+        () => UpdateProfileCubit(gh<UpdateProfileRepo>()));
     gh.factory<_i62.DataSourceRepo>(
         () => _i661.DataSourceImp(gh<_i184.AuthService>()));
+    gh.factory<_i970.UpdateProfileRepo>(() => _i471.UpdateProfileRepoImp(
+          gh<_i185.UserProfileDataSourceRepo>(),
+          gh<_i973.InternetConnectionChecker>(),
+        ));
     gh.factory<_i972.GetUserProfileRepo>(() =>
         _i601.GetUserProfileRepoImp(gh<_i185.UserProfileDataSourceRepo>()));
     gh.factory<_i1061.UserProfileCubit>(

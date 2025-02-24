@@ -41,10 +41,11 @@ class UserPofileDataSourceRepoImp implements UserProfileDataSourceRepo {
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return Right(null);
       } else {
+        log(response.data['message'].toString());
         return left(ServerFailure(errorMessage: response.data['message']));
       }
     } on DioException catch (e) {
-      // log(ServerFailure.fromDioException(e).errorMessage);
+      log(e.toString());
       return left(ServerFailure.fromDioException(e));
     }
   }

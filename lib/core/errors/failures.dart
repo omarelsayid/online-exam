@@ -44,6 +44,9 @@ class ServerFailure extends Failure {
         return ServerFailure(errorMessage: 'invalid password format');
       } else if (dioExep.response!.data['message'].contains('login again')) {
         return ServerFailure(errorMessage: 'login again');
+      } else if (dioExep.response!.data['message']
+          .contains('token not provided')) {
+        return ServerFailure(errorMessage: 'token not provided');
       } else {
         return ServerFailure(errorMessage: 'somthing went wrong');
       }

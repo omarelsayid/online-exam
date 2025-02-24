@@ -101,13 +101,23 @@ class AuthService {
     String? email,
     String? phone,
   }) async {
-    Response response = await _dio.put(updateProfileEndPoint, data: {
-      "username": username,
-      "firstName": firstName,
-      "lastName": lastName,
-      "email": email,
-      "phone": phone,
-    });
+    String? token = await SecureStorageService.getValue(kUserTokenKey);
+
+    Response response = await _dio.put(
+      updateProfileEndPoint,
+      data: {
+        "username": username,
+        "firstName": firstName,
+        "lastName": lastName,
+        "email": email,
+        "phone": phone,
+      },
+      options: Options(
+        headers: {
+          'token': token,
+        },
+      ),
+    );
     return response;
   }
 }
