@@ -1,6 +1,8 @@
 import 'dart:developer';
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:online_exam/core/errors/failures.dart';
 import 'package:online_exam/core/services/auth_service.dart';
 import 'package:online_exam/features/user_profile/data/data_source/user_profile_data_source_repo.dart';
 import 'package:online_exam/features/user_profile/data/models/user_profile_model.dart';
@@ -16,5 +18,34 @@ class UserPofileDataSourceRepoImp implements UserProfileDataSourceRepo {
     UserProfileModel userProfileModel =
         UserProfileModel.fromJson(response.data);
     return userProfileModel;
+  }
+
+  @override
+  Future<Either<ServerFailure, void>> updateProfile({
+    String? username,
+    String? firstName,
+    String? lastName,
+    String? email,
+    String? phone,
+  }) async {
+    try {
+      Response response = await authService.updateProfile(
+        username: username,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: phone,
+      );
+      UserProfileModel userProfileModel =
+          UserProfileModel.fromJson(response.data);
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        return Right(null);
+      } else {
+        return left(ServerFailure(errorMessage: response.data['message']));
+      }
+    } on DioException catch (e) {
+      // log(ServerFailure.fromDioException(e).errorMessage);
+      return left(ServerFailure.fromDioException(e));
+    }
   }
 }

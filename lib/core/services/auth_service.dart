@@ -86,11 +86,28 @@ class AuthService {
     Response response = await _dio.get(
       getUserProfileEndPoint,
       options: Options(
-          headers: {
-            'token': token,
-          },
-          ),
+        headers: {
+          'token': token,
+        },
+      ),
     );
+    return response;
+  }
+
+  Future<Response> updateProfile({
+    String? username,
+    String? firstName,
+    String? lastName,
+    String? email,
+    String? phone,
+  }) async {
+    Response response = await _dio.put(updateProfileEndPoint, data: {
+      "username": username,
+      "firstName": firstName,
+      "lastName": lastName,
+      "email": email,
+      "phone": phone,
+    });
     return response;
   }
 }

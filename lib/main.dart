@@ -35,7 +35,8 @@ class MainApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             onGenerateRoute: onGenerateRoute,
             // initialRoute: SiginView.routeName,
-            initialRoute: token != null ? MainView.routeName :  SiginView.routeName,
+            initialRoute:
+                token != null ? MainView.routeName : SiginView.routeName,
 
             theme: themeData,
           );
