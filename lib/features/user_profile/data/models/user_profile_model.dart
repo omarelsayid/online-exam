@@ -40,10 +40,12 @@ class UserProfileModel {
       role: json['user']['role'],
       isVerified: json['user']['isVerified'],
       createdAt: DateTime.parse(json['user']['createdAt']),
-      passwordResetCode: json['user']['passwordResetCode'],
-      passwordResetExpires:
-          DateTime.parse(json['user']['passwordResetExpires']),
-      resetCodeVerified: json['user']['resetCodeVerified'],
+      passwordResetCode: json['user']['passwordResetCode'] ?? '',
+      passwordResetExpires: json['user']['passwordResetExpires'] != null &&
+              json['user']['passwordResetExpires'].toString().isNotEmpty
+          ? DateTime.tryParse(json['user']['passwordResetExpires'])
+          : null,
+      resetCodeVerified: json['user']['resetCodeVerified'] ?? false,
     );
   }
 
@@ -74,8 +76,8 @@ class UserProfileModel {
         role: role,
         isVerified: isVerified,
         createdAt: createdAt,
-        passwordResetCode: passwordResetCode,
-        passwordResetExpires: passwordResetExpires,
-        resetCodeVerified: resetCodeVerified,
+        // passwordResetCode: passwordResetCode,
+        // passwordResetExpires: passwordResetExpires,
+        // resetCodeVerified: resetCodeVerified,
       );
 }

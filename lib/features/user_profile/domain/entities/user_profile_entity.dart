@@ -8,9 +8,9 @@ class UserProfileEntity {
   final String? role;
   final bool? isVerified;
   final DateTime? createdAt;
-  final String? passwordResetCode;
-  final DateTime? passwordResetExpires;
-  final bool? resetCodeVerified;
+  // final String? passwordResetCode;
+  // final DateTime? passwordResetExpires;
+  // final bool? resetCodeVerified;
 
   const UserProfileEntity({
     this.id,
@@ -22,8 +22,8 @@ class UserProfileEntity {
     this.role,
     this.isVerified,
     this.createdAt,
-    this.passwordResetCode,
-    this.passwordResetExpires,
-    this.resetCodeVerified,
+    // this.passwordResetCode,
+    // this.passwordResetExpires,
+    // this.resetCodeVerified,
   });
 }

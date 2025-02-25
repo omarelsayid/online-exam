@@ -52,7 +52,7 @@ class _MainViewState extends State<MainView> {
               icon: SvgPicture.asset(Assets.imagesInActiveProfileIcon),
               activeIcon: ActiveIconWidget(
                   child: SvgPicture.asset(Assets.imagesActiveProfileIcon)),
-              label: 'Results'),
+              label: 'Profile'),
         ],
       ),
     );
