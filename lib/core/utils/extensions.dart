@@ -12,4 +12,9 @@ extension StringExtensions on String {
         .hasMatch(this);
     return passwordValid;
   }
+
+  bool get isValidPhone {
+    final bool phoneValid = RegExp(r"^01[0125][0-9]{8}$").hasMatch(this);
+    return phoneValid;
+  }
 }
