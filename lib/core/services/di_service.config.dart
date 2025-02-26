@@ -39,15 +39,12 @@ import '../../features/auth/presentation/cubits/signup_cubit/signup_cubit.dart'
     as _i112;
 import '../../features/auth/presentation/cubits/verify_code_cubit/verify_reset_code_view_model.dart'
     as _i16;
-import '../../features/user_profile/data/data_source/change_password_data_source.dart'
-    as _i65;
-import '../../features/user_profile/data/data_source/logout_data_source.dart'
-    as _i434;
 import '../../features/user_profile/data/data_source/user_profile_data_source_repo.dart'
     as _i185;
 import '../../features/user_profile/data/data_source/user_profile_data_source_repo_imp.dart'
     as _i852;
-import '../../features/user_profile/data/repo/chage_password_repo_imp.dart';
+import '../../features/user_profile/data/repo/chage_password_repo_imp.dart'
+    as _i626;
 import '../../features/user_profile/data/repo/get_user_profile_repo_imp.dart'
     as _i601;
 import '../../features/user_profile/data/repo/logout_repo_imp.dart' as _i552;
@@ -84,22 +81,22 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i184.AuthService>(() => _i184.AuthService());
     gh.singleton<_i973.InternetConnectionChecker>(
         () => dataModule.getInternetConnectionCheck());
-    gh.factory<_i65.ChangePasswordDataSource>(
-        () => _i65.ChangePasswordDataSourceImp(gh<_i184.AuthService>()));
-    gh.factory<_i434.LogoutDataSource>(
-        () => _i434.LogoutDataSourceImp(gh<_i184.AuthService>()));
+    gh.factory<_i185.LogoutDataSource>(
+        () => _i852.LogoutDataSourceImp(gh<_i184.AuthService>()));
+    gh.factory<_i185.ChangePasswordDataSource>(
+        () => _i852.ChangePasswordDataSourceImp(gh<_i184.AuthService>()));
     gh.factory<_i185.UserProfileDataSourceRepo>(
         () => _i852.UserPofileDataSourceRepoImp(gh<_i184.AuthService>()));
     gh.factory<_i485.LogoutRepo>(
-        () => _i552.LogoutRepoImp(dataSource: gh<_i434.LogoutDataSource>()));
+        () => _i552.LogoutRepoImp(dataSource: gh<_i185.LogoutDataSource>()));
     gh.factory<_i62.DataSourceRepo>(
         () => _i661.DataSourceImp(gh<_i184.AuthService>()));
-    gh.factory<_i970.UpdateProfileRepo>(() => _i471.UpdateProfileRepoImp(
-          gh<_i185.UserProfileDataSourceRepo>(),
+    gh.factory<_i822.ChangePasswordRepo>(() => _i626.ChangePasswordRepoImp(
+          gh<_i185.ChangePasswordDataSource>(),
           gh<_i973.InternetConnectionChecker>(),
         ));
-    gh.factory<_i822.ChangePasswordRepo>(() => ChangePasswordRepoImp(
-          gh<_i65.ChangePasswordDataSource>(),
+    gh.factory<_i970.UpdateProfileRepo>(() => _i471.UpdateProfileRepoImp(
+          gh<_i185.UserProfileDataSourceRepo>(),
           gh<_i973.InternetConnectionChecker>(),
         ));
     gh.factory<_i972.GetUserProfileRepo>(() =>

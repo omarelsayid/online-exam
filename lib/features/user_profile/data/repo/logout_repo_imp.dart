@@ -6,7 +6,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../core/errors/failures.dart';
 import '../../domain/repo/logout_repo.dart';
-import '../data_source/logout_data_source.dart';
+import '../data_source/user_profile_data_source_repo.dart';
 
 @Injectable(as: LogoutRepo)
 

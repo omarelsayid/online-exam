@@ -4,7 +4,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:online_exam/core/errors/failures.dart';
 
 import '../../domain/repo/change_password_repo.dart';
-import '../data_source/change_password_data_source.dart';
+import '../data_source/user_profile_data_source_repo.dart';
 
 @Injectable(as: ChangePasswordRepo)
 class ChangePasswordRepoImp implements ChangePasswordRepo {
