@@ -42,7 +42,7 @@ class UserPofileDataSourceRepoImp implements UserProfileDataSourceRepo {
         return Right(null);
       } else {
         log(response.data['message'].toString());
-        return left(ServerFailure(errorMessage: response.data['message']));
+        return left(ServerFailure.fromDioException(response.data['message']));
       }
     } on DioException catch (e) {
       log(e.toString());
