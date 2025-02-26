@@ -69,7 +69,7 @@ class _UserProfileViewBodyState extends State<UserProfileViewBody> {
               SizedBox(height: 24.h),
               TextFormField(
                 autovalidateMode: validateMode,
-                controller: _usernameController, // ✅ Assigned controller
+                controller: _usernameController, 
                 decoration: InputDecoration(labelText: 'User Name'),
                 validator: (value) {
                   if (value == null || value.isEmpty == true) {
