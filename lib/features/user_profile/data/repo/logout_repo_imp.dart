@@ -11,7 +11,7 @@ import '../data_source/user_profile_data_source_repo.dart';
 @Injectable(as: LogoutRepo)
 
 class LogoutRepoImp implements LogoutRepo {
-  final LogoutDataSource dataSource;
+  final UserProfileDataSourceRepo dataSource;
 
   LogoutRepoImp({required this.dataSource});
 

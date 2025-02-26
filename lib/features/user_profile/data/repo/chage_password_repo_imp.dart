@@ -8,13 +8,11 @@ import '../data_source/user_profile_data_source_repo.dart';
 
 @Injectable(as: ChangePasswordRepo)
 class ChangePasswordRepoImp implements ChangePasswordRepo {
-  final ChangePasswordDataSource changePasswordDataSource;
+  final UserProfileDataSourceRepo userProfileDataSourceRepo;
   final InternetConnectionChecker internetConnectionChecker;
 
   ChangePasswordRepoImp(
-      this.changePasswordDataSource,this.internetConnectionChecker
-
-      );
+      this.userProfileDataSourceRepo, this.internetConnectionChecker);
 
   @override
   Future<Either<ServerFailure, void>> changePassword({
@@ -26,7 +24,7 @@ class ChangePasswordRepoImp implements ChangePasswordRepo {
 
     print("=============Connection Status: $isConnected");
     if (isConnected) {
-      return changePasswordDataSource.changePassword(
+      return userProfileDataSourceRepo.changePassword(
           oldPassword: oldPassword,
           newPassword: newPassword,
           reNewPassword: reNewPassword);

@@ -81,20 +81,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i184.AuthService>(() => _i184.AuthService());
     gh.singleton<_i973.InternetConnectionChecker>(
         () => dataModule.getInternetConnectionCheck());
-    gh.factory<_i185.LogoutDataSource>(
-        () => _i852.LogoutDataSourceImp(gh<_i184.AuthService>()));
-    gh.factory<_i185.ChangePasswordDataSource>(
-        () => _i852.ChangePasswordDataSourceImp(gh<_i184.AuthService>()));
     gh.factory<_i185.UserProfileDataSourceRepo>(
         () => _i852.UserPofileDataSourceRepoImp(gh<_i184.AuthService>()));
-    gh.factory<_i485.LogoutRepo>(
-        () => _i552.LogoutRepoImp(dataSource: gh<_i185.LogoutDataSource>()));
-    gh.factory<_i62.DataSourceRepo>(
-        () => _i661.DataSourceImp(gh<_i184.AuthService>()));
     gh.factory<_i822.ChangePasswordRepo>(() => _i626.ChangePasswordRepoImp(
-          gh<_i185.ChangePasswordDataSource>(),
+          gh<_i185.UserProfileDataSourceRepo>(),
           gh<_i973.InternetConnectionChecker>(),
         ));
+    gh.factory<_i62.DataSourceRepo>(
+        () => _i661.DataSourceImp(gh<_i184.AuthService>()));
     gh.factory<_i970.UpdateProfileRepo>(() => _i471.UpdateProfileRepoImp(
           gh<_i185.UserProfileDataSourceRepo>(),
           gh<_i973.InternetConnectionChecker>(),
@@ -117,6 +111,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i62.DataSourceRepo>(),
           gh<_i973.InternetConnectionChecker>(),
         ));
+    gh.factory<_i485.LogoutRepo>(() =>
+        _i552.LogoutRepoImp(dataSource: gh<_i185.UserProfileDataSourceRepo>()));
     gh.factory<_i375.VerifyResetCodeRepo>(() => _i898.VerifyResetCodeRepoImp(
           gh<_i62.DataSourceRepo>(),
           gh<_i973.InternetConnectionChecker>(),

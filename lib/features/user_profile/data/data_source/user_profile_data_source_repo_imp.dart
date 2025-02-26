@@ -49,44 +49,28 @@ class UserPofileDataSourceRepoImp implements UserProfileDataSourceRepo {
       return left(ServerFailure.fromDioException(e));
     }
   }
-}
-
-@Injectable(as: ChangePasswordDataSource)
-class ChangePasswordDataSourceImp implements ChangePasswordDataSource {
-  AuthService authService;
-
-  ChangePasswordDataSourceImp(this.authService);
 
   @override
-  Future<Either<ServerFailure, void>> changePassword({required String oldPassword, required String newPassword, required String reNewPassword}) async{
-    try{
-      Response response =await authService.changePassword(oldPassword: oldPassword,
+  Future<Either<ServerFailure, void>> changePassword(
+      {required String oldPassword,
+      required String newPassword,
+      required String reNewPassword}) async {
+    try {
+      Response response = await authService.changePassword(
+          oldPassword: oldPassword,
           newPassword: newPassword,
           reNewPassword: reNewPassword);
-      if(response.statusCode! >= 200 && response.statusCode! < 300){
-
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
         return Right(null);
-      }
-      else{
+      } else {
         return left(ServerFailure(errorMessage: response.data['message']));
       }
-    }on DioException catch(e){
+    } on DioException catch (e) {
       print("=======================Error ======");
       print(e.toString());
       return left(ServerFailure.fromDioException(e));
     }
   }
-
-
-
-}
-
-
-@Injectable(as: LogoutDataSource)
-class LogoutDataSourceImp implements LogoutDataSource {
-  AuthService authService;
-
-  LogoutDataSourceImp(this.authService);
 
   @override
   Future<Either<ServerFailure, void>> logout() async {
@@ -102,4 +86,3 @@ class LogoutDataSourceImp implements LogoutDataSource {
     }
   }
 }
-
