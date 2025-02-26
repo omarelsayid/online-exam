@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:online_exam/features/auth/presentation/views/forget_password_view.dart';
 import 'package:online_exam/features/auth/presentation/views/sigin_up_view.dart';
 import 'package:online_exam/features/auth/presentation/views/sigin_view.dart';
-import 'package:online_exam/features/user_profile/presentation/views/chnage_password_view.dart';
+import 'package:online_exam/features/user_profile/presentation/views/change_password_view.dart';
 import 'package:online_exam/main_view.dart';
 
 import '../../features/auth/presentation/views/reset_password_view.dart';

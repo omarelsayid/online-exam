@@ -6,3 +6,5 @@ const String resetPasswordEndPoint = 'auth/resetPassword';
 const String signUpEndPoint = "auth/signup";
 const String getUserProfileEndPoint = "auth/profileData";
 const String updateProfileEndPoint = "auth/editProfile";
+const String changePasswordEndPoint = "auth/changePassword";
+const String logoutEndPoint = "auth/logout";

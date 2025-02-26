@@ -13,8 +13,6 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:internet_connection_checker/internet_connection_checker.dart'
     as _i973;
-import 'package:online_exam/features/user_profile/domain/repo/update_profile_repo.dart';
-import 'package:online_exam/features/user_profile/presentation/cubits/update_profile_cubit/update_profile_cubit.dart';
 
 import '../../features/auth/data/data_source.dart/data_source_imp.dart'
     as _i661;
@@ -45,14 +43,24 @@ import '../../features/user_profile/data/data_source/user_profile_data_source_re
     as _i185;
 import '../../features/user_profile/data/data_source/user_profile_data_source_repo_imp.dart'
     as _i852;
+import '../../features/user_profile/data/repo/chage_password_repo_imp.dart'
+    as _i626;
 import '../../features/user_profile/data/repo/get_user_profile_repo_imp.dart'
     as _i601;
+import '../../features/user_profile/data/repo/logout_repo_imp.dart' as _i552;
 import '../../features/user_profile/data/repo/update_profile_repo_imp.dart'
     as _i471;
+import '../../features/user_profile/domain/repo/change_password_repo.dart'
+    as _i822;
 import '../../features/user_profile/domain/repo/get_user_profile_repo.dart'
     as _i972;
+import '../../features/user_profile/domain/repo/logout_repo.dart' as _i485;
 import '../../features/user_profile/domain/repo/update_profile_repo.dart'
     as _i970;
+import '../../features/user_profile/presentation/cubits/change_password_cubit/change_password_cubit.dart'
+    as _i82;
+import '../../features/user_profile/presentation/cubits/update_profile_cubit/update_profile_cubit.dart'
+    as _i90;
 import '../../features/user_profile/presentation/cubits/user_profile_cubit/user_profile_cubit.dart'
     as _i1061;
 import 'auth_service.dart' as _i184;
@@ -73,12 +81,20 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i184.AuthService>(() => _i184.AuthService());
     gh.singleton<_i973.InternetConnectionChecker>(
         () => dataModule.getInternetConnectionCheck());
+    gh.factory<_i185.LogoutDataSource>(
+        () => _i852.LogoutDataSourceImp(gh<_i184.AuthService>()));
+    gh.factory<_i185.ChangePasswordDataSource>(
+        () => _i852.ChangePasswordDataSourceImp(gh<_i184.AuthService>()));
     gh.factory<_i185.UserProfileDataSourceRepo>(
         () => _i852.UserPofileDataSourceRepoImp(gh<_i184.AuthService>()));
-    gh.factory<UpdateProfileCubit>(
-        () => UpdateProfileCubit(gh<UpdateProfileRepo>()));
+    gh.factory<_i485.LogoutRepo>(
+        () => _i552.LogoutRepoImp(dataSource: gh<_i185.LogoutDataSource>()));
     gh.factory<_i62.DataSourceRepo>(
         () => _i661.DataSourceImp(gh<_i184.AuthService>()));
+    gh.factory<_i822.ChangePasswordRepo>(() => _i626.ChangePasswordRepoImp(
+          gh<_i185.ChangePasswordDataSource>(),
+          gh<_i973.InternetConnectionChecker>(),
+        ));
     gh.factory<_i970.UpdateProfileRepo>(() => _i471.UpdateProfileRepoImp(
           gh<_i185.UserProfileDataSourceRepo>(),
           gh<_i973.InternetConnectionChecker>(),
@@ -105,6 +121,12 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i62.DataSourceRepo>(),
           gh<_i973.InternetConnectionChecker>(),
         ));
+    gh.factory<_i82.ChangePasswordCubit>(() => _i82.ChangePasswordCubit(
+          gh<_i822.ChangePasswordRepo>(),
+          gh<_i485.LogoutRepo>(),
+        ));
+    gh.factory<_i90.UpdateProfileCubit>(
+        () => _i90.UpdateProfileCubit(gh<_i970.UpdateProfileRepo>()));
     gh.factory<_i16.VerifyResetCodeViewModel>(
         () => _i16.VerifyResetCodeViewModel(gh<_i375.VerifyResetCodeRepo>()));
     gh.factory<_i895.SiginCubit>(

@@ -120,4 +120,39 @@ class AuthService {
     );
     return response;
   }
+
+  Future<Response> changePassword({
+    required String oldPassword,
+    required String newPassword,
+    required String reNewPassword,
+  }) async {
+    String? token = await SecureStorageService.getValue(kUserTokenKey);
+
+    Response response = await _dio.patch(
+      changePasswordEndPoint,
+      data: {
+        "oldPassword": oldPassword,
+        "password": newPassword,
+        "rePassword": reNewPassword,
+      },
+      options: Options(
+        headers: {
+          'token': token,
+        },
+      ),
+    );
+    return response;
+  }
+
+
+
+  Future<Response>logout()async{
+    String? token = await SecureStorageService.getValue(kUserTokenKey);
+    Response response = await _dio.get(logoutEndPoint,options: Options(
+      headers: {
+        'token': token,
+      },
+    ));
+    return response;
+  }
 }

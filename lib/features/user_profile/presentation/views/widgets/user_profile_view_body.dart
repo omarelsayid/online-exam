@@ -10,7 +10,7 @@ import 'package:online_exam/core/utils/text_styles.dart';
 import 'package:online_exam/features/user_profile/domain/entities/user_profile_entity.dart';
 import 'package:online_exam/features/user_profile/presentation/cubits/update_profile_cubit/update_profile_cubit.dart';
 import 'package:online_exam/features/user_profile/presentation/cubits/update_profile_cubit/update_profile_state.dart';
-import 'package:online_exam/features/user_profile/presentation/views/chnage_password_view.dart';
+import 'package:online_exam/features/user_profile/presentation/views/change_password_view.dart';
 import 'package:online_exam/features/user_profile/presentation/views/widgets/profile_image_widget.dart';
 
 class UserProfileViewBody extends StatefulWidget {

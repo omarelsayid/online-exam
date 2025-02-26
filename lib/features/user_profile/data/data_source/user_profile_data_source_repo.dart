@@ -13,3 +13,17 @@ abstract class UserProfileDataSourceRepo {
     String? phone,
   });
 }
+
+abstract class ChangePasswordDataSource {
+
+
+  Future<Either<ServerFailure, void>> changePassword({
+    required String oldPassword,
+    required String newPassword,
+    required String reNewPassword,
+  });
+}
+
+abstract class LogoutDataSource {
+  Future<Either<ServerFailure, void>> logout();
+}
