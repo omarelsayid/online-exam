@@ -14,6 +14,10 @@ class Assets {
   /// assets/images/active_profile_icon.svg
   static const String imagesActiveProfileIcon = "assets/images/active_profile_icon.svg";
 
+  /// Assets for imagesCamera
+  /// assets/images/Camera.svg
+  static const String imagesCamera = "assets/images/Camera.svg";
+
   /// Assets for imagesInActiveExploreIcon
   /// assets/images/in_active_explore_icon.svg
   static const String imagesInActiveExploreIcon = "assets/images/in_active_explore_icon.svg";
@@ -25,5 +29,9 @@ class Assets {
   /// Assets for imagesInActiveResultIcon
   /// assets/images/in_active_result_icon.svg
   static const String imagesInActiveResultIcon = "assets/images/in_active_result_icon.svg";
+
+  /// Assets for imagesProfilePhoto
+  /// assets/images/profile_photo.svg
+  static const String imagesProfilePhoto = "assets/images/profile_photo.svg";
 }
 

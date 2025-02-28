@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:online_exam/core/utils/extensions.dart';
 import 'package:online_exam/features/auth/presentation/cubits/signup_cubit/signup_states.dart';
 import 'package:online_exam/main_view.dart';
 import '../../../../../../core/helper_function/show_error_snackbar.dart';
@@ -130,6 +131,10 @@ class _SignupBodyState extends State<SignupBody> {
                 if (value == null || value.isEmpty) {
                   return 'Please enter your Email';
                 }
+                if (!value.isValidEmail) {
+                  return "invalid email format";
+                }
+
                 return null;
               },
               controller: _emailController,
@@ -148,6 +153,9 @@ class _SignupBodyState extends State<SignupBody> {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your password';
                       }
+                      if (!value.isValidPassword) {
+                        return "invalid password format";
+                      }
                       return null;
                     },
                     controller: _passwordController,
@@ -165,6 +173,8 @@ class _SignupBodyState extends State<SignupBody> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your Confirm password';
+                      } else if (value != _passwordController.text) {
+                        return "passwords do not match";
                       }
                       return null;
                     },
@@ -219,8 +229,8 @@ class _SignupBodyState extends State<SignupBody> {
               listener: (context, state) {
                 if (state is SignupSuccess) {
                   ShowSnackbar("Register completed Successfully", context);
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil(MainView.routeName, (Route<dynamic> route) => false);
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      MainView.routeName, (Route<dynamic> route) => false);
                 } else if (state is SignupFailure) {
                   ShowErrorSnackbar(state.message, context);
                 }

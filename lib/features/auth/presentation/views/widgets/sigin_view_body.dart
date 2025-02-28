@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -47,12 +49,14 @@ class _SiginViewBodyState extends State<SiginViewBody> {
             TextFormField(
               onChanged: onChange,
               validator: (value) {
-                if (!value!.isValidEmail) {
-                  return 'invalid email format';
-                }
                 if (value == null || value.isEmpty) {
                   return 'Please enter your email';
                 }
+
+                if (!value.isValidEmail) {
+                  return 'invalid email format';
+                }
+
                 return null;
               },
               controller: _emailController,
@@ -65,12 +69,14 @@ class _SiginViewBodyState extends State<SiginViewBody> {
             TextFormField(
               onChanged: onChange,
               validator: (value) {
-                if (!value!.isValidPassword) {
-                  return "invalid password format";
-                }
                 if (value == null || value.isEmpty) {
                   return 'Please enter your password';
                 }
+
+                if (!value.isValidPassword) {
+                  return "invalid password format";
+                }
+
                 return null;
               },
               controller: _passwordController,
@@ -107,48 +113,52 @@ class _SiginViewBodyState extends State<SiginViewBody> {
               ],
             ),
             SizedBox(height: 64.h),
-            BlocConsumer<SiginCubit, SiginStates>(
-              listener: (context, state) async {
-                if (state is SiginSuccess) {
-                  ShowErrorSnackbar('login successfully', context);
-                  await _saveUserToken(state);
-
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    MainView.routeName,
-                    (route) => false,
-                  );
-                } else if (state is SiginFailure) {
-                  ShowErrorSnackbar(state.message, context);
-                }
-              },
-              builder: (context, state) {
-                return ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: validateMode == AutovalidateMode.disabled
-                        ? primayColor
-                        : secondaryColor,
-                  ),
-                  onPressed: () {
-                    sigin(context, state);
-                  },
-                  child: state is SiginLoading
-                      ? const Center(
-                          child: CircularProgressIndicator(color: Colors.white),
-                        )
-                      : Text(
-                          'Login',
-                          style: AppTextStyles.roboto500_16
-                              .copyWith(color: Colors.white),
-                        ),
-                );
-              },
-            ),
+            ElevatedButtonBlocConsumer(),
             SizedBox(height: 16.h),
             DoNotHaveAnAccountWidget(),
           ],
         ),
       ),
+    );
+  }
+
+  BlocConsumer<SiginCubit, SiginStates> ElevatedButtonBlocConsumer() {
+    return BlocConsumer<SiginCubit, SiginStates>(
+      listener: (context, state) async {
+        if (state is SiginSuccess) {
+          ShowSnackbar('login successfully', context);
+          await _saveUserToken(state);
+
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            MainView.routeName,
+            (route) => false,
+          );
+        } else if (state is SiginFailure) {
+          ShowErrorSnackbar(state.message, context);
+        }
+      },
+      builder: (context, state) {
+        return ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: validateMode == AutovalidateMode.disabled
+                ? primayColor
+                : secondaryColor,
+          ),
+          onPressed: () {
+            sigin(context, state);
+          },
+          child: state is SiginLoading
+              ? const Center(
+                  child: CircularProgressIndicator(color: Colors.white),
+                )
+              : Text(
+                  'Login',
+                  style:
+                      AppTextStyles.roboto500_16.copyWith(color: Colors.white),
+                ),
+        );
+      },
     );
   }
 
@@ -189,7 +199,8 @@ class _SiginViewBodyState extends State<SiginViewBody> {
     if (rememberMe) {
       await SecureStorageService.setValue(
           kUserTokenKey, state.userEntity.token!);
-      await SecureStorageService.getValue(kUserTokenKey);
+      String? token = await SecureStorageService.getValue(kUserTokenKey);
+      log(token!);
     }
   }
 
