@@ -8,3 +8,6 @@ const String getUserProfileEndPoint = "auth/profileData";
 const String updateProfileEndPoint = "auth/editProfile";
 const String changePasswordEndPoint = "auth/changePassword";
 const String logoutEndPoint = "auth/logout";
+const String subjectsEndPoint = "subjects";
+const String examsEndPoint = "exams";
+const String examOnIdEndPoint = "exams";
