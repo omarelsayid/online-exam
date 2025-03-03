@@ -58,7 +58,7 @@ class Exam {
     return map;
   }
 
-  ExamEntity toEntity() {
+  ExamEntity toExamEntity() {
     return ExamEntity(
       id: id,
       title: title,
