@@ -1,3 +1,5 @@
+import 'package:online_exam/features/exam/domain/entites/exam_entity.dart';
+
 class Exam {
   String? id;
   String? title;
@@ -54,5 +56,14 @@ class Exam {
     map['active'] = active;
     map['createdAt'] = createdAt;
     return map;
+  }
+
+  ExamEntity toEntity() {
+    return ExamEntity(
+      id: id,
+      title: title,
+      duration: duration,
+      numberOfQuestions: numberOfQuestions,
+    );
   }
 }

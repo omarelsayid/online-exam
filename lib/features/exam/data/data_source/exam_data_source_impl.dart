@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
 import 'package:online_exam/core/errors/failures.dart';
 import 'package:online_exam/core/services/exam_service.dart';
 import 'package:online_exam/features/exam/data/data_source/exam_data_source.dart';
@@ -11,6 +12,7 @@ import 'package:online_exam/features/exam/data/models/ExamsResponse.dart';
 import 'package:online_exam/features/exam/data/models/Subjects.dart';
 import 'package:online_exam/features/exam/data/models/SubjectsResponse.dart';
 
+@Injectable(as: ExamDataSource)
 class ExamDataSourceImpl extends ExamDataSource {
   ExamService examService;
   ExamDataSourceImpl(this.examService);
