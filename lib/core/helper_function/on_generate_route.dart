@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:online_exam/features/auth/presentation/views/forget_password_view.dart';
 import 'package:online_exam/features/auth/presentation/views/sigin_up_view.dart';
 import 'package:online_exam/features/auth/presentation/views/sigin_view.dart';
+import 'package:online_exam/features/exam/presentation/views/exams_on_subjects_view.dart';
 import 'package:online_exam/features/user_profile/presentation/views/change_password_view.dart';
 import 'package:online_exam/main_view.dart';
 
@@ -27,6 +28,9 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case ResetPasswordView.routeName:
       return MaterialPageRoute(
           builder: (_) => const ResetPasswordView(), settings: settings);
+    case ExamsOnSubjectsView.routeName:
+      return MaterialPageRoute(
+          builder: (_) => const ExamsOnSubjectsView(), settings: settings);
     default:
       return MaterialPageRoute(
           builder: (_) =>

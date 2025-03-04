@@ -7,6 +7,7 @@ import 'package:online_exam/core/utils/app_colors.dart';
 import 'package:online_exam/core/utils/text_styles.dart';
 import 'package:online_exam/features/exam/presentation/cubits/explore_subjects_cubit/explore_subjects_cubit.dart';
 import 'package:online_exam/features/exam/presentation/cubits/explore_subjects_cubit/explore_subjects_state.dart';
+import 'package:online_exam/features/exam/presentation/views/exams_on_subjects_view.dart';
 
 class ExploreSubjectsView extends StatefulWidget {
   const ExploreSubjectsView({super.key});
@@ -31,7 +32,7 @@ class _ExploreSubjectsViewState extends State<ExploreSubjectsView> {
       create: (context) => exploreSubjectsCubit,
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 16.0, right: 16, top: 24.0),
+          padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -107,24 +108,12 @@ class _ExploreSubjectsViewState extends State<ExploreSubjectsView> {
       child: ListView.separated(
         itemCount: state.subjects.length,
         itemBuilder: (context, index) {
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 8),
-            height: MediaQuery.of(context).size.height * .1,
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 8,
-                  spreadRadius: 0,
-                  offset: Offset(0, 3),
-                ),
-              ],
-            ),
-            child: buildSubjectRow(state, index, context),
-          );
+          return InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, ExamsOnSubjectsView.routeName,
+                    arguments: state.subjects[index]);
+              },
+              child: buildSubjectsContainer(context, state, index));
         },
         separatorBuilder: (context, index) {
           return const SizedBox(
@@ -132,6 +121,28 @@ class _ExploreSubjectsViewState extends State<ExploreSubjectsView> {
           );
         },
       ),
+    );
+  }
+
+  Container buildSubjectsContainer(
+      BuildContext context, ExploreSubjectsSuccessState state, int index) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 8),
+      height: MediaQuery.of(context).size.height * .1,
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 8,
+            spreadRadius: 0,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: buildSubjectRow(state, index, context),
     );
   }
 

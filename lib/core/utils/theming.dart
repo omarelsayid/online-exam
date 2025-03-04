@@ -4,6 +4,7 @@ import 'package:online_exam/core/utils/app_colors.dart';
 import 'package:online_exam/core/utils/text_styles.dart';
 
 ThemeData themeData = ThemeData(
+    scaffoldBackgroundColor: Colors.white,
     inputDecorationTheme: InputDecorationTheme(
       floatingLabelBehavior: FloatingLabelBehavior.always,
       hintStyle: AppTextStyles.roboto400_14.copyWith(
