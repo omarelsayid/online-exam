@@ -8,6 +8,7 @@ import 'package:online_exam/features/exam/data/models/Subjects.dart';
 import 'package:online_exam/features/exam/domain/entites/exam_entity.dart';
 import 'package:online_exam/features/exam/presentation/cubits/get_all_exams_on_subjects_cubit/get_all_exams_on_subjects_cubit.dart';
 import 'package:online_exam/features/exam/presentation/cubits/get_all_exams_on_subjects_cubit/get_all_exams_on_subjects_state.dart';
+import 'package:online_exam/features/exam/presentation/views/exam_details_view.dart';
 
 class ExamsOnSubjectsView extends StatefulWidget {
   const ExamsOnSubjectsView({super.key});
@@ -85,24 +86,30 @@ class _ExamsOnSubjectsViewState extends State<ExamsOnSubjectsView> {
     );
   }
 
-  Container buildExamContainer(ExamEntity exam) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8),
-      height: MediaQuery.of(context).size.height * .1,
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 8,
-            spreadRadius: 0,
-            offset: Offset(0, 3),
-          ),
-        ],
+  Widget buildExamContainer(ExamEntity exam) {
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, ExamDetailsView.routeName,
+            arguments: exam.id);
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 8),
+        height: MediaQuery.of(context).size.height * .1,
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 8,
+              spreadRadius: 0,
+              offset: Offset(0, 3),
+            ),
+          ],
+        ),
+        child: buildExamRow(exam),
       ),
-      child: buildExamRow(exam),
     );
   }
 
