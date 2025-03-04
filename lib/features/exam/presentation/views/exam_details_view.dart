@@ -4,6 +4,7 @@ import 'package:online_exam/core/helper_function/show_error_snackbar.dart';
 import 'package:online_exam/core/services/di_service.dart';
 import 'package:online_exam/core/utils/app_colors.dart';
 import 'package:online_exam/core/utils/text_styles.dart';
+import 'package:online_exam/features/exam/domain/entites/exam_entity.dart';
 import 'package:online_exam/features/exam/presentation/cubits/get_exam_on_id_cubit/get_exam_on_id_cubit.dart';
 import 'package:online_exam/features/exam/presentation/cubits/get_exam_on_id_cubit/get_exam_on_id_state.dart';
 
@@ -49,7 +50,7 @@ class _ExamDetailsViewState extends State<ExamDetailsView> {
                 child: CircularProgressIndicator(),
               );
             } else if (state is GetExamOnIdSuccessState) {
-              return buildExamDetails(state);
+              return buildExamDetails(state.exam);
             } else {
               return Container();
             }
@@ -59,7 +60,7 @@ class _ExamDetailsViewState extends State<ExamDetailsView> {
     );
   }
 
-  Padding buildExamDetails(GetExamOnIdSuccessState state) {
+  Padding buildExamDetails(ExamEntity exam) {
     return Padding(
       padding: const EdgeInsets.only(left: 24.0, right: 24.0, top: 24.0),
       child: Column(
@@ -77,7 +78,7 @@ class _ExamDetailsViewState extends State<ExamDetailsView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      state.exam.title ?? '',
+                      exam.title ?? '',
                       style:
                           AppTextStyles.inter600_20.copyWith(color: blackColor),
                     ),
@@ -85,7 +86,7 @@ class _ExamDetailsViewState extends State<ExamDetailsView> {
                 ),
               ),
               Text(
-                '${state.exam.duration} Minutes',
+                '${exam.duration} Minutes',
                 style: AppTextStyles.inter400_16.copyWith(color: primayColor),
               ),
             ],
@@ -94,7 +95,7 @@ class _ExamDetailsViewState extends State<ExamDetailsView> {
             height: 20,
           ),
           Text(
-            '${state.exam.numberOfQuestions ?? ''} Questions',
+            '${exam.numberOfQuestions ?? ''} Questions',
             style: AppTextStyles.inter400_16.copyWith(color: greyColor),
           ),
           const SizedBox(
