@@ -49,4 +49,13 @@ class ExamService {
     );
     return response;
   }
+
+  Future<Response> getAllQuestionsOnExam({required String examId}) async {
+    String? token = await SecureStorageService.getValue(kUserTokenKey);
+    Response response = await _dio.get('$allQuestionsEndPoint?exam=$examId',
+        options: Options(headers: {
+          'token': token,
+        }));
+    return response;
+  }
 }

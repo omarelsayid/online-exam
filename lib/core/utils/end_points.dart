@@ -11,3 +11,4 @@ const String logoutEndPoint = "auth/logout";
 const String subjectsEndPoint = "subjects";
 const String examsEndPoint = "exams";
 const String examOnIdEndPoint = "exams";
+const String allQuestionsEndPoint = "questions";

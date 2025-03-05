@@ -8,4 +8,7 @@ abstract class ExamDataSource {
   Future<Either<ServerFailure, List<Exam>>> getAllExamsOnSubject(
       {required String subjectId});
   Future<Either<ServerFailure, Exam>> getExamOnId({required String examId});
+
+
+
 }
