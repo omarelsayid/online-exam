@@ -44,10 +44,14 @@ import '../../features/exam/data/data_source/exam_data_source_impl.dart'
     as _i160;
 import '../../features/exam/data/repo/get_all_exam_on_subject_repo_impl.dart'
     as _i482;
+import '../../features/exam/data/repo/get_all_qusetions_on_exam_repo_imp.dart'
+    as _i870;
 import '../../features/exam/data/repo/get_all_subjects_repo_impl.dart' as _i679;
 import '../../features/exam/data/repo/get_exam_on_id_repo_impl.dart' as _i61;
 import '../../features/exam/domain/repo/get_all_exams_on_subject_repo.dart'
     as _i979;
+import '../../features/exam/domain/repo/get_all_qusetions_on_exam_repo.dart'
+    as _i1072;
 import '../../features/exam/domain/repo/get_all_subjects_repo.dart' as _i155;
 import '../../features/exam/domain/repo/get_exam_on_id_repo.dart' as _i423;
 import '../../features/exam/presentation/cubits/explore_subjects_cubit/explore_subjects_cubit.dart'
@@ -147,6 +151,9 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i62.DataSourceRepo>(),
           gh<_i973.InternetConnectionChecker>(),
         ));
+    gh.factory<_i1072.GetAllQusetionsOnExam>(() =>
+        _i870.GetAllQusetionsOnExamRepoImp(
+            examDataSource: gh<_i831.ExamDataSource>()));
     gh.factory<_i155.GetAllSubjectsRepo>(() => _i679.GetAllSubjectsRepoImpl(
           gh<_i831.ExamDataSource>(),
           gh<_i973.InternetConnectionChecker>(),
