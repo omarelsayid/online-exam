@@ -1,4 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/widgets.dart';
+import 'package:online_exam/features/auth/presentation/views/sigin_view.dart';
+import 'package:online_exam/main.dart';
 
 abstract class Failure {
   final String errorMessage;
@@ -32,37 +35,47 @@ class ServerFailure extends Failure {
     }
   }
   factory ServerFailure.fromResponse(DioException dioExep) {
-    if (dioExep.response!.statusCode == 401) {
-      if (dioExep.response!.data['message'] ==
-          "\"email\" must be a valid email") {
-        return ServerFailure(errorMessage: 'not valid email format');
-      } else if (dioExep.response!.data['message'] ==
-          "incorrect email or password") {
-        return ServerFailure(errorMessage: 'incorrect email or password');
-      } else if (dioExep.response!.data['message']
-          .contains('fails to match the required pattern')) {
-        return ServerFailure(errorMessage: 'invalid password format');
-      } else if (dioExep.response!.data['message'].contains('invalid token')) {
-        return ServerFailure(errorMessage: 'login again');
-      } else if (dioExep.response!.data['message']
-          .contains('token not provided')) {
-        return ServerFailure(errorMessage: 'token not provided');
-      } else {
-        return ServerFailure(errorMessage: 'somthing went wrong');
-      }
-    } else if (dioExep.response!.statusCode == 404) {
-      if (dioExep.response!.data['message'].contains('no account')) {
-        return ServerFailure(
-            errorMessage: 'There is no account with this email address');
-      }
-      return ServerFailure(errorMessage: 'somthing went wrong');
-    } else if (dioExep.response!.statusCode == 400) {
-      if (dioExep.response!.data['message']
-          .contains('invalid or has expired')) {
-        return ServerFailure(
-            errorMessage: 'Reset code is invalid or has expired');
-      }
+    final response = dioExep.response;
+    if (response == null) {
+      return ServerFailure(errorMessage: 'Something went wrong');
     }
-    return ServerFailure(errorMessage: 'somthing went wrong');
+
+    final statusCode = response.statusCode;
+    final message = response.data['message'];
+
+    switch (statusCode) {
+      case 401:
+        switch (message) {
+          case '"email" must be a valid email':
+            return ServerFailure(errorMessage: 'Not a valid email format');
+          case 'incorrect email or password':
+            return ServerFailure(errorMessage: 'Incorrect email or password');
+          default:
+            if (message.contains('fails to match the required pattern')) {
+              return ServerFailure(errorMessage: 'Invalid password format');
+            } else if (message.contains('invalid token')) {
+              Navigator.pushNamed(navigatorKey.currentContext!, SiginView.routeName);
+              return ServerFailure(errorMessage: 'Login again');
+            } else if (message.contains('token not provided')) {
+              return ServerFailure(errorMessage: 'Token not provided');
+            }
+            return ServerFailure(errorMessage: 'Something went wrong');
+        }
+
+      case 404:
+        if (message.contains('no account')) {
+          return ServerFailure(errorMessage: 'There is no account with this email address');
+        }
+        return ServerFailure(errorMessage: 'Something went wrong');
+
+      case 400:
+        if (message.contains('invalid or has expired')) {
+          return ServerFailure(errorMessage: 'Reset code is invalid or has expired');
+        }
+        return ServerFailure(errorMessage: 'Something went wrong');
+
+      default:
+        return ServerFailure(errorMessage: 'Something went wrong');
+    }
   }
 }

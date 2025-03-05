@@ -9,7 +9,7 @@ import 'package:online_exam/core/utils/constans.dart';
 import 'package:online_exam/core/utils/theming.dart';
 import 'package:online_exam/features/auth/presentation/views/sigin_view.dart';
 import 'package:online_exam/main_view.dart';
-
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>(); // for navigation 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = CustomBlocObserver();
@@ -32,6 +32,7 @@ class MainApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (_, child) {
           return MaterialApp(
+            navigatorKey: navigatorKey,
             debugShowCheckedModeBanner: false,
             onGenerateRoute: onGenerateRoute,
             // initialRoute: SiginView.routeName,
