@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
+import 'package:online_exam/core/services/navigation_service.dart';
 import 'package:online_exam/features/auth/presentation/views/sigin_view.dart';
-import 'package:online_exam/main.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
 abstract class Failure {
@@ -65,8 +65,6 @@ class ServerFailure extends Failure {
                   title: 'Login again',
                   desc: ' with Remember me',
                   dismissOnTouchOutside: false,
-                  btnCancelOnPress: () {},
-                  btnOkOnPress: () {},
                 ).show();
               });
 
