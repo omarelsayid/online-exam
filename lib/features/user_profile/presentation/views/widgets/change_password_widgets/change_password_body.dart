@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:online_exam/features/user_profile/presentation/cubits/change_password_cubit/change_password_cubit.dart';
-import '../../../../../../core/helper_function/show_error_snackbar.dart';
+import '../../../../../../core/helper_function/show_snackbar.dart';
 import '../../../../../../core/utils/constans.dart';
 import '../../../../../../core/utils/text_styles.dart';
 import '../../../../../../core/widgets/custom_app_bar.dart';
