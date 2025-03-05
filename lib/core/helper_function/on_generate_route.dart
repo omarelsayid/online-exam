@@ -3,6 +3,7 @@ import 'package:online_exam/features/auth/presentation/views/forget_password_vie
 import 'package:online_exam/features/auth/presentation/views/sigin_up_view.dart';
 import 'package:online_exam/features/auth/presentation/views/sigin_view.dart';
 import 'package:online_exam/features/exam/presentation/views/exam_details_view.dart';
+import 'package:online_exam/features/exam/presentation/views/exam_qustions_view.dart';
 import 'package:online_exam/features/exam/presentation/views/exams_on_subjects_view.dart';
 import 'package:online_exam/features/user_profile/presentation/views/change_password_view.dart';
 import 'package:online_exam/main_view.dart';
@@ -14,27 +15,39 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
   switch (settings.name) {
     case SiginView.routeName:
       return MaterialPageRoute(builder: (_) => const SiginView());
+
     case MainView.routeName:
       return MaterialPageRoute(builder: (_) => const MainView());
+
     case SiginUpView.routeName:
       return MaterialPageRoute(builder: (_) => const SiginUpView());
+
     case ForgetPasswordView.routeName:
       return MaterialPageRoute(builder: (_) => const ForgetPasswordView());
 
+    case ExamQustionsView.routeName:
+      return MaterialPageRoute(
+          builder: (_) => const ExamQustionsView(), settings: settings);
+
     case ChangePasswordView.routeName:
       return MaterialPageRoute(builder: (_) => const ChangePasswordView());
+
     case VerifyResetCodeView.routeName:
       return MaterialPageRoute(
           builder: (_) => const VerifyResetCodeView(), settings: settings);
+
     case ResetPasswordView.routeName:
       return MaterialPageRoute(
           builder: (_) => const ResetPasswordView(), settings: settings);
+
     case ExamsOnSubjectsView.routeName:
       return MaterialPageRoute(
           builder: (_) => const ExamsOnSubjectsView(), settings: settings);
+
     case ExamDetailsView.routeName:
       return MaterialPageRoute(
           builder: (_) => const ExamDetailsView(), settings: settings);
+
     default:
       return MaterialPageRoute(
           builder: (_) =>

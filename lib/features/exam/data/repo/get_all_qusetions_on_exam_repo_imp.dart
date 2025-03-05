@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
@@ -19,6 +21,7 @@ class GetAllQusetionsOnExamRepoImp implements GetAllQusetionsOnExamRepo {
     try {
       QusetionsResponse questionsResponse =
           await examDataSource.getAllQuestionsOnExam(examId: examId);
+      log(questionsResponse.questions[1].question.toString() + '++++++++');
       return right(questionsResponse);
     } on DioException catch (e) {
       return left(ServerFailure.fromDioException(e));

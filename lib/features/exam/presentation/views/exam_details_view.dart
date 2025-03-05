@@ -7,6 +7,7 @@ import 'package:online_exam/core/utils/text_styles.dart';
 import 'package:online_exam/features/exam/domain/entites/exam_entity.dart';
 import 'package:online_exam/features/exam/presentation/cubits/get_exam_on_id_cubit/get_exam_on_id_cubit.dart';
 import 'package:online_exam/features/exam/presentation/cubits/get_exam_on_id_cubit/get_exam_on_id_state.dart';
+import 'package:online_exam/features/exam/presentation/views/exam_qustions_view.dart';
 
 class ExamDetailsView extends StatefulWidget {
   const ExamDetailsView({super.key});
@@ -111,7 +112,10 @@ class _ExamDetailsViewState extends State<ExamDetailsView> {
             style: ElevatedButton.styleFrom(
               backgroundColor: primayColor,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, ExamQustionsView.routeName,
+                  arguments: exam);
+            },
             child: Text(
               'Start',
               style: AppTextStyles.roboto500_16.copyWith(color: Colors.white),

@@ -22,6 +22,7 @@ class GetAllExamOnSubjectRepoImpl extends GetAllExamsOnSubjectRepo {
     if (isConnected) {
       final result =
           await examDataSource.getAllExamsOnSubject(subjectId: subjectId);
+          
       return result.fold(
         (failure) => left(failure),
         (exams) => right(exams.map((e) => e.toExamEntity()).toList()),
