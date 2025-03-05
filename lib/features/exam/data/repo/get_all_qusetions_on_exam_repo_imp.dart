@@ -7,8 +7,8 @@ import 'package:online_exam/features/exam/data/data_source/exam_data_source.dart
 import 'package:online_exam/features/exam/data/models/qusetions_response.dart';
 import 'package:online_exam/features/exam/domain/repo/get_all_qusetions_on_exam_repo.dart';
 
-@Injectable(as: GetAllQusetionsOnExam)
-class GetAllQusetionsOnExamRepoImp implements GetAllQusetionsOnExam {
+@Injectable(as: GetAllQusetionsOnExamRepo)
+class GetAllQusetionsOnExamRepoImp implements GetAllQusetionsOnExamRepo {
   ExamDataSource examDataSource;
   GetAllQusetionsOnExamRepoImp({
     required this.examDataSource,

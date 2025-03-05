@@ -2,11 +2,13 @@
 import 'package:online_exam/features/exam/data/models/answer_model.dart';
 
 class QuestionModel {
+  String? id;
   String? question;
   List<AnswerModel>? answers;
   String? correctKey;
 
   QuestionModel({
+    this.id,
     this.question,
     this.answers,
     this.correctKey,
@@ -14,6 +16,7 @@ class QuestionModel {
 
   factory QuestionModel.fromJson(Map<String, dynamic> json) {
     return QuestionModel(
+      id: json['_id'],
       question: json['question'],
       answers: (json['answers'] as List)
           .map((e) => AnswerModel.fromJson(e))
