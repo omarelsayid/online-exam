@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:online_exam/features/auth/presentation/views/sigin_view.dart';
 import 'package:online_exam/main.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 abstract class Failure {
   final String errorMessage;
@@ -54,7 +55,18 @@ class ServerFailure extends Failure {
             if (message.contains('fails to match the required pattern')) {
               return ServerFailure(errorMessage: 'Invalid password format');
             } else if (message.contains('invalid token')) {
-              Navigator.pushNamed(navigatorKey.currentContext!, SiginView.routeName);
+              Navigator.pushNamed(
+                  navigatorKey.currentContext!, SiginView.routeName);
+              AwesomeDialog(
+                context: navigatorKey.currentContext!,
+                dialogType: DialogType.info,
+                animType: AnimType.rightSlide,
+                title: 'Login again',
+                desc: ' with Remember me',
+                dismissOnTouchOutside: false,
+                btnCancelOnPress: () {},
+                btnOkOnPress: () {},
+              ).show();
               return ServerFailure(errorMessage: 'Login again');
             } else if (message.contains('token not provided')) {
               return ServerFailure(errorMessage: 'Token not provided');
@@ -64,13 +76,15 @@ class ServerFailure extends Failure {
 
       case 404:
         if (message.contains('no account')) {
-          return ServerFailure(errorMessage: 'There is no account with this email address');
+          return ServerFailure(
+              errorMessage: 'There is no account with this email address');
         }
         return ServerFailure(errorMessage: 'Something went wrong');
 
       case 400:
         if (message.contains('invalid or has expired')) {
-          return ServerFailure(errorMessage: 'Reset code is invalid or has expired');
+          return ServerFailure(
+              errorMessage: 'Reset code is invalid or has expired');
         }
         return ServerFailure(errorMessage: 'Something went wrong');
 
