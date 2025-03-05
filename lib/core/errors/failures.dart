@@ -56,17 +56,20 @@ class ServerFailure extends Failure {
               return ServerFailure(errorMessage: 'Invalid password format');
             } else if (message.contains('invalid token')) {
               Navigator.pushNamed(
-                  navigatorKey.currentContext!, SiginView.routeName);
-              AwesomeDialog(
-                context: navigatorKey.currentContext!,
-                dialogType: DialogType.info,
-                animType: AnimType.rightSlide,
-                title: 'Login again',
-                desc: ' with Remember me',
-                dismissOnTouchOutside: false,
-                btnCancelOnPress: () {},
-                btnOkOnPress: () {},
-              ).show();
+                      navigatorKey.currentContext!, SiginView.routeName)
+                  .then((_) {
+                AwesomeDialog(
+                  context: navigatorKey.currentContext!,
+                  dialogType: DialogType.info,
+                  animType: AnimType.rightSlide,
+                  title: 'Login again',
+                  desc: ' with Remember me',
+                  dismissOnTouchOutside: false,
+                  btnCancelOnPress: () {},
+                  btnOkOnPress: () {},
+                ).show();
+              });
+
               return ServerFailure(errorMessage: 'Login again');
             } else if (message.contains('token not provided')) {
               return ServerFailure(errorMessage: 'Token not provided');
