@@ -13,13 +13,14 @@ class ExamQustionsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    final exam = ModalRoute.of(context)?.settings.arguments as ExamEntity;
     return BlocProvider(
         create: (context) =>
             GetAllExamsOnSubjectsCubit(getIt.get<GetAllExamsOnSubjectRepo>()),
         child: Scaffold(
-          body: const ExamQusetionsViewBody(),
+          body: ExamQusetionsViewBody(
+            exam: exam,
+          ),
         ));
   }
 }

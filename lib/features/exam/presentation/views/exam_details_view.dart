@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:online_exam/core/helper_function/show_error_snackbar.dart';
 import 'package:online_exam/core/services/di_service.dart';
 import 'package:online_exam/core/utils/app_colors.dart';
@@ -63,15 +64,15 @@ class _ExamDetailsViewState extends State<ExamDetailsView> {
 
   Padding buildExamDetails(ExamEntity exam) {
     return Padding(
-      padding: const EdgeInsets.only(left: 24.0, right: 24.0, top: 24.0),
+      padding: EdgeInsets.only(left: 24.0.w, right: 24.0.w, top: 24.0.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               Image.asset('assets/images/exam.png'),
-              const SizedBox(
-                width: 16,
+              SizedBox(
+                width: 16.h,
               ),
               Expanded(
                 child: Column(
@@ -92,21 +93,21 @@ class _ExamDetailsViewState extends State<ExamDetailsView> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: 20.h,
           ),
           Text(
             '${exam.numberOfQuestions ?? ''} Questions',
             style: AppTextStyles.inter400_16.copyWith(color: greyColor),
           ),
-          const SizedBox(
-            height: 30,
+          SizedBox(
+            height: 30.h,
           ),
           Divider(
             color: greyColor,
           ),
-          const SizedBox(
-            height: 15,
+          SizedBox(
+            height: 15.h,
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(

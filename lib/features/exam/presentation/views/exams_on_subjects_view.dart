@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:online_exam/core/helper_function/show_error_snackbar.dart';
 import 'package:online_exam/core/services/di_service.dart';
 import 'package:online_exam/core/utils/app_colors.dart';
@@ -41,7 +42,7 @@ class _ExamsOnSubjectsViewState extends State<ExamsOnSubjectsView> {
           title: Text(subject.name!),
         ),
         body: Padding(
-          padding: const EdgeInsets.only(left: 16.0, right: 16, top: 24.0),
+          padding:  EdgeInsets.only(left: 16.0.w, right: 16.w, top: 24.0.h),
           child: BlocConsumer<GetAllExamsOnSubjectsCubit,
               GetAllExamsOnSubjectsState>(
             listener: (context, state) {
@@ -69,8 +70,8 @@ class _ExamsOnSubjectsViewState extends State<ExamsOnSubjectsView> {
                       return buildExamContainer(state.exams[index]);
                     },
                     separatorBuilder: (context, index) {
-                      return const SizedBox(
-                        height: 20,
+                      return  SizedBox(
+                        height: 20.h,
                       );
                     },
                     itemCount: state.exams.length,
@@ -93,17 +94,17 @@ class _ExamsOnSubjectsViewState extends State<ExamsOnSubjectsView> {
             arguments: exam.id);
       },
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 8),
+        margin:  EdgeInsets.symmetric(horizontal: 8.w),
         height: MediaQuery.of(context).size.height * .1,
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(10.r),
           boxShadow: [
             BoxShadow(
               color: Colors.black12,
-              blurRadius: 8,
-              spreadRadius: 0,
+              blurRadius: 8.r,
+              spreadRadius: 0.r,
               offset: Offset(0, 3),
             ),
           ],
@@ -117,8 +118,8 @@ class _ExamsOnSubjectsViewState extends State<ExamsOnSubjectsView> {
     return Row(
       children: [
         Image.asset('assets/images/exam.png'),
-        const SizedBox(
-          width: 16,
+         SizedBox(
+          width: 16.w,
         ),
         Expanded(
           child: Column(

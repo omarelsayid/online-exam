@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:online_exam/core/helper_function/show_error_snackbar.dart';
 import 'package:online_exam/core/services/di_service.dart';
 import 'package:online_exam/core/utils/app_colors.dart';
@@ -32,7 +33,7 @@ class _ExploreSubjectsViewState extends State<ExploreSubjectsView> {
       create: (context) => exploreSubjectsCubit,
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 24.0),
+          padding:  EdgeInsets.only(left: 10.0.w, right: 10.0.w, top: 24.0.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -40,23 +41,23 @@ class _ExploreSubjectsViewState extends State<ExploreSubjectsView> {
                 'Survey',
                 style: AppTextStyles.inter500_20.copyWith(color: primayColor),
               ),
-              const SizedBox(
-                height: 20,
+               SizedBox(
+                height: 20.h,
               ),
               buildSearchContainer(),
-              const SizedBox(
-                height: 30,
+               SizedBox(
+                height: 30.h ,
               ),
               Text(
                 'Browse by subject',
                 style: AppTextStyles.inter500_18.copyWith(color: blackColor),
               ),
-              const SizedBox(
-                height: 20,
+               SizedBox(
+                height: 20.h,
               ),
               buildBlocConsumer(),
-              const SizedBox(
-                height: 20,
+               SizedBox(
+                height: 20.h,
               ),
             ],
           ),
@@ -116,8 +117,8 @@ class _ExploreSubjectsViewState extends State<ExploreSubjectsView> {
               child: buildSubjectsContainer(context, state, index));
         },
         separatorBuilder: (context, index) {
-          return const SizedBox(
-            height: 12,
+          return  SizedBox(
+            height: 12.h,
           );
         },
       ),
@@ -127,17 +128,17 @@ class _ExploreSubjectsViewState extends State<ExploreSubjectsView> {
   Container buildSubjectsContainer(
       BuildContext context, ExploreSubjectsSuccessState state, int index) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8),
+      margin:  EdgeInsets.symmetric(horizontal: 8.w),
       height: MediaQuery.of(context).size.height * .1,
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(10.r),
         boxShadow: [
           BoxShadow(
             color: Colors.black12,
-            blurRadius: 8,
-            spreadRadius: 0,
+            blurRadius: 8.r,
+            spreadRadius: 0.r,
             offset: Offset(0, 3),
           ),
         ],
@@ -172,12 +173,12 @@ class _ExploreSubjectsViewState extends State<ExploreSubjectsView> {
 
   Container buildSearchContainer() {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding:  EdgeInsets.all(16.dg),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(20.r),
         border: Border.all(
           color: blackColor,
-          width: 1,
+          width: 1.w,
         ),
       ),
       child: Row(
@@ -186,7 +187,7 @@ class _ExploreSubjectsViewState extends State<ExploreSubjectsView> {
             Icons.search,
           ),
           SizedBox(
-            width: 12,
+            width: 12.h,
           ),
           Text(
             'Search',
