@@ -10,11 +10,4 @@ class AnswerModel {
       key: json['key'],
     );
   }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'answer': answer,
-      'key': key,
-    };
-  }
 }

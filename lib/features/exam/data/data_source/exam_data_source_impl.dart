@@ -11,7 +11,7 @@ import 'package:online_exam/features/exam/data/models/ExamResponse.dart';
 import 'package:online_exam/features/exam/data/models/ExamsResponse.dart';
 import 'package:online_exam/features/exam/data/models/Subjects.dart';
 import 'package:online_exam/features/exam/data/models/SubjectsResponse.dart';
-import 'package:online_exam/features/exam/data/models/questions_response.dart';
+import 'package:online_exam/features/exam/data/models/question_model.dart';
 
 @Injectable(as: ExamDataSource)
 class ExamDataSourceImpl extends ExamDataSource {
@@ -73,11 +73,9 @@ class ExamDataSourceImpl extends ExamDataSource {
   }
 
   @override
-  Future<QuestionsResponse> getAllQuestionsOnExam(
-      {required String examId}) async {
+  Future<QuestionModel> getAllQuestionsOnExam({required String examId}) async {
     Response response = await examService.getAllQuestionsOnExam(examId: examId);
-    QuestionsResponse questionsResponse =
-        QuestionsResponse.fromJson(response.data);
+    QuestionModel questionsResponse = QuestionModel.fromJson(response.data);
     return questionsResponse;
   }
 }

@@ -7,7 +7,7 @@ import 'package:injectable/injectable.dart';
 
 import 'package:online_exam/core/errors/failures.dart';
 import 'package:online_exam/features/exam/data/data_source/exam_data_source.dart';
-import 'package:online_exam/features/exam/data/models/questions_response.dart';
+import 'package:online_exam/features/exam/data/models/question_model.dart';
 import 'package:online_exam/features/exam/domain/repo/get_all_qusetions_on_exam_repo.dart';
 
 @Injectable(as: GetAllQusetionsOnExam)
@@ -17,10 +17,10 @@ class GetAllQusetionsOnExamRepoImp implements GetAllQusetionsOnExam {
     required this.examDataSource,
   });
   @override
-  Future<Either<ServerFailure, QuestionsResponse>> getAllQuestionsOnExam(
+  Future<Either<ServerFailure, QuestionModel>> getAllQuestionsOnExam(
       {required String examId}) async {
     try {
-      QuestionsResponse questionsResponse =
+      QuestionModel questionsResponse =
           await examDataSource.getAllQuestionsOnExam(examId: examId);
       return right(questionsResponse);
     } on DioException catch (e) {
