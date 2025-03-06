@@ -6,7 +6,7 @@ class QuestionModel {
   String? id;
   String? question;
   List<AnswerModel>? answers;
-  String? correctKey;
+  int? correctKey;
 
   QuestionModel({
     this.id,
@@ -22,7 +22,9 @@ class QuestionModel {
       answers: (json['answers'] as List)
           .map((e) => AnswerModel.fromJson(e))
           .toList(),
-      correctKey: json['correct'],
+      correctKey: int.parse(
+              json['correct'].replaceAll(RegExp(r'[^0-9]'), '') as String) -
+          1,
     );
   }
 

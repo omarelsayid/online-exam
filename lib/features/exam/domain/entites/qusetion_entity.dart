@@ -2,10 +2,10 @@
 import 'package:online_exam/features/exam/data/models/answer_model.dart';
 
 class QusetionEntity {
-   String? id;
+  String? id;
   String? question;
   List<AnswerModel>? answers;
-  String? correctKey;
+  int? correctKey;
   QusetionEntity({
     this.id,
     this.question,

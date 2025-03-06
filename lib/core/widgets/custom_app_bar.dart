@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:online_exam/core/utils/text_styles.dart';
 
 AppBar buildCustomAppBar(
@@ -6,6 +7,7 @@ AppBar buildCustomAppBar(
     required bool isVisible,
     required BuildContext context}) {
   return AppBar(
+    titleSpacing: 2.w,
     leading: Visibility(
       visible: isVisible,
       child: IconButton(
