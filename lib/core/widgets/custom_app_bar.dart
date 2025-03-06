@@ -7,6 +7,8 @@ AppBar buildCustomAppBar(
     required bool isVisible,
     required BuildContext context}) {
   return AppBar(
+    backgroundColor: Colors.white,
+    elevation: 0,
     titleSpacing: 2.w,
     leading: Visibility(
       visible: isVisible,
