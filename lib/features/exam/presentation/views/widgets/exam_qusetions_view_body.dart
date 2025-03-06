@@ -106,13 +106,16 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
       if (currentQuestionIndex < questions.length - 1) {
         setState(() {
           userAnswers[currentQuestionIndex] = UserAnswerEntity(
+            answerIndex: selectedAnswer,
             questionId: currentQuestion.id,
             userAnswer: ' A${1 + selectedAnswer!}',
             correctAnswer: currentQuestion.correctKey,
           );
-          log(userAnswers[0].userAnswer.toString());
           currentQuestionIndex++;
-          selectedAnswer = null;
+
+          // ! save the asnwer (to understand it well look at  line 138)
+          selectedAnswer =
+              userAnswers[currentQuestionIndex].answerIndex ?? null;
         });
       }
     } else {
@@ -132,6 +135,7 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
     if (currentQuestionIndex > 0) {
       setState(() {
         currentQuestionIndex--;
+        selectedAnswer = userAnswers[currentQuestionIndex].answerIndex;
       });
     }
   }
@@ -162,6 +166,9 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
             onChanged: (value) {
               setState(() {
                 selectedAnswer = value;
+
+                // ! save the asnwer (to understand it well look at  line 138)
+                userAnswers[currentQuestionIndex].answerIndex = value;
               });
             },
           ),
