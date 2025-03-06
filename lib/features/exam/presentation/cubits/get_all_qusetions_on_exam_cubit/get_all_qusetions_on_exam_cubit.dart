@@ -1,10 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:online_exam/features/exam/domain/repo/get_all_qusetions_on_exam_repo.dart';
 import 'package:online_exam/features/exam/presentation/cubits/get_all_qusetions_on_exam_cubit/get_all_qusetions_on_exam_states.dart';
 
 @injectable
-class GetAllQusetionsOnExamCubit extends Cubit<GetAllQusetionsOnExamStates> {
+class GetAllQusetionsOnExamCubit extends Cubit<GetAllQuestionOnExamStates> {
   GetAllQusetionsOnExamRepo getAllQusetionsOnExamRepo;
   GetAllQusetionsOnExamCubit(this.getAllQusetionsOnExamRepo)
       : super(GetAllQusetionsOnExamInitialState());

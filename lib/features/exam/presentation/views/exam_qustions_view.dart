@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:online_exam/core/services/di_service.dart';
 import 'package:online_exam/core/widgets/custom_app_bar.dart';
@@ -15,15 +14,13 @@ class ExamQustionsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final exam = ModalRoute.of(context)?.settings.arguments as ExamEntity;
-    return BlocProvider<GetAllQusetionsOnExamCubit>(
-        create: (context) =>
-            GetAllQusetionsOnExamCubit(getIt.get<GetAllQusetionsOnExamRepo>()),
-        child: Scaffold(
-          appBar: buildCustomAppBar(
-              title: 'Exam', isVisible: true, context: context),
-          body: ExamQusetionsViewBody(
-            exam: exam,
-          ),
-        ));
+
+    return BlocProvider(
+      create: (context) => getIt.get<GetAllQusetionsOnExamCubit>()..getAllQuestionsOnExam(examId: exam.id.toString()),
+      child: Scaffold(
+        appBar: buildCustomAppBar(title: 'Exam', isVisible: true, context: context),
+        body: ExamQusetionsViewBody(exam: exam),
+      ),
+    );
   }
 }
