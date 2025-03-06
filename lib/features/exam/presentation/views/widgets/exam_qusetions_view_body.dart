@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:online_exam/core/services/di_service.dart';
 import 'package:online_exam/features/exam/domain/entites/exam_entity.dart';
-import 'package:online_exam/features/exam/presentation/cubits/all_qusetions_on_exam_cubit/all_qusetions_on_exam_cubit.dart';
+import 'package:online_exam/features/exam/presentation/cubits/get_all_qusetions_on_exam_cubit/get_all_qusetions_on_exam_cubit.dart';
 
 class ExamQusetionsViewBody extends StatefulWidget {
   const ExamQusetionsViewBody({super.key, required this.exam});
@@ -11,8 +11,8 @@ class ExamQusetionsViewBody extends StatefulWidget {
 }
 
 class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
-  AllQusetionsOnExamCubit getAllQuestionsOnExamCubit =
-      getIt.get<AllQusetionsOnExamCubit>();
+  GetAllQusetionsOnExamCubit getAllQuestionsOnExamCubit =
+      getIt.get<GetAllQusetionsOnExamCubit>();
 
   @override
   void initState() {

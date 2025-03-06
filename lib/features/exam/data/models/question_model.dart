@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:online_exam/features/exam/data/models/answer_model.dart';
+import 'package:online_exam/features/exam/domain/entites/qusetion_entity.dart';
 
 class QuestionModel {
   String? id;
@@ -22,6 +23,15 @@ class QuestionModel {
           .map((e) => AnswerModel.fromJson(e))
           .toList(),
       correctKey: json['correct'],
+    );
+  }
+
+  QusetionEntity toQusetionEntity() {
+    return QusetionEntity(
+      id: id,
+      question: question,
+      answers: answers,
+      correctKey: correctKey,
     );
   }
 }

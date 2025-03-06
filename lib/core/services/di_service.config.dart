@@ -54,12 +54,12 @@ import '../../features/exam/domain/repo/get_all_qusetions_on_exam_repo.dart'
     as _i1072;
 import '../../features/exam/domain/repo/get_all_subjects_repo.dart' as _i155;
 import '../../features/exam/domain/repo/get_exam_on_id_repo.dart' as _i423;
-import '../../features/exam/presentation/cubits/all_qusetions_on_exam_cubit/all_qusetions_on_exam_cubit.dart'
-    as _i70;
 import '../../features/exam/presentation/cubits/explore_subjects_cubit/explore_subjects_cubit.dart'
     as _i103;
 import '../../features/exam/presentation/cubits/get_all_exams_on_subjects_cubit/get_all_exams_on_subjects_cubit.dart'
     as _i309;
+import '../../features/exam/presentation/cubits/get_all_qusetions_on_exam_cubit/get_all_qusetions_on_exam_cubit.dart'
+    as _i500;
 import '../../features/exam/presentation/cubits/get_exam_on_id_cubit/get_exam_on_id_cubit.dart'
     as _i304;
 import '../../features/user_profile/data/data_source/user_profile_data_source_repo.dart'
@@ -160,8 +160,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1072.GetAllQusetionsOnExamRepo>(() =>
         _i870.GetAllQusetionsOnExamRepoImp(
             examDataSource: gh<_i831.ExamDataSource>()));
-    gh.factory<_i70.AllQusetionsOnExamCubit>(() =>
-        _i70.AllQusetionsOnExamCubit(gh<_i1072.GetAllQusetionsOnExamRepo>()));
+    gh.factory<_i500.GetAllQusetionsOnExamCubit>(() =>
+        _i500.GetAllQusetionsOnExamCubit(
+            gh<_i1072.GetAllQusetionsOnExamRepo>()));
     gh.factory<_i82.ChangePasswordCubit>(() => _i82.ChangePasswordCubit(
           gh<_i822.ChangePasswordRepo>(),
           gh<_i485.LogoutRepo>(),

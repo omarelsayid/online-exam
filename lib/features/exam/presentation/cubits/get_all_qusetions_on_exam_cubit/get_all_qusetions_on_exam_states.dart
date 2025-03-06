@@ -1,4 +1,4 @@
-import 'package:online_exam/features/exam/data/models/qusetions_response.dart';
+import 'package:online_exam/features/exam/domain/entites/qusetion_entity.dart';
 
 sealed class GetAllQusetionsOnExamStates {}
 
@@ -13,7 +13,7 @@ final class GetAllQusetionsOnExamErrorState
 
 final class GetAllQusetionsOnExamSuccessState
     extends GetAllQusetionsOnExamStates {
-  final QusetionsResponse qusetionsResponse;
+  final List<QusetionEntity> qusetionsResponse;
   GetAllQusetionsOnExamSuccessState(this.qusetionsResponse);
 }
 
