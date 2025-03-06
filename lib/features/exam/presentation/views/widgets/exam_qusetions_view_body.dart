@@ -15,6 +15,8 @@ import 'package:online_exam/features/exam/presentation/views/widgets/current_que
 import 'package:online_exam/features/exam/presentation/views/widgets/custom_elevated_button.dart';
 import 'package:online_exam/features/exam/presentation/views/widgets/progress_bar_widget.dart';
 import 'package:online_exam/features/exam/presentation/views/widgets/question_text_widget.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class ExamQusetionsViewBody extends StatefulWidget {
   const ExamQusetionsViewBody({super.key, required this.exam});
@@ -115,6 +117,13 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
       }
     } else {
       // show snack bar from the top
+      showTopSnackBar(
+        Overlay.of(context),
+        CustomSnackBar.info(
+          message:
+              "Please select an answer before moving to the next question.",
+        ),
+      );
     }
   }
 
