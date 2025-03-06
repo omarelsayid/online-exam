@@ -5,8 +5,10 @@ import 'package:online_exam/core/utils/text_styles.dart';
 AppBar buildCustomAppBar(
     {required String title,
     required bool isVisible,
+    List<Widget>? actions,
     required BuildContext context}) {
   return AppBar(
+    actions: actions,
     backgroundColor: Colors.white,
     elevation: 0,
     titleSpacing: 2.w,

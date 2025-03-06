@@ -1,9 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:online_exam/core/utils/app_colors.dart';
+import 'package:online_exam/core/utils/app_images.dart';
 import 'package:online_exam/core/utils/constans.dart';
 import 'package:online_exam/core/utils/text_styles.dart';
 import 'package:online_exam/features/exam/domain/entites/exam_entity.dart';
@@ -53,6 +52,15 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
             padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding.w),
             child: Column(
               children: [
+                Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                  Image.asset(
+                    Assets.imagesAlram2,
+                  ),
+                  SizedBox(width: 8.w),
+                  Text(
+                    (double.parse(widget.exam.duration.toString())).toString(),
+                  ),
+                ]),
                 SizedBox(height: 8.h),
                 CurrentQuestionIndexWidget(
                   currentQuestionIndex: currentQuestionIndex,
@@ -68,7 +76,7 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
                 SizedBox(height: 24.h),
                 SizedBox(
                     width: 343.w,
-                    height: 260.h,
+                    height: 290.h,
                     child: _answersWidget(currentQuestion)),
                 SizedBox(height: 80.h),
                 Row(
@@ -142,6 +150,7 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
 
   ListView _answersWidget(QusetionEntity currentQuestion) {
     return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: currentQuestion.answers!.length,
       itemBuilder: (context, index) {
         final choice = currentQuestion.answers![index];
