@@ -6,7 +6,7 @@ class QuestionModel {
   String? id;
   String? question;
   List<AnswerModel>? answers;
-  int? correctKey;
+  String? correctKey;
 
   QuestionModel({
     this.id,
@@ -17,15 +17,12 @@ class QuestionModel {
 
   factory QuestionModel.fromJson(Map<String, dynamic> json) {
     return QuestionModel(
-      id: json['_id'],
-      question: json['question'],
-      answers: (json['answers'] as List)
-          .map((e) => AnswerModel.fromJson(e))
-          .toList(),
-      correctKey: int.parse(
-              json['correct'].replaceAll(RegExp(r'[^0-9]'), '') as String) -
-          1,
-    );
+        id: json['_id'],
+        question: json['question'],
+        answers: (json['answers'] as List)
+            .map((e) => AnswerModel.fromJson(e))
+            .toList(),
+        correctKey: json['correct']);
   }
 
   QusetionEntity toQusetionEntity() {

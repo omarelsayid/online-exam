@@ -5,7 +5,7 @@ class QusetionEntity {
   String? id;
   String? question;
   List<AnswerModel>? answers;
-  int? correctKey;
+  String? correctKey;
   QusetionEntity({
     this.id,
     this.question,
