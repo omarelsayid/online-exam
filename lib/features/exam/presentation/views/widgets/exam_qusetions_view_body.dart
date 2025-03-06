@@ -68,7 +68,7 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
                 SizedBox(height: 24.h),
                 SizedBox(
                     width: 343.w,
-                    height: 256.h,
+                    height: 260.h,
                     child: _answersWidget(currentQuestion)),
                 SizedBox(height: 80.h),
                 Row(
