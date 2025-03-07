@@ -35,72 +35,86 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
     return BlocConsumer<GetAllQusetionsOnExamCubit, GetAllQuestionOnExamStates>(
       listener: (context, state) {
         if (state is GetAllQusetionsOnExamSuccessState) {
-          userAnswers = List.generate(
-            state.qusetionsResponse.length,
-            (index) => UserAnswerEntity(),
-          );
+          if (state.qusetionsResponse.isEmpty) {
+            showTopSnackBar(
+              Overlay.of(context),
+              CustomSnackBar.error(
+                message: "No questions found",
+              ),
+            );
+          } else {
+            userAnswers = List.generate(
+              state.qusetionsResponse.length,
+              (index) => UserAnswerEntity(),
+            );
+          }
         }
       },
       builder: (context, state) {
         if (state is GetAllQusetionsOnExamLoadingState) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is GetAllQusetionsOnExamSuccessState) {
-          final List<QusetionEntity> questions = state.qusetionsResponse;
-          final currentQuestion = questions[currentQuestionIndex];
+          if (state.qusetionsResponse.isEmpty) {
+            return const Center(child: Text('No questions found'));
+          } else {
+            final List<QusetionEntity> questions = state.qusetionsResponse;
+            final currentQuestion = questions[currentQuestionIndex];
 
-          return Padding(
-            padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding.w),
-            child: Column(
-              children: [
-                Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                  Image.asset(
-                    Assets.imagesAlram2,
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding.w),
+              child: Column(
+                children: [
+                  Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                    Image.asset(
+                      Assets.imagesAlram2,
+                    ),
+                    SizedBox(width: 8.w),
+                    Text(
+                      (double.parse(widget.exam.duration.toString()))
+                          .toString(),
+                    ),
+                  ]),
+                  SizedBox(height: 8.h),
+                  CurrentQuestionIndexWidget(
+                    currentQuestionIndex: currentQuestionIndex,
+                    questions: questions,
                   ),
-                  SizedBox(width: 8.w),
-                  Text(
-                    (double.parse(widget.exam.duration.toString())).toString(),
+                  SizedBox(height: 3.h),
+                  ProgressBarWidget(
+                    questions: questions,
+                    currentQuestionIndex: currentQuestionIndex,
                   ),
-                ]),
-                SizedBox(height: 8.h),
-                CurrentQuestionIndexWidget(
-                  currentQuestionIndex: currentQuestionIndex,
-                  questions: questions,
-                ),
-                SizedBox(height: 3.h),
-                ProgressBarWidget(
-                  questions: questions,
-                  currentQuestionIndex: currentQuestionIndex,
-                ),
-                SizedBox(height: 28.h),
-                QuestionTextWidget(currentQuestion: currentQuestion),
-                SizedBox(height: 24.h),
-                SizedBox(
-                    width: 343.w,
-                    height: 290.h,
-                    child: _answersWidget(currentQuestion)),
-                SizedBox(height: 80.h),
-                Row(
-                  children: [
-                    CustomElevatedButton(
-                        text: 'Back',
-                        onPressed: () =>
-                            _previousQusetion(questions, currentQuestion),
-                        backgroundColor: backgroundColor,
-                        textColor: primayColor,
-                        borderColor: primayColor),
-                    SizedBox(width: 16.w),
-                    CustomElevatedButton(
-                        text: 'Next',
-                        onPressed: () =>
-                            _nextQusetion(questions, currentQuestion),
-                        backgroundColor: primayColor,
-                        textColor: backgroundColor,
-                        borderColor: primayColor),
-                  ],
-                ),
-              ],
-            ),
-          );
+                  SizedBox(height: 28.h),
+                  QuestionTextWidget(currentQuestion: currentQuestion),
+                  SizedBox(height: 24.h),
+                  SizedBox(
+                      width: 343.w,
+                      height: 290.h,
+                      child: _answersWidget(currentQuestion)),
+                  SizedBox(height: 80.h),
+                  Row(
+                    children: [
+                      CustomElevatedButton(
+                          text: 'Back',
+                          onPressed: () =>
+                              _previousQusetion(questions, currentQuestion),
+                          backgroundColor: backgroundColor,
+                          textColor: primayColor,
+                          borderColor: primayColor),
+                      SizedBox(width: 16.w),
+                      CustomElevatedButton(
+                          text: 'Next',
+                          onPressed: () =>
+                              _nextQusetion(questions, currentQuestion),
+                          backgroundColor: primayColor,
+                          textColor: backgroundColor,
+                          borderColor: primayColor),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          }
         } else {
           return const Center(child: Text('Something went wrong'));
         }
