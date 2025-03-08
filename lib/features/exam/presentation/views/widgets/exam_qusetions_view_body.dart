@@ -7,6 +7,7 @@ import 'package:online_exam/core/utils/app_colors.dart';
 import 'package:online_exam/core/utils/app_images.dart';
 import 'package:online_exam/core/utils/constans.dart';
 import 'package:online_exam/core/utils/text_styles.dart';
+import 'package:online_exam/features/exam/data/models/UserAnswerModel.dart';
 import 'package:online_exam/features/exam/domain/entites/exam_entity.dart';
 import 'package:online_exam/features/exam/domain/entites/qusetion_entity.dart';
 import 'package:online_exam/features/exam/domain/entites/user_answer_entity.dart';
@@ -34,6 +35,7 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
   late Duration countdownDuration;
   late ValueNotifier<Duration> durationNotifier;
   Timer? timer;
+  late List<QusetionEntity> questions;
 
   @override
   void initState() {
@@ -77,7 +79,7 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
           if (state.qusetionsResponse.isEmpty) {
             return const Center(child: Text('No questions found'));
           } else {
-            final List<QusetionEntity> questions = state.qusetionsResponse;
+            questions = state.qusetionsResponse;
             final currentQuestion = questions[currentQuestionIndex];
 
             return Padding(
@@ -155,8 +157,6 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
     final minutes = twoDigits(duration.inMinutes.remainder(60));
     final seconds = twoDigits(duration.inSeconds.remainder(60));
-
-    // Determine the color based on remaining time
     final totalSeconds = countdownDuration.inSeconds;
     final remainingSeconds = duration.inSeconds;
     final Color textColor =
@@ -186,6 +186,27 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
         durationNotifier.value =
             Duration(seconds: durationNotifier.value.inSeconds - 1);
       } else {
+        List<UserAnswerModel> userQuestionAnswer = questions.indexed
+            .map((question) => question.$1 <= currentQuestionIndex
+                ? UserAnswerModel(
+                    questionId:
+                        userAnswers[question.$1].questionId ?? question.$2.id,
+                    correct: userAnswers[question.$1].userAnswer ??
+                        (selectedAnswer != null
+                            ? ' A${1 + selectedAnswer!}'
+                            : ' '))
+                : UserAnswerModel(questionId: question.$2.id, correct: ' '))
+            .toList();
+
+        // print(userQuestionAnswer.length);
+        // print(userQuestionAnswer[1].questionId);
+        // print(userQuestionAnswer[1].correct);
+
+        List<Map<String, dynamic>> jsonString =
+            userQuestionAnswer.map((answer) => answer.toJson()).toList();
+
+        print(jsonString);
+
         timer.cancel(); // Stop the timer when time reaches 0
       }
     });
@@ -194,20 +215,34 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
   void _nextQusetion(
       List<QusetionEntity> questions, QusetionEntity currentQuestion) {
     if (selectedAnswer != null) {
+      setState(() {
+        userAnswers[currentQuestionIndex] = UserAnswerEntity(
+          answerIndex: selectedAnswer,
+          questionId: currentQuestion.id,
+          userAnswer: ' A${1 + selectedAnswer!}',
+          correctAnswer: currentQuestion.correctKey,
+        );
+      });
       if (currentQuestionIndex < questions.length - 1) {
         setState(() {
-          userAnswers[currentQuestionIndex] = UserAnswerEntity(
-            answerIndex: selectedAnswer,
-            questionId: currentQuestion.id,
-            userAnswer: ' A${1 + selectedAnswer!}',
-            correctAnswer: currentQuestion.correctKey,
-          );
           currentQuestionIndex++;
 
           // ! save the asnwer (to understand it well look at  line 138)
           selectedAnswer =
               userAnswers[currentQuestionIndex].answerIndex ?? null;
         });
+      } else {
+        List<UserAnswerModel> userQuestionAnswer = userAnswers
+            .map((answer) => UserAnswerModel(
+                questionId: answer.questionId, correct: answer.userAnswer))
+            .toList();
+
+        List<Map<String, dynamic>> jsonString =
+            userQuestionAnswer.map((answer) => answer.toJson()).toList();
+        //
+        // log(jsonString as String);
+        // log(userQuestionAnswer[1].correct as String);
+        // log(userQuestionAnswer.length as String);
       }
     } else {
       // show snack bar from the top
