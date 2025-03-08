@@ -205,11 +205,54 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
         List<Map<String, dynamic>> jsonString =
             userQuestionAnswer.map((answer) => answer.toJson()).toList();
 
-        print(jsonString);
+        // print(jsonString);
+        showTimerEndDialog();
 
         timer.cancel(); // Stop the timer when time reaches 0
       }
     });
+  }
+
+  Future<dynamic> showTimerEndDialog() {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          contentPadding: EdgeInsets.all(20),
+          content: Column(
+            mainAxisSize: MainAxisSize.min, // Prevent overflow
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('assets/images/sand-clock 1.png', height: 50),
+                  SizedBox(width: 10),
+                  Text(
+                    'Time Out !!',
+                    style: AppTextStyles.roboto400_20
+                        .copyWith(color: Colors.red, fontSize: 24),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {},
+                child: Text(
+                  'View Score',
+                  style:
+                      AppTextStyles.roboto400_20.copyWith(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   void _nextQusetion(
