@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,6 +31,24 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
   int currentQuestionIndex = 0;
   int? selectedAnswer; // Store the selected choice index
   List<UserAnswerEntity> userAnswers = [];
+  late Duration countdownDuration;
+  late ValueNotifier<Duration> durationNotifier;
+  Timer? timer;
+
+  @override
+  void initState() {
+    countdownDuration = Duration(minutes: widget.exam.duration!.toInt());
+    durationNotifier = ValueNotifier<Duration>(countdownDuration);
+    startTimer();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    durationNotifier.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,16 +84,25 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
               padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding.w),
               child: Column(
                 children: [
-                  Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                    Image.asset(
-                      Assets.imagesAlram2,
-                    ),
-                    SizedBox(width: 8.w),
-                    Text(
-                      (double.parse(widget.exam.duration.toString()))
-                          .toString(),
-                    ),
-                  ]),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Image.asset(
+                        Assets.imagesAlram2,
+                      ),
+                      SizedBox(width: 8.w),
+                      // Text(
+                      //   (double.parse(widget.exam.duration.toString()))
+                      //       .toString(),
+                      // ),
+                      ValueListenableBuilder<Duration>(
+                        valueListenable: durationNotifier,
+                        builder: (context, duration, child) {
+                          return buildTime(duration);
+                        },
+                      )
+                    ],
+                  ),
                   SizedBox(height: 8.h),
                   CurrentQuestionIndexWidget(
                     currentQuestionIndex: currentQuestionIndex,
@@ -120,6 +149,46 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
         }
       },
     );
+  }
+
+  Widget buildTime(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+
+    // Determine the color based on remaining time
+    final totalSeconds = countdownDuration.inSeconds;
+    final remainingSeconds = duration.inSeconds;
+    final Color textColor =
+        remainingSeconds > totalSeconds / 2 ? Colors.green : Colors.red;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        buildDigit(minutes, "minutes", textColor), // Pass color
+        const Text(' : '),
+        buildDigit(seconds, "seconds", textColor), // Pass color
+      ],
+    );
+  }
+
+  Widget buildDigit(String digit, String type, Color color) {
+    return Text(
+      digit,
+      key: ValueKey<String>("$type-$digit"),
+      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: color),
+    );
+  }
+
+  void startTimer() {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (durationNotifier.value.inSeconds > 0) {
+        durationNotifier.value =
+            Duration(seconds: durationNotifier.value.inSeconds - 1);
+      } else {
+        timer.cancel(); // Stop the timer when time reaches 0
+      }
+    });
   }
 
   void _nextQusetion(
