@@ -194,8 +194,8 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
                     correct: userAnswers[question.$1].userAnswer ??
                         (selectedAnswer != null
                             ? ' A${1 + selectedAnswer!}'
-                            : ' '))
-                : UserAnswerModel(questionId: question.$2.id, correct: ' '))
+                            : " "))
+                : UserAnswerModel(questionId: question.$2.id, correct: " "))
             .toList();
 
         // print(userQuestionAnswer.length);
