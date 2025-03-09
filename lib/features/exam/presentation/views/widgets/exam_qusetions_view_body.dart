@@ -41,7 +41,7 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
 
   @override
   void initState() {
-    countdownDuration = Duration(minutes: widget.exam.duration!.toInt());
+    countdownDuration = Duration(minutes: 1);
     durationNotifier = ValueNotifier<Duration>(countdownDuration);
     startTimer();
     super.initState();
@@ -168,7 +168,9 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         buildDigit(minutes, "minutes", textColor), // Pass color
-        const Text(' : '),
+        Text(' : ',
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.bold, color: textColor)),
         buildDigit(seconds, "seconds", textColor), // Pass color
       ],
     );
