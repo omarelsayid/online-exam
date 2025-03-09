@@ -58,4 +58,21 @@ class ExamService {
         }));
     return response;
   }
+
+  Future<Response> checkQuestion(
+      {required List<Map<String, dynamic>> answers}) async {
+    String? token = await SecureStorageService.getValue(kUserTokenKey);
+    Response response = await _dio.post(
+      checkQuestionsEndPoint,
+      data: {
+        'answers': answers,
+      },
+      options: Options(
+        headers: {
+          'token': token,
+        },
+      ),
+    );
+    return response;
+  }
 }

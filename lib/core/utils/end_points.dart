@@ -12,3 +12,4 @@ const String subjectsEndPoint = "subjects";
 const String examsEndPoint = "exams";
 const String examOnIdEndPoint = "exams";
 const String allQuestionsEndPoint = "questions";
+const String checkQuestionsEndPoint = "questions/check";
