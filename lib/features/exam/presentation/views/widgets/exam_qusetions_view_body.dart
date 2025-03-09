@@ -292,7 +292,7 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
         setState(() {
           currentQuestionIndex++;
 
-          // ! save the asnwer (to understand it well look at  line 138)
+          // ! save the asnwer (to understand it well look at  line 337 )
           selectedAnswer =
               userAnswers[currentQuestionIndex].answerIndex ?? null;
         });
@@ -334,46 +334,10 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
     if (currentQuestionIndex > 0) {
       setState(() {
         currentQuestionIndex--;
+        // ! save the asnwer (to understand it well look at  line 295 )
+
         selectedAnswer = userAnswers[currentQuestionIndex].answerIndex;
       });
     }
-  }
-
-  ListView _answersWidget(QusetionEntity currentQuestion) {
-    return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: currentQuestion.answers!.length,
-      itemBuilder: (context, index) {
-        final choice = currentQuestion.answers![index];
-
-        return Padding(
-          padding: EdgeInsets.only(bottom: 16.h),
-          child: RadioListTile<int>(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.r),
-            ),
-            selected: selectedAnswer == index,
-            tileColor: Color(0xffedeff3),
-            selectedTileColor:
-                selectedAnswer == index ? const Color(0xffCCD7EB) : null,
-            activeColor: primayColor,
-            title: Text(
-              choice.answer,
-              style: AppTextStyles.inter400_14.copyWith(color: blackColor),
-            ),
-            value: index, // Store index instead of 0
-            groupValue: selectedAnswer, // Compare with selected index
-            onChanged: (value) {
-              setState(() {
-                selectedAnswer = value;
-
-                // ! save the asnwer (to understand it well look at  line 138)
-                userAnswers[currentQuestionIndex].answerIndex = value;
-              });
-            },
-          ),
-        );
-      },
-    );
   }
 }
