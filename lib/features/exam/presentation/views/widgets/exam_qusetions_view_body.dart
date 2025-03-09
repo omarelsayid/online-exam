@@ -221,7 +221,8 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
         return AlertDialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          contentPadding: EdgeInsets.all(20),
+          contentPadding: EdgeInsets.all(30),
+          backgroundColor: Colors.white,
           content: Column(
             mainAxisSize: MainAxisSize.min, // Prevent overflow
             crossAxisAlignment: CrossAxisAlignment.center,
