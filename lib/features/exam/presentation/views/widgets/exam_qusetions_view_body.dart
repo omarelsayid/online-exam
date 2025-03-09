@@ -168,7 +168,11 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         buildDigit(minutes, "minutes", textColor), // Pass color
-        const Text(' : '),
+        Text(
+          ' : ',
+          style: TextStyle(
+              fontSize: 20, fontWeight: FontWeight.bold, color: textColor),
+        ),
         buildDigit(seconds, "seconds", textColor), // Pass color
       ],
     );
