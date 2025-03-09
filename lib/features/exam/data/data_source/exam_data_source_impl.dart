@@ -6,6 +6,7 @@ import 'package:injectable/injectable.dart';
 import 'package:online_exam/core/errors/failures.dart';
 import 'package:online_exam/core/services/exam_service.dart';
 import 'package:online_exam/features/exam/data/data_source/exam_data_source.dart';
+import 'package:online_exam/features/exam/data/models/CheckQuestionResponse.dart';
 import 'package:online_exam/features/exam/data/models/Exam.dart';
 import 'package:online_exam/features/exam/data/models/ExamResponse.dart';
 import 'package:online_exam/features/exam/data/models/ExamsResponse.dart';
@@ -79,5 +80,24 @@ class ExamDataSourceImpl extends ExamDataSource {
     QusetionsResponse questionsResponse =
         QusetionsResponse.fromJson(response.data);
     return questionsResponse;
+  }
+
+  @override
+  Future<Either<ServerFailure, CheckQuestionResponse>> checkQuestions(
+      {required List<Map<String, dynamic>> answers}) async {
+    try {
+      Response response = await examService.checkQuestions(answers: answers);
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        CheckQuestionResponse checkQuestionResponse =
+            CheckQuestionResponse.fromJson(response.data);
+        return Right(checkQuestionResponse);
+      } else {
+        log(response.data['message'].toString());
+        return left(ServerFailure.fromDioException(response.data['message']));
+      }
+    } on DioException catch (e) {
+      log(e.toString());
+      return left(ServerFailure.fromDioException(e));
+    }
   }
 }

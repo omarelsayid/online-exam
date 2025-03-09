@@ -59,7 +59,7 @@ class ExamService {
     return response;
   }
 
-  Future<Response> checkQuestion(
+  Future<Response> checkQuestions(
       {required List<Map<String, dynamic>> answers}) async {
     String? token = await SecureStorageService.getValue(kUserTokenKey);
     Response response = await _dio.post(
