@@ -42,18 +42,22 @@ import '../../features/auth/presentation/cubits/verify_code_cubit/verify_reset_c
 import '../../features/exam/data/data_source/exam_data_source.dart' as _i831;
 import '../../features/exam/data/data_source/exam_data_source_impl.dart'
     as _i160;
+import '../../features/exam/data/repo/check_questions_repo_impl.dart' as _i326;
 import '../../features/exam/data/repo/get_all_exam_on_subject_repo_impl.dart'
     as _i482;
 import '../../features/exam/data/repo/get_all_qusetions_on_exam_repo_imp.dart'
     as _i870;
 import '../../features/exam/data/repo/get_all_subjects_repo_impl.dart' as _i679;
 import '../../features/exam/data/repo/get_exam_on_id_repo_impl.dart' as _i61;
+import '../../features/exam/domain/repo/check_questions_repo.dart' as _i3;
 import '../../features/exam/domain/repo/get_all_exams_on_subject_repo.dart'
     as _i979;
 import '../../features/exam/domain/repo/get_all_qusetions_on_exam_repo.dart'
     as _i1072;
 import '../../features/exam/domain/repo/get_all_subjects_repo.dart' as _i155;
 import '../../features/exam/domain/repo/get_exam_on_id_repo.dart' as _i423;
+import '../../features/exam/presentation/cubits/check_questions_cubit/check_questions_cubit.dart'
+    as _i204;
 import '../../features/exam/presentation/cubits/explore_subjects_cubit/explore_subjects_cubit.dart'
     as _i103;
 import '../../features/exam/presentation/cubits/get_all_exams_on_subjects_cubit/get_all_exams_on_subjects_cubit.dart'
@@ -149,6 +153,10 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i485.LogoutRepo>(() =>
         _i552.LogoutRepoImp(dataSource: gh<_i185.UserProfileDataSourceRepo>()));
+    gh.factory<_i3.CheckQuestionsRepo>(() => _i326.CheckQuestionsRepoImpl(
+          gh<_i831.ExamDataSource>(),
+          gh<_i973.InternetConnectionChecker>(),
+        ));
     gh.factory<_i375.VerifyResetCodeRepo>(() => _i898.VerifyResetCodeRepoImp(
           gh<_i62.DataSourceRepo>(),
           gh<_i973.InternetConnectionChecker>(),
@@ -169,6 +177,8 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i90.UpdateProfileCubit>(
         () => _i90.UpdateProfileCubit(gh<_i970.UpdateProfileRepo>()));
+    gh.factory<_i204.CheckQuestionsCubit>(
+        () => _i204.CheckQuestionsCubit(gh<_i3.CheckQuestionsRepo>()));
     gh.factory<_i103.ExploreSubjectsCubit>(
         () => _i103.ExploreSubjectsCubit(gh<_i155.GetAllSubjectsRepo>()));
     gh.factory<_i16.VerifyResetCodeViewModel>(

@@ -4,6 +4,7 @@ import 'package:online_exam/features/auth/presentation/views/sigin_up_view.dart'
 import 'package:online_exam/features/auth/presentation/views/sigin_view.dart';
 import 'package:online_exam/features/exam/presentation/views/exam_details_view.dart';
 import 'package:online_exam/features/exam/presentation/views/exam_qustions_view.dart';
+import 'package:online_exam/features/exam/presentation/views/exam_score_view.dart';
 import 'package:online_exam/features/exam/presentation/views/exams_on_subjects_view.dart';
 import 'package:online_exam/features/user_profile/presentation/views/change_password_view.dart';
 import 'package:online_exam/main_view.dart';
@@ -47,6 +48,10 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case ExamDetailsView.routeName:
       return MaterialPageRoute(
           builder: (_) => const ExamDetailsView(), settings: settings);
+
+    case ExamScoreView.routeName:
+      return MaterialPageRoute(
+          builder: (_) => const ExamScoreView(), settings: settings);
 
     default:
       return MaterialPageRoute(

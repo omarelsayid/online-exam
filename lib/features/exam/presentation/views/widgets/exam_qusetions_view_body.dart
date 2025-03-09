@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +14,7 @@ import 'package:online_exam/features/exam/domain/entites/qusetion_entity.dart';
 import 'package:online_exam/features/exam/domain/entites/user_answer_entity.dart';
 import 'package:online_exam/features/exam/presentation/cubits/get_all_qusetions_on_exam_cubit/get_all_qusetions_on_exam_cubit.dart';
 import 'package:online_exam/features/exam/presentation/cubits/get_all_qusetions_on_exam_cubit/get_all_qusetions_on_exam_states.dart';
+import 'package:online_exam/features/exam/presentation/views/exam_score_view.dart';
 import 'package:online_exam/features/exam/presentation/views/widgets/current_question_index_widget.dart';
 import 'package:online_exam/features/exam/presentation/views/widgets/custom_elevated_button.dart';
 import 'package:online_exam/features/exam/presentation/views/widgets/progress_bar_widget.dart';
@@ -193,27 +195,28 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
                         userAnswers[question.$1].questionId ?? question.$2.id,
                     correct: userAnswers[question.$1].userAnswer ??
                         (selectedAnswer != null
-                            ? ' A${1 + selectedAnswer!}'
+                            ? 'A${1 + selectedAnswer!}'
                             : " "))
                 : UserAnswerModel(questionId: question.$2.id, correct: " "))
             .toList();
 
         // print(userQuestionAnswer.length);
-        // print(userQuestionAnswer[1].questionId);
+        // print(user as StringQuestionAnswer[1].questionId);
         // print(userQuestionAnswer[1].correct);
 
-        List<Map<String, dynamic>> jsonString =
-            userQuestionAnswer.map((answer) => answer.toJson()).toList();
-
+        List<Map<String, dynamic>> jsonString = (jsonDecode(jsonEncode(
+          userQuestionAnswer.map((answer) => answer.toJson()).toList(),
+        )) as List<dynamic>)
+            .cast<Map<String, dynamic>>();
         // print(jsonString);
-        showTimerEndDialog();
+        showTimerEndDialog(jsonString);
 
         timer.cancel(); // Stop the timer when time reaches 0
       }
     });
   }
 
-  Future<dynamic> showTimerEndDialog() {
+  Future<dynamic> showTimerEndDialog(jsonString) {
     return showDialog(
       context: context,
       barrierDismissible: false,
@@ -242,7 +245,11 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushReplacementNamed(
+                      context, ExamScoreView.routeName,
+                      arguments: jsonString);
+                },
                 child: Text(
                   'View Score',
                   style:
@@ -263,7 +270,7 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
         userAnswers[currentQuestionIndex] = UserAnswerEntity(
           answerIndex: selectedAnswer,
           questionId: currentQuestion.id,
-          userAnswer: ' A${1 + selectedAnswer!}',
+          userAnswer: 'A${1 + selectedAnswer!}',
           correctAnswer: currentQuestion.correctKey,
         );
       });
@@ -281,12 +288,20 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
                 questionId: answer.questionId, correct: answer.userAnswer))
             .toList();
 
-        List<Map<String, dynamic>> jsonString =
-            userQuestionAnswer.map((answer) => answer.toJson()).toList();
+        // String jsonString =
+        // jsonEncode(userQuestionAnswer.map((answer) => answer.toJson()).toList());
+        List<Map<String, dynamic>> jsonString = (jsonDecode(jsonEncode(
+          userQuestionAnswer.map((answer) => answer.toJson()).toList(),
+        )) as List<dynamic>)
+            .cast<Map<String, dynamic>>();
+
         //
         // log(jsonString as String);
         // log(userQuestionAnswer[1].correct as String);
         // log(userQuestionAnswer.length as String);
+
+        Navigator.pushReplacementNamed(context, ExamScoreView.routeName,
+            arguments: jsonString);
       }
     } else {
       // show snack bar from the top
