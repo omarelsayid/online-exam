@@ -15,6 +15,7 @@ import 'package:online_exam/features/exam/domain/entites/user_answer_entity.dart
 import 'package:online_exam/features/exam/presentation/cubits/get_all_qusetions_on_exam_cubit/get_all_qusetions_on_exam_cubit.dart';
 import 'package:online_exam/features/exam/presentation/cubits/get_all_qusetions_on_exam_cubit/get_all_qusetions_on_exam_states.dart';
 import 'package:online_exam/features/exam/presentation/views/exam_score_view.dart';
+import 'package:online_exam/features/exam/presentation/views/widgets/answers_list_view_widget.dart';
 import 'package:online_exam/features/exam/presentation/views/widgets/current_question_index_widget.dart';
 import 'package:online_exam/features/exam/presentation/views/widgets/custom_elevated_button.dart';
 import 'package:online_exam/features/exam/presentation/views/widgets/progress_bar_widget.dart';
@@ -123,7 +124,16 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
                   SizedBox(
                       width: 343.w,
                       height: 290.h,
-                      child: _answersWidget(currentQuestion)),
+                      child: AnswerslistViewWidget(
+                        currentQuestion: currentQuestion,
+                        currentQuestionIndex: currentQuestionIndex,
+                        onAnswerSelected: (selectedIndex) {
+                          setState(() {
+                            userAnswers[currentQuestionIndex].answerIndex =
+                                selectedIndex;
+                          });
+                        },
+                      )),
                   SizedBox(height: 80.h),
                   Row(
                     children: [

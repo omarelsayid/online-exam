@@ -36,6 +36,7 @@ class UserPofileDataSourceRepoImp implements UserProfileDataSourceRepo {
         email: email,
         phone: phone,
       );
+      // ignore: unused_local_variable
       UserProfileModel userProfileModel =
           UserProfileModel.fromJson(response.data);
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
