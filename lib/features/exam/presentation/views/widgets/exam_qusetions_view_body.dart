@@ -126,7 +126,6 @@ class _ExamQusetionsViewBodyState extends State<ExamQusetionsViewBody> {
                       height: 290.h,
                       child: AnswerslistViewWidget(
                         currentQuestion: currentQuestion,
-                        currentQuestionIndex: currentQuestionIndex,
                         onAnswerSelected: (selectedIndex) {
                           setState(() {
                             userAnswers[currentQuestionIndex].answerIndex =

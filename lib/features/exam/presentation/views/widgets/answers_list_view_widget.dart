@@ -6,13 +6,11 @@ import 'package:online_exam/features/exam/domain/entites/qusetion_entity.dart';
 
 class AnswerslistViewWidget extends StatefulWidget {
   final QusetionEntity currentQuestion;
-  final int currentQuestionIndex;
   final Function(int) onAnswerSelected;
 
   const AnswerslistViewWidget({
     super.key,
     required this.currentQuestion,
-    required this.currentQuestionIndex,
     required this.onAnswerSelected,
   });
 
