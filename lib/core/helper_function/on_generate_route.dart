@@ -11,9 +11,11 @@ import 'package:online_exam/main_view.dart';
 
 import '../../features/auth/presentation/views/reset_password_view.dart';
 import '../../features/auth/presentation/views/verify_reset_code_view.dart';
+import '../../features/exam/presentation/views/exam_result/exam_result_details.dart';
 
 Route<dynamic> onGenerateRoute(RouteSettings settings) {
   switch (settings.name) {
+
     case SiginView.routeName:
       return MaterialPageRoute(builder: (_) => const SiginView());
 
@@ -52,6 +54,11 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case ExamScoreView.routeName:
       return MaterialPageRoute(
           builder: (_) => const ExamScoreView(), settings: settings);
+
+
+    case ExamResultDetails.routeName:
+      final examMap = settings.arguments as Map<String, dynamic>;
+      return MaterialPageRoute(builder: (_)=>ExamResultDetails(examResult: examMap),settings: settings);
 
     default:
       return MaterialPageRoute(
