@@ -7,6 +7,8 @@ import 'package:online_exam/core/widgets/active_icon_widget.dart';
 import 'package:online_exam/features/exam/presentation/views/explore_subjects_view.dart';
 import 'package:online_exam/features/user_profile/presentation/views/user_profile_view.dart';
 
+import 'features/exam/presentation/views/exam_result/exam_result.dart';
+
 class MainView extends StatefulWidget {
   const MainView({super.key});
   static const routeName = 'mainView';
@@ -17,7 +19,7 @@ class MainView extends StatefulWidget {
 class _MainViewState extends State<MainView> {
   final List<Widget> _screens = [
     ExploreSubjectsView(),
-    Center(child: Text('Results')),
+    ExamResult(),
     UserProfileView(),
   ];
 
