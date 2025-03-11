@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:online_exam/core/helper_function/on_generate_route.dart';
 import 'package:online_exam/core/services/custom_bloc_observer.dart';
 import 'package:online_exam/core/services/di_service.dart';
+import 'package:online_exam/core/services/navigation_service.dart';
 import 'package:online_exam/core/services/secure_storage_service.dart';
 import 'package:online_exam/core/utils/constans.dart';
 import 'package:online_exam/core/utils/theming.dart';
@@ -32,6 +33,7 @@ class MainApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (_, child) {
           return MaterialApp(
+            navigatorKey: navigatorKey,
             debugShowCheckedModeBanner: false,
             onGenerateRoute: onGenerateRoute,
             // initialRoute: SiginView.routeName,

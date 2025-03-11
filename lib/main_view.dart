@@ -4,7 +4,10 @@ import 'package:online_exam/core/utils/app_colors.dart';
 import 'package:online_exam/core/utils/app_images.dart';
 import 'package:online_exam/core/utils/text_styles.dart';
 import 'package:online_exam/core/widgets/active_icon_widget.dart';
+import 'package:online_exam/features/exam/presentation/views/explore_subjects_view.dart';
 import 'package:online_exam/features/user_profile/presentation/views/user_profile_view.dart';
+
+import 'features/exam/presentation/views/exam_result/exam_result.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
@@ -15,8 +18,8 @@ class MainView extends StatefulWidget {
 
 class _MainViewState extends State<MainView> {
   final List<Widget> _screens = [
-    Center(child: Text('Explore')),
-    Center(child: Text('Results')),
+    ExploreSubjectsView(),
+    ExamResult(),
     UserProfileView(),
   ];
 
@@ -25,6 +28,7 @@ class _MainViewState extends State<MainView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: _screens[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: primayColor,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:online_exam/core/helper_function/show_error_snackbar.dart';
+import 'package:online_exam/core/helper_function/show_snackbar.dart';
 import 'package:online_exam/core/services/di_service.dart';
 import 'package:online_exam/core/utils/app_colors.dart';
 import 'package:online_exam/core/utils/extensions.dart';
