@@ -10,6 +10,8 @@ AppBar buildCustomAppBar(
   return AppBar(
     actions: actions,
     backgroundColor: Colors.white,
+    scrolledUnderElevation: 00,
+    surfaceTintColor: Colors.transparent,
     elevation: 0,
     titleSpacing: 2.w,
     leading: Visibility(
