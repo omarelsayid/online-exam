@@ -12,13 +12,18 @@ class ExploreSubjectsCubit extends Cubit<ExploreSubjectsState> {
   void getAllSubjects() async {
     emit(ExploreSubjectsLoadingState());
     final response = await getAllSubjectsRepo.getAllSubjects();
-    response.fold(
-      (failure) {
-        emit(ExploreSubjectsErrorState(failure.errorMessage));
-      },
-      (subjects) {
-        emit(ExploreSubjectsSuccessState(subjects));
-      },
-    );
+
+    if(!isClosed)
+      {
+        response.fold(
+              (failure) {
+            emit(ExploreSubjectsErrorState(failure.errorMessage));
+          },
+              (subjects) {
+            emit(ExploreSubjectsSuccessState(subjects));
+          },
+        );
+      }
+
   }
 }

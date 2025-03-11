@@ -6,6 +6,7 @@ import 'package:online_exam/features/exam/presentation/views/exam_details_view.d
 import 'package:online_exam/features/exam/presentation/views/exam_qustions_view.dart';
 import 'package:online_exam/features/exam/presentation/views/exam_score_view.dart';
 import 'package:online_exam/features/exam/presentation/views/exams_on_subjects_view.dart';
+import 'package:online_exam/features/splash_screen/splash_screen.dart';
 import 'package:online_exam/features/user_profile/presentation/views/change_password_view.dart';
 import 'package:online_exam/main_view.dart';
 
@@ -60,6 +61,8 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
       final examMap = settings.arguments as Map<String, dynamic>;
       return MaterialPageRoute(builder: (_)=>ExamResultDetails(examResult: examMap),settings: settings);
 
+    case SplashScreen.routeName:
+      return MaterialPageRoute(builder: (_)=>SplashScreen());
     default:
       return MaterialPageRoute(
           builder: (_) =>
