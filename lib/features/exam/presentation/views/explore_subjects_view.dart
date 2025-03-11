@@ -26,7 +26,6 @@ class _ExploreSubjectsViewState extends State<ExploreSubjectsView> {
     exploreSubjectsCubit.getAllSubjects();
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
