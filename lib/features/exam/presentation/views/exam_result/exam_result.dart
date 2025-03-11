@@ -1,6 +1,37 @@
 import 'package:flutter/material.dart';
 import '../../../../../core/services/secure_storage_service.dart';
 
+// 1. Paste the helper function somewhere in this file (above or below the widget).
+String getCategoryFromTitle(String examTitle) {
+  final lowerTitle = examTitle.toLowerCase();
+
+  if (lowerTitle.contains('html') ||
+      lowerTitle.contains('c++') ||
+      lowerTitle.contains('flutter') ||
+      lowerTitle.contains('java') ||
+      lowerTitle.contains('python') ||
+      lowerTitle.contains('javascript') ||
+      lowerTitle.contains('dart')) {
+    return 'Programming';
+  }
+
+  if (lowerTitle.contains('html') ||
+      lowerTitle.contains('french') ||
+      lowerTitle.contains('arabic') ||
+      lowerTitle.contains('spanish')) {
+    return 'Language';
+  }
+
+  if (lowerTitle.contains('math') ||
+      lowerTitle.contains('algebra') ||
+      lowerTitle.contains('geometry') ||
+      lowerTitle.contains('calculus')) {
+    return 'Math';
+  }
+
+  return 'Unknown';
+}
+
 class ExamResult extends StatefulWidget {
   const ExamResult({Key? key}) : super(key: key);
 
@@ -20,7 +51,15 @@ class _ExamResultState extends State<ExamResult> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Results')),
+
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: const Text('Results'),
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
+      ),
       body: FutureBuilder<List<dynamic>>(
         future: _futureResults,
         builder: (context, snapshot) {
@@ -33,19 +72,20 @@ class _ExamResultState extends State<ExamResult> {
             return const Center(child: Text('No exam attempts found.'));
           }
 
-          // Group by category if needed
           final Map<String, List<Map<String, dynamic>>> groupedByCategory = {};
+
           for (var item in results) {
             final map = item as Map<String, dynamic>;
-            final category = map['category'] ?? 'Unknown';
 
+            final examTitle = map['examTitle'] ?? 'Untitled Exam';
+            final category = getCategoryFromTitle(examTitle);
             if (!groupedByCategory.containsKey(category)) {
               groupedByCategory[category] = [];
             }
             groupedByCategory[category]!.add(map);
           }
-
           return ListView(
+            padding: const EdgeInsets.only(top: kToolbarHeight+12),
             children: groupedByCategory.entries.map((entry) {
               final categoryName = entry.key;
               final examsInCategory = entry.value;
@@ -53,9 +93,9 @@ class _ExamResultState extends State<ExamResult> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Category Header
+
                   Padding(
-                    padding: const EdgeInsets.only(left: 16, top: 16, bottom: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 14),
                     child: Text(
                       categoryName,
                       style: const TextStyle(
@@ -65,7 +105,7 @@ class _ExamResultState extends State<ExamResult> {
                     ),
                   ),
 
-                  // List of exams in this category
+
                   ...examsInCategory.map((examMap) {
                     final examTitle = examMap['examTitle'] ?? '';
                     final examDuration = examMap['examDuration'] ?? 0; // minutes
@@ -76,7 +116,6 @@ class _ExamResultState extends State<ExamResult> {
 
                     return InkWell(
                       onTap: () {
-                        // Navigate to detail page, passing the entire examMap
                         Navigator.pushNamed(
                           context,
                           "ExamResultDetails",
@@ -84,8 +123,10 @@ class _ExamResultState extends State<ExamResult> {
                         );
                       },
                       child: Padding(
-                        padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 4,
+                        ),
                         child: Container(
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -103,7 +144,6 @@ class _ExamResultState extends State<ExamResult> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // Title & Duration
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
@@ -135,9 +175,8 @@ class _ExamResultState extends State<ExamResult> {
                                 ),
                                 const SizedBox(height: 8),
 
-                                // Correct answers + time taken
                                 Text(
-                                  '$correctAnswers corrected answers in $usedMin min $usedSec sec',
+                                  '$correctAnswers correct answers in $usedMin min $usedSec sec',
                                   style: const TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
@@ -159,7 +198,6 @@ class _ExamResultState extends State<ExamResult> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          // Clear all results if needed
           await SecureStorageService.clearExamResults();
           setState(() {
             _futureResults = SecureStorageService.getAllExamResults();
