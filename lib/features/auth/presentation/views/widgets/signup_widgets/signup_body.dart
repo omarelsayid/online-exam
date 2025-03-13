@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:online_exam/core/utils/extensions.dart';
 import 'package:online_exam/features/auth/presentation/cubits/signup_cubit/signup_states.dart';
 import 'package:online_exam/main_view.dart';
-import '../../../../../../core/helper_function/show_error_snackbar.dart';
+import '../../../../../../core/helper_function/show_snackbar.dart';
 import '../../../../../../core/utils/app_colors.dart';
 import '../../../../../../core/utils/constans.dart';
 import '../../../../../../core/utils/text_styles.dart';

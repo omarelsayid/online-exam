@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:online_exam/core/helper_function/show_error_snackbar.dart';
+import 'package:online_exam/core/helper_function/show_snackbar.dart';
 import 'package:online_exam/core/utils/app_colors.dart';
 import 'package:online_exam/features/user_profile/presentation/cubits/user_profile_cubit/user_profile_cubit.dart';
 import 'package:online_exam/features/user_profile/presentation/cubits/user_profile_cubit/user_profile_states.dart';
@@ -22,6 +22,11 @@ class _UserProfileViewBodyBlocConsumerState
     Future.microtask(() => context.read<UserProfileCubit>().getUserProfile());
   }
 
+  @override
+  void dispose() {
+
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<UserProfileCubit, UserProfileStates>(

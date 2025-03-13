@@ -12,13 +12,21 @@ class UserProfileCubit extends Cubit<UserProfileStates> {
   UserProfileCubit(this.getUserProfileRepo) : super(UserProfileInitial());
 
   Future<Either<ServerFailure, UserProfileEntity>> getUserProfile() async {
+
+
     emit(UserProfileLoading());
     final result = await getUserProfileRepo.getUserProfile();
-    result.fold(
-      (failure) => emit(UserProfileFailure(errorMessage: failure.errorMessage)),
-      (userProfileEntity) =>
-          emit(UserProfileLoaded(userProfileEntity: userProfileEntity)),
-    );
+
+    if(!isClosed)
+      {
+        result.fold(
+                (failure) => emit(UserProfileFailure(errorMessage: failure.errorMessage)),
+                (userProfileEntity)=>
+                emit(UserProfileLoaded(userProfileEntity: userProfileEntity))
+        );
+      }
+
+
     return result;
   }
 }
