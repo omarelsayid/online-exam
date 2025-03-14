@@ -56,9 +56,3 @@ The **Online Exam** project is a Flutter-based application designed to facilitat
 
 ---
 
-### 🎯 **Why This Works Better?**
-✅ Uses **tables** to keep related images side by side.  
-✅ Uses **headings & sections** for clarity.  
-✅ Provides **better image scaling** and formatting.  
-
-Would you like any further refinements? 🚀
