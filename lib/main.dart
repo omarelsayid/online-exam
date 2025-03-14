@@ -5,19 +5,15 @@ import 'package:online_exam/core/helper_function/on_generate_route.dart';
 import 'package:online_exam/core/services/custom_bloc_observer.dart';
 import 'package:online_exam/core/services/di_service.dart';
 import 'package:online_exam/core/services/navigation_service.dart';
-import 'package:online_exam/core/services/secure_storage_service.dart';
-import 'package:online_exam/core/utils/constans.dart';
 import 'package:online_exam/core/utils/theming.dart';
-import 'package:online_exam/features/auth/presentation/views/sigin_view.dart';
 import 'package:online_exam/features/splash_screen/splash_screen.dart';
-import 'package:online_exam/main_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = CustomBlocObserver();
   configureDependencies();
 
-  runApp(MainApp(
+  runApp(const MainApp(
   ));
 }
 
