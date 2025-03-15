@@ -22,8 +22,7 @@
   import 'package:top_snackbar_flutter/custom_snack_bar.dart';
   import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-  import '../../../../../core/services/hive_db_service.dart';
-import '../../../../../core/services/secure_storage_service.dart';
+
 import '../../../domain/entites/exam_result_entity.dart';
 import '../../cubits/exam_result_cubit/exam_result_cubit.dart';
 
@@ -233,13 +232,11 @@ import '../../cubits/exam_result_cubit/exam_result_cubit.dart';
     //==========================================================
 
     void _onExamFinish() async {
-      // Calculate the time taken by the examinee
       final endTime = DateTime.now();
       final duration = endTime.difference(_startTime!);
       final usedMinutes = duration.inMinutes;
       final usedSeconds = duration.inSeconds % 60;
 
-      // Count how many answers are correct
       int correctCount = 0;
       for (int i = 0; i < questions.length; i++) {
         if (userAnswers[i].userAnswer == questions[i].correctKey) {
@@ -247,7 +244,6 @@ import '../../cubits/exam_result_cubit/exam_result_cubit.dart';
         }
       }
 
-      // Create the ExamResultEntity using the exam and question data.
       final examResult = ExamResultEntity(
         examTitle: widget.exam.title!,
         totalQuestions: questions.length,
@@ -259,8 +255,6 @@ import '../../cubits/exam_result_cubit/exam_result_cubit.dart';
           final i = entry.key;
           final q = entry.value;
           final ua = userAnswers[i];
-
-          // Map the answers using AnswerEntity.
           final answersList = q.answers?.map((a) => AnswerEntity(
             answer: a.answer,
             key: a.key,
@@ -278,8 +272,17 @@ import '../../cubits/exam_result_cubit/exam_result_cubit.dart';
         }).toList(),
       );
 
+      print("==============Data in exam ===============");
+      print(examResult.correctAnswers);
+      print(examResult.examDuration);
+      print(examResult.examTitle);
+      print(examResult.questions);
+      print(examResult.timeTakenMin);
+      print(examResult.timeTakenSec);
+      print(examResult.totalQuestions);
       context.read<ExamResultCubit>().addExamResult(examResult);
     }
+
 
 
     //==========================================================

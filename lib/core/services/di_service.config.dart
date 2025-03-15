@@ -9,7 +9,6 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i174;
-import 'package:hive/hive.dart' as _i979;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:internet_connection_checker/internet_connection_checker.dart'
     as _i973;
@@ -100,6 +99,7 @@ import '../../features/user_profile/presentation/cubits/update_profile_cubit/upd
 import '../../features/user_profile/presentation/cubits/user_profile_cubit/user_profile_cubit.dart'
     as _i1061;
 import 'auth_service.dart' as _i184;
+import 'database_helper.dart' as _i353;
 import 'exam_service.dart' as _i406;
 import 'internet_connection_check.dart' as _i746;
 
@@ -115,14 +115,15 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final dataModule = _$DataModule();
+    gh.factory<_i353.DatabaseHelper>(() => _i353.DatabaseHelper());
     gh.singleton<_i184.AuthService>(() => _i184.AuthService());
     gh.singleton<_i406.ExamService>(() => _i406.ExamService());
     gh.singleton<_i973.InternetConnectionChecker>(
         () => dataModule.getInternetConnectionCheck());
-    gh.factory<_i163.ExamResultLocalDataSource>(
-        () => _i786.ExamResultHiveDataSource(gh<_i979.Box<dynamic>>()));
     gh.factory<_i185.UserProfileDataSourceRepo>(
         () => _i852.UserPofileDataSourceRepoImp(gh<_i184.AuthService>()));
+    gh.factory<_i163.ExamResultLocalDataSource>(
+        () => _i786.ExamResultSqliteDataSource(gh<_i353.DatabaseHelper>()));
     gh.factory<_i822.ChangePasswordRepo>(() => _i626.ChangePasswordRepoImp(
           gh<_i185.UserProfileDataSourceRepo>(),
           gh<_i973.InternetConnectionChecker>(),

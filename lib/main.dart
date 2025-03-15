@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+
 import 'package:online_exam/core/helper_function/on_generate_route.dart';
 import 'package:online_exam/core/services/custom_bloc_observer.dart';
 import 'package:online_exam/core/services/di_service.dart';
@@ -14,7 +13,8 @@ import 'package:online_exam/features/auth/presentation/views/sigin_view.dart';
 import 'package:online_exam/features/splash_screen/splash_screen.dart';
 import 'package:online_exam/main_view.dart';
 
-import 'core/services/hive_db_service.dart';
+
+import 'core/services/database_helper.dart';
 import 'features/exam/domain/repo/exam_result_repository.dart';
 import 'features/exam/presentation/cubits/exam_result_cubit/exam_result_cubit.dart';
 
@@ -23,10 +23,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   Bloc.observer = CustomBlocObserver();
-  await Hive.initFlutter();
-  final examResultsBox = await Hive.openBox('exam_results');
-  configureDependencies(examResultsBox);
-  await ExamResultStorage.initHive();
+
+  configureDependencies();
+
   runApp(MainApp());
 }
 

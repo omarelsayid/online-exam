@@ -1,16 +1,12 @@
+// exam_result_widget.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../core/services/di_service.dart';
-import '../../../../../core/services/hive_db_service.dart';
-import '../../../../../core/services/secure_storage_service.dart';
-import '../../../domain/entites/exam_result_entity.dart';
-import '../../../domain/repo/exam_result_repository.dart';
-import '../../cubits/exam_result_cubit/exam_result_cubit.dart';
+import 'package:online_exam/features/exam/domain/entites/exam_result_entity.dart';
+import 'package:online_exam/features/exam/presentation/cubits/exam_result_cubit/exam_result_cubit.dart';
 
 // Helper function to extract category from exam title.
 String getCategoryFromTitle(String examTitle) {
   final lowerTitle = examTitle.toLowerCase();
-
   if (lowerTitle.contains('html') ||
       lowerTitle.contains('c++') ||
       lowerTitle.contains('flutter') ||
@@ -20,20 +16,17 @@ String getCategoryFromTitle(String examTitle) {
       lowerTitle.contains('dart')) {
     return 'Programming';
   }
-
   if (lowerTitle.contains('french') ||
       lowerTitle.contains('arabic') ||
       lowerTitle.contains('spanish')) {
     return 'Language';
   }
-
   if (lowerTitle.contains('math') ||
       lowerTitle.contains('algebra') ||
       lowerTitle.contains('geometry') ||
       lowerTitle.contains('calculus')) {
     return 'Math';
   }
-
   return 'Unknown';
 }
 
@@ -48,7 +41,6 @@ class _ExamResultState extends State<ExamResult> {
   @override
   void initState() {
     super.initState();
-    // Fetch all exam results using the cubit.
     context.read<ExamResultCubit>().getAllExamResults();
   }
 
@@ -70,11 +62,10 @@ class _ExamResultState extends State<ExamResult> {
           } else if (state is ExamResultError) {
             return Center(child: Text(state.message));
           } else if (state is ExamResultSuccess) {
-            final results = state.examResults; // List<ExamResultEntity>
+            final results = state.examResults;
             if (results.isEmpty) {
               return const Center(child: Text('No exam attempts found.'));
             }
-
             // Group exam results by category.
             final Map<String, List<ExamResultEntity>> groupedByCategory = {};
             for (var examResult in results) {
@@ -82,7 +73,6 @@ class _ExamResultState extends State<ExamResult> {
               groupedByCategory.putIfAbsent(category, () => []);
               groupedByCategory[category]!.add(examResult);
             }
-
             return ListView(
               padding: const EdgeInsets.only(top: kToolbarHeight + 12),
               children: groupedByCategory.entries.map((entry) {
@@ -92,8 +82,7 @@ class _ExamResultState extends State<ExamResult> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                       child: Text(
                         categoryName,
                         style: const TextStyle(
@@ -104,12 +93,11 @@ class _ExamResultState extends State<ExamResult> {
                     ),
                     ...examsInCategory.map((examResult) {
                       final examTitle = examResult.examTitle;
-                      final examDuration = examResult.examDuration; // in minutes
+                      final examDuration = examResult.examDuration;
                       final totalQuestions = examResult.totalQuestions;
                       final correctAnswers = examResult.correctAnswers;
                       final usedMin = examResult.timeTakenMin;
                       final usedSec = examResult.timeTakenSec;
-
                       return InkWell(
                         onTap: () {
                           Navigator.pushNamed(
@@ -119,8 +107,7 @@ class _ExamResultState extends State<ExamResult> {
                           );
                         },
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 4),
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                           child: Container(
                             decoration: BoxDecoration(
                               color: Colors.white,
@@ -139,8 +126,7 @@ class _ExamResultState extends State<ExamResult> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         examTitle,
@@ -192,7 +178,6 @@ class _ExamResultState extends State<ExamResult> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-
           context.read<ExamResultCubit>().clearExamResults();
         },
         child: const Icon(Icons.delete),
