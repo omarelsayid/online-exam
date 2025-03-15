@@ -22,7 +22,8 @@
   import 'package:top_snackbar_flutter/custom_snack_bar.dart';
   import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-  import '../../../../../core/services/secure_storage_service.dart';
+  import '../../../../../core/services/hive_db_service.dart';
+import '../../../../../core/services/secure_storage_service.dart';
 
   class ExamQusetionsViewBody extends StatefulWidget {
     const ExamQusetionsViewBody({super.key, required this.exam});
@@ -282,9 +283,7 @@
 
         'questions': questionsData,
       };
-
-      // Store in Secure Storage
-      await SecureStorageService.addExamResult(examResultMap);
+      await ExamResultStorage.addExamResult(examResultMap);
     }
 
     //==========================================================

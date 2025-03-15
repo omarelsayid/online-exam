@@ -35,24 +35,4 @@ abstract class SecureStorageService {
   }
 
 
-  static Future<List<dynamic>> getAllExamResults()async {
-    final existData = await _instance.read(key: _examResultKey);
-
-    if (existData == null)
-      return [];
-
-    return jsonDecode(existData) as List<dynamic>;
-  }
-
-
-  static Future<void> addExamResult(Map<String,dynamic> newResult)async{
-    final existList = await getAllExamResults();
-    existList.add(newResult);
-
-    await _instance.write(key: _examResultKey, value: jsonEncode(existList));
-  }
-
-  static Future<void>clearExamResults()async{
-    await _instance.delete(key: _examResultKey);
-  }
 }

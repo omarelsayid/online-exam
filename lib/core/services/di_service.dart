@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
 
 import 'di_service.config.dart';
@@ -10,4 +11,7 @@ final getIt = GetIt.instance;
   preferRelativeImports: true, // default
   asExtension: true, // default
 )
-void configureDependencies() => getIt.init();
+void configureDependencies(Box examResultsBox) {
+  getIt.registerSingleton<Box>(examResultsBox);
+  getIt.init();
+}
