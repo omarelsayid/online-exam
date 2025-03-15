@@ -1,11 +1,10 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 abstract class SecureStorageService {
   static final FlutterSecureStorage _instance = FlutterSecureStorage();
-  static const String _examResultKey= 'examResult';
+  static const String _examResultKey = 'examResult';
 
   static Future<void> setValue(String key, String value) async {
     try {
@@ -33,6 +32,4 @@ abstract class SecureStorageService {
       log('Error deleting from secure storage: $e');
     }
   }
-
-
 }

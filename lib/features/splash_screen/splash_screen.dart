@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:online_exam/features/auth/presentation/views/sigin_view.dart';
-
 import '../../core/services/secure_storage_service.dart';
 import '../../core/utils/constans.dart';
 import '../../main_view.dart';
