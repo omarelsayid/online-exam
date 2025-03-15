@@ -1,4 +1,3 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
@@ -10,6 +9,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i174;
+import 'package:hive/hive.dart' as _i979;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:internet_connection_checker/internet_connection_checker.dart'
     as _i973;
@@ -42,7 +42,13 @@ import '../../features/auth/presentation/cubits/verify_code_cubit/verify_reset_c
 import '../../features/exam/data/data_source/exam_data_source.dart' as _i831;
 import '../../features/exam/data/data_source/exam_data_source_impl.dart'
     as _i160;
+import '../../features/exam/data/data_source/local_data_source/exam_result_local_ds.dart'
+    as _i163;
+import '../../features/exam/data/data_source/local_data_source/exam_result_local_ds_imp.dart'
+    as _i786;
 import '../../features/exam/data/repo/check_questions_repo_impl.dart' as _i326;
+import '../../features/exam/data/repo/exam_result_repository_impl.dart'
+    as _i888;
 import '../../features/exam/data/repo/get_all_exam_on_subject_repo_impl.dart'
     as _i482;
 import '../../features/exam/data/repo/get_all_qusetions_on_exam_repo_imp.dart'
@@ -50,6 +56,7 @@ import '../../features/exam/data/repo/get_all_qusetions_on_exam_repo_imp.dart'
 import '../../features/exam/data/repo/get_all_subjects_repo_impl.dart' as _i679;
 import '../../features/exam/data/repo/get_exam_on_id_repo_impl.dart' as _i61;
 import '../../features/exam/domain/repo/check_questions_repo.dart' as _i3;
+import '../../features/exam/domain/repo/exam_result_repository.dart' as _i811;
 import '../../features/exam/domain/repo/get_all_exams_on_subject_repo.dart'
     as _i979;
 import '../../features/exam/domain/repo/get_all_qusetions_on_exam_repo.dart'
@@ -58,6 +65,8 @@ import '../../features/exam/domain/repo/get_all_subjects_repo.dart' as _i155;
 import '../../features/exam/domain/repo/get_exam_on_id_repo.dart' as _i423;
 import '../../features/exam/presentation/cubits/check_questions_cubit/check_questions_cubit.dart'
     as _i204;
+import '../../features/exam/presentation/cubits/exam_result_cubit/exam_result_cubit.dart'
+    as _i540;
 import '../../features/exam/presentation/cubits/explore_subjects_cubit/explore_subjects_cubit.dart'
     as _i103;
 import '../../features/exam/presentation/cubits/get_all_exams_on_subjects_cubit/get_all_exams_on_subjects_cubit.dart'
@@ -110,6 +119,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i406.ExamService>(() => _i406.ExamService());
     gh.singleton<_i973.InternetConnectionChecker>(
         () => dataModule.getInternetConnectionCheck());
+    gh.factory<_i163.ExamResultLocalDataSource>(
+        () => _i786.ExamResultHiveDataSource(gh<_i979.Box<dynamic>>()));
     gh.factory<_i185.UserProfileDataSourceRepo>(
         () => _i852.UserPofileDataSourceRepoImp(gh<_i184.AuthService>()));
     gh.factory<_i822.ChangePasswordRepo>(() => _i626.ChangePasswordRepoImp(
@@ -137,6 +148,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i62.DataSourceRepo>(),
           gh<_i973.InternetConnectionChecker>(),
         ));
+    gh.factory<_i811.ExamResultRepository>(() => _i888.ExamResultRepositoryImpl(
+        localDataSource: gh<_i163.ExamResultLocalDataSource>()));
     gh.factory<_i364.SigninRepo>(
         () => _i739.SigninRepoImp(gh<_i62.DataSourceRepo>()));
     gh.factory<_i423.GetExamOnIdRepo>(() => _i61.GetExamOnIdRepoImpl(
@@ -175,6 +188,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i822.ChangePasswordRepo>(),
           gh<_i485.LogoutRepo>(),
         ));
+    gh.factory<_i540.ExamResultCubit>(() =>
+        _i540.ExamResultCubit(repository: gh<_i811.ExamResultRepository>()));
     gh.factory<_i90.UpdateProfileCubit>(
         () => _i90.UpdateProfileCubit(gh<_i970.UpdateProfileRepo>()));
     gh.factory<_i204.CheckQuestionsCubit>(
