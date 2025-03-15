@@ -15,6 +15,8 @@ import 'package:online_exam/features/splash_screen/splash_screen.dart';
 import 'package:online_exam/main_view.dart';
 
 import 'core/services/hive_db_service.dart';
+import 'features/exam/domain/repo/exam_result_repository.dart';
+import 'features/exam/presentation/cubits/exam_result_cubit/exam_result_cubit.dart';
 
 
 void main() async {
@@ -40,16 +42,19 @@ class MainApp extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (_, child) {
-          return MaterialApp(
-            navigatorKey: navigatorKey,
-            debugShowCheckedModeBanner: false,
-            initialRoute: SplashScreen.routeName,
-            onGenerateRoute: onGenerateRoute,
-            // initialRoute: SiginView.routeName,
-            // initialRoute:
-            //     token != null ? MainView.routeName : SiginView.routeName,
+          return BlocProvider(
+            create: (context) => ExamResultCubit(repository: getIt<ExamResultRepository>()),
+            child: MaterialApp(
+              navigatorKey: navigatorKey,
+              debugShowCheckedModeBanner: false,
+              initialRoute: SplashScreen.routeName,
+              onGenerateRoute: onGenerateRoute,
+              // initialRoute: SiginView.routeName,
+              // initialRoute:
+              //     token != null ? MainView.routeName : SiginView.routeName,
 
-            theme: themeData,
+              theme: themeData,
+            ),
           );
         });
   }

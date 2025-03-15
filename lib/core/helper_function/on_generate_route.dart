@@ -12,6 +12,7 @@ import 'package:online_exam/main_view.dart';
 
 import '../../features/auth/presentation/views/reset_password_view.dart';
 import '../../features/auth/presentation/views/verify_reset_code_view.dart';
+import '../../features/exam/domain/entites/exam_result_entity.dart';
 import '../../features/exam/presentation/views/exam_result/exam_result_details.dart';
 
 Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -58,9 +59,11 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
 
 
     case ExamResultDetails.routeName:
-      final examMap = settings.arguments as Map<String, dynamic>;
-      return MaterialPageRoute(builder: (_)=>ExamResultDetails(examResult: examMap),settings: settings);
-
+      final examResult = settings.arguments as ExamResultEntity;
+      return MaterialPageRoute(
+        builder: (_) => ExamResultDetails(examResult: examResult),
+        settings: settings,
+      );
     case SplashScreen.routeName:
       return MaterialPageRoute(builder: (_)=>SplashScreen());
     default:

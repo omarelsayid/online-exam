@@ -12,15 +12,15 @@ class ExamResultRepositoryImpl implements ExamResultRepository {
   ExamResultRepositoryImpl({required this.localDataSource});
 
   @override
-  Future<List<ExamResult>> getAllExamResults() async {
+  Future<List<ExamResultEntity >> getAllExamResults() async {
     final examResultsData = await localDataSource.getExamResults();
     return examResultsData
-        .map((data) => ExamResult.fromJson(Map<String, dynamic>.from(data)))
+        .map((data) => ExamResultEntity .fromJson(Map<String, dynamic>.from(data)))
         .toList();
   }
 
   @override
-  Future<void> addExamResult(ExamResult examResult) async {
+  Future<void> addExamResult(ExamResultEntity  examResult) async {
     final currentResults = await localDataSource.getExamResults();
     currentResults.add(examResult.toJson());
     await localDataSource.cacheExamResults(currentResults);

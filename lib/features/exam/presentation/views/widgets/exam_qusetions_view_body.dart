@@ -24,6 +24,8 @@
 
   import '../../../../../core/services/hive_db_service.dart';
 import '../../../../../core/services/secure_storage_service.dart';
+import '../../../domain/entites/exam_result_entity.dart';
+import '../../cubits/exam_result_cubit/exam_result_cubit.dart';
 
   class ExamQusetionsViewBody extends StatefulWidget {
     const ExamQusetionsViewBody({super.key, required this.exam});
@@ -231,60 +233,54 @@ import '../../../../../core/services/secure_storage_service.dart';
     //==========================================================
 
     void _onExamFinish() async {
+      // Calculate the time taken by the examinee
       final endTime = DateTime.now();
       final duration = endTime.difference(_startTime!);
-
       final usedMinutes = duration.inMinutes;
       final usedSeconds = duration.inSeconds % 60;
 
-      // Count how many are correct
+      // Count how many answers are correct
       int correctCount = 0;
       for (int i = 0; i < questions.length; i++) {
-
         if (userAnswers[i].userAnswer == questions[i].correctKey) {
           correctCount++;
         }
       }
 
+      // Create the ExamResultEntity using the exam and question data.
+      final examResult = ExamResultEntity(
+        examTitle: widget.exam.title!,
+        totalQuestions: questions.length,
+        examDuration: widget.exam.duration!.toInt(),
+        correctAnswers: correctCount,
+        timeTakenMin: usedMinutes,
+        timeTakenSec: usedSeconds,
+        questions: questions.asMap().entries.map((entry) {
+          final i = entry.key;
+          final q = entry.value;
+          final ua = userAnswers[i];
 
-      List<Map<String, dynamic>> questionsData = [];
-      for (int i = 0; i < questions.length; i++) {
-        final q = questions[i];
-        final ua = userAnswers[i];
+          // Map the answers using AnswerEntity.
+          final answersList = q.answers?.map((a) => AnswerEntity(
+            answer: a.answer,
+            key: a.key,
+          )).toList();
 
+          return QuestionResultEntity(
+            id: q.id!,
+            questionText: q.question!,
+            answers: answersList,
+            correctKey: q.correctKey!,
+            selectedAnswer: ua.userAnswer,
+            answerIndex: ua.answerIndex,
+            correctAnswer: ua.correctAnswer,
+          );
+        }).toList(),
+      );
 
-        final answersList = q.answers?.map((a) => {
-          'answer': a.answer,
-          'key': a.key,
-        }).toList();
-
-
-        final questionMap = {
-          'id': q.id,
-          'questionText': q.question,
-          'answers': answersList,
-          'correctKey': q.correctKey,
-          'selectedAnswer': ua.userAnswer,
-          'answerIndex': ua.answerIndex,
-          'correctAnswer': ua.correctAnswer,
-        };
-
-        questionsData.add(questionMap);
-      }
-
-
-      final examResultMap = {
-        'examTitle': widget.exam.title,
-        'totalQuestions': questions.length,
-        'examDuration': widget.exam.duration,
-        'correctAnswers': correctCount,
-        'timeTakenMin': usedMinutes,
-        'timeTakenSec': usedSeconds,
-
-        'questions': questionsData,
-      };
-      await ExamResultStorage.addExamResult(examResultMap);
+      context.read<ExamResultCubit>().addExamResult(examResult);
     }
+
 
     //==========================================================
     //==========================================================

@@ -8,7 +8,7 @@ final class ExamResultInitial extends ExamResultState {}
 
 class ExamResultLoading extends ExamResultState{}
 class ExamResultSuccess extends ExamResultState{
-  final List<ExamResult> examResults;
+  final List<ExamResultEntity > examResults;
   ExamResultSuccess(this.examResults);
 }
 class ExamResultError extends ExamResultState{

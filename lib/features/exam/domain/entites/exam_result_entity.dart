@@ -1,14 +1,13 @@
-class ExamResult {
+class ExamResultEntity {
   final String examTitle;
   final int totalQuestions;
   final int examDuration;
   final int correctAnswers;
   final int timeTakenMin;
   final int timeTakenSec;
-  final List<QuestionResult> questions;
-  final DateTime createdAt;
+  final List<QuestionResultEntity> questions;
 
-  ExamResult({
+  ExamResultEntity({
     required this.examTitle,
     required this.totalQuestions,
     required this.examDuration,
@@ -16,8 +15,7 @@ class ExamResult {
     required this.timeTakenMin,
     required this.timeTakenSec,
     required this.questions,
-    DateTime? createdAt,
-  }) : this.createdAt = createdAt ?? DateTime.now();
+  });
 
   Map<String, dynamic> toJson() {
     return {
@@ -28,12 +26,11 @@ class ExamResult {
       'timeTakenMin': timeTakenMin,
       'timeTakenSec': timeTakenSec,
       'questions': questions.map((q) => q.toJson()).toList(),
-      'createdAt': createdAt.toIso8601String(),
     };
   }
 
-  factory ExamResult.fromJson(Map<String, dynamic> json) {
-    return ExamResult(
+  factory ExamResultEntity.fromJson(Map<String, dynamic> json) {
+    return ExamResultEntity(
       examTitle: json['examTitle'],
       totalQuestions: json['totalQuestions'],
       examDuration: json['examDuration'],
@@ -41,31 +38,28 @@ class ExamResult {
       timeTakenMin: json['timeTakenMin'],
       timeTakenSec: json['timeTakenSec'],
       questions: (json['questions'] as List)
-          .map((q) => QuestionResult.fromJson(q))
+          .map((q) => QuestionResultEntity.fromJson(q))
           .toList(),
-      createdAt: json['createdAt'] != null
-          ? DateTime.parse(json['createdAt'])
-          : DateTime.now(),
     );
   }
 }
 
-class QuestionResult {
+class QuestionResultEntity {
   final String id;
   final String questionText;
-  final List<Answer> answers;
+  final List<AnswerEntity>? answers;
   final String correctKey;
   final String? selectedAnswer;
   final int? answerIndex;
-  final bool correctAnswer;
+  final String? correctAnswer;
 
-  QuestionResult({
+  QuestionResultEntity({
     required this.id,
     required this.questionText,
     required this.answers,
     required this.correctKey,
-    this.selectedAnswer,
-    this.answerIndex,
+    required this.selectedAnswer,
+    required this.answerIndex,
     required this.correctAnswer,
   });
 
@@ -73,7 +67,7 @@ class QuestionResult {
     return {
       'id': id,
       'questionText': questionText,
-      'answers': answers.map((a) => a.toJson()).toList(),
+      'answers': answers?.map((a) => a.toJson()).toList(),
       'correctKey': correctKey,
       'selectedAnswer': selectedAnswer,
       'answerIndex': answerIndex,
@@ -81,13 +75,15 @@ class QuestionResult {
     };
   }
 
-  factory QuestionResult.fromJson(Map<String, dynamic> json) {
-    return QuestionResult(
+  factory QuestionResultEntity.fromJson(Map<String, dynamic> json) {
+    return QuestionResultEntity(
       id: json['id'],
       questionText: json['questionText'],
-      answers: (json['answers'] as List)
-          .map((a) => Answer.fromJson(a))
-          .toList(),
+      answers: json['answers'] != null
+          ? (json['answers'] as List)
+          .map((a) => AnswerEntity.fromJson(a))
+          .toList()
+          : null,
       correctKey: json['correctKey'],
       selectedAnswer: json['selectedAnswer'],
       answerIndex: json['answerIndex'],
@@ -96,11 +92,11 @@ class QuestionResult {
   }
 }
 
-class Answer {
+class AnswerEntity {
   final String answer;
   final String key;
 
-  Answer({
+  AnswerEntity({
     required this.answer,
     required this.key,
   });
@@ -112,8 +108,8 @@ class Answer {
     };
   }
 
-  factory Answer.fromJson(Map<String, dynamic> json) {
-    return Answer(
+  factory AnswerEntity.fromJson(Map<String, dynamic> json) {
+    return AnswerEntity(
       answer: json['answer'],
       key: json['key'],
     );

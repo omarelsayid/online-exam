@@ -26,7 +26,7 @@ class ExamResultCubit extends Cubit<ExamResultState> {
     }
   }
 
-  Future<void> addExamResult(ExamResult examResult) async {
+  Future<void> addExamResult(ExamResultEntity  examResult) async {
     try {
       await repository.addExamResult(examResult);
       getAllExamResults();
