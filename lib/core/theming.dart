@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:online_exam/core/app_colors.dart';
 
 ThemeData themeData = ThemeData(
-    scaffoldBackgroundColor: Colors.white,
     inputDecorationTheme: InputDecorationTheme(
       contentPadding: EdgeInsets.fromLTRB(
         16.w,

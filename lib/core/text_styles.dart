@@ -65,12 +65,6 @@ class AppTextStyles {
     fontSize: 12.sp,
   );
 
-  static TextStyle inter600_20 = TextStyle(
-    fontFamily: 'Inter',
-    fontWeight: FontWeight.w600,
-    fontSize: 20.sp,
-  );
-
   // Roboto - Weight 500, Size 14px
   static TextStyle roboto500_14 = TextStyle(
     fontFamily: 'Roboto',
