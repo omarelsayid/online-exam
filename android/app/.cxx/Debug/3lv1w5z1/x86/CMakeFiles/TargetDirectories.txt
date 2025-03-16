@@ -1,0 +1,2 @@
+D:/projects/online_exam/android/app/.cxx/Debug/3lv1w5z1/x86/CMakeFiles/edit_cache.dir
+D:/projects/online_exam/android/app/.cxx/Debug/3lv1w5z1/x86/CMakeFiles/rebuild_cache.dir

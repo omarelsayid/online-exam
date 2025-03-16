@@ -1,6 +1,6 @@
 # Online Exam
 
-![Flutter Version](https://img.shields.io/badge/Flutter-v3.27.0-blue)
+![Flutter Version](https://img.shields.io/badge/Flutter-v2.5.0-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 ## Overview
@@ -21,8 +21,7 @@ The **Online Exam** project is a Flutter-based application designed to facilitat
 - **Frontend**: Flutter framework utilizing the Dart programming language.
 - **State Management**: Bloc pattern for predictable and testable state management.
 - **Secure Storage**: Utilizes `flutter_secure_storage` for storing sensitive data securely.
-- **Sqflite**: to store exam results locally
-- **Backend**: Resful API
+- **Backend**: Restful  API
 ---
 
 ## 🔐 Authentication  
