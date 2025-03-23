@@ -41,7 +41,6 @@ class MainApp extends StatelessWidget {
               // initialRoute: SiginView.routeName,
               // initialRoute:
               //     token != null ? MainView.routeName : SiginView.routeName,
-
               theme: themeData,
             ),
           );
