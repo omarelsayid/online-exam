@@ -16,6 +16,8 @@ AppBar buildCustomAppBar(
     titleSpacing: 2.w,
     leading: Visibility(
       visible: isVisible,
+      maintainAnimation: true,
+      maintainState: true,
       child: IconButton(
           onPressed: () {
             Navigator.pop(context);
