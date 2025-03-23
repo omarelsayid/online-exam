@@ -15,6 +15,9 @@ AppBar buildCustomAppBar(
     elevation: 0,
     titleSpacing: 2.w,
     leading: Visibility(
+      maintainState: true,
+      maintainAnimation: true,
+      maintainSize: true,
       visible: isVisible,
       child: IconButton(
           onPressed: () {
